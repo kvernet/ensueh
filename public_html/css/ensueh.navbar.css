@@ -1,0 +1,22 @@
+
+.ensueh-navbar {
+    background-color: darkslategrey;
+}
+.ensueh-navbar ul {
+    font-weight: bold;
+    align-content: center;
+    align-items: center;
+}
+
+.ensueh-navbar ul li a {
+    color: #fff;
+    transition: 0.2s ease;
+}
+
+.dropdown ul li a {
+    color: blue;
+}
+
+.ensueh-navbar ul li a:hover, .ensueh-navbar ul li.active a, .ensueh-navbar ul li a.active:hover {
+    color: #ff7200;
+}

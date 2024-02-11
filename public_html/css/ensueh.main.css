@@ -1,0 +1,25 @@
+@import url("ensueh.sidebar.css");
+@import url("ensueh.navbar.css");
+
+.bg-cover {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    /*background: linear-gradient(to top, rgba(0, 0, 0, 0.5)50%, rgba(0, 0, 0, 0.5)50%), url("../images/ensueh-bg.webp");*/
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.dashboard-content {
+    color: #000;
+}
+
+.jumbotron p {
+    text-align: justify;
+}

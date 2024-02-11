@@ -1,0 +1,26 @@
+.ensueh-connexion {
+    margin: 5%;
+    border-radius: 25px;
+    border: 5px solid #ff7200;
+}
+
+.form-connexion {
+    background-color: gray;
+    border-radius: 20px;
+}
+
+.ensueh-connexion h2 {
+    padding: 10px 0;
+    text-align: center;
+    font-weight: bold;
+    color: #ff7200;
+}
+
+.ensueh-connexion button {
+    font-weight: bold;
+}
+
+.ensueh-connexion .div-details {
+    text-align: center;
+    color: blue;
+}

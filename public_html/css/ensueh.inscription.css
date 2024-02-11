@@ -1,0 +1,26 @@
+.ensueh-inscription {
+    margin: 5%;
+    border-radius: 25px;
+    border: 3px solid #0000ff;
+}
+
+.form-inscription {
+    background-color: #ece6e6;
+    border-radius: 20px;
+}
+
+.ensueh-inscription h2 {
+    padding: 10px 0;
+    text-align: center;
+    font-weight: bold;
+    color: #0000ff;
+}
+
+.ensueh-inscription button {
+    font-weight: bold;
+}
+
+.ensueh-inscription .div-details {
+    text-align: center;
+    color: red;
+}

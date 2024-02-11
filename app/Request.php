@@ -35,16 +35,16 @@ class Request {
 
         $explode_path = explode('/', $path);
 
-        if(count($explode_path) > 3) {
-            if($explode_path[3] != "") {
-                echo "Page does not exist<br>";
-                die();
-            }            
-        }
-
         $controller = $explode_path[1] == "" ? "home" : $explode_path[1];
         $controller = ucfirst($controller) . "Controller";
         $method = ($explode_path[2] == null || $explode_path[2] == "") ? "index" : $explode_path[2];
+
+        if(count($explode_path) > 3) {
+            if(strlen($explode_path[3]) != 0) {
+                $method = "_404";
+            }            
+        }
+        
         return [
             "controller" => $controller,
             "method" =>$method,
