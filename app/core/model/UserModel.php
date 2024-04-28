@@ -9,7 +9,7 @@ class UserModel extends Model {
 
     private $table = "users";
 
-    public function setTable($table) : UserModel {
+    public function setTable(string $table) : UserModel {
         $this->table = $table;
         return $this;
     }
@@ -50,7 +50,7 @@ class UserModel extends Model {
         }
     }
 
-    public function get($user_name, $pwd) : User {
+    public function get(string $user_name, string $pwd) : User {
         $user = new User;
 
         $sql = "SELECT * FROM " . $this->table . " WHERE (user_name=:user_name AND pwd=:pwd)";
@@ -70,7 +70,7 @@ class UserModel extends Model {
         return $user;
     }
 
-    public function emailExists($email) : bool {
+    public function emailExists(string $email) : bool {
         $sql = "SELECT * FROM " . $this->table . " WHERE email=:email";
         $data = $this->query($sql, [
             [":email", $email, PDO::PARAM_STR]
@@ -78,7 +78,7 @@ class UserModel extends Model {
         return count($data) > 0;
     }
 
-    public function phoneExists($phone) : bool {
+    public function phoneExists(string $phone) : bool {
         $sql = "SELECT * FROM " . $this->table . " WHERE phone=:phone";
         $data = $this->query($sql, [
             [":phone", $phone, PDO::PARAM_STR]
@@ -86,7 +86,7 @@ class UserModel extends Model {
         return count($data) > 0;
     }
 
-    public function userNameExists($user_name) : bool {
+    public function userNameExists(string $user_name) : bool {
         $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
         $data = $this->query($sql, [
             [":user_name", $user_name, PDO::PARAM_STR]

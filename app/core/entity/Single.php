@@ -13,6 +13,7 @@ class Single {
         return '<option value="'. $this->getId() .'">'. $this->getName() .'</option>';
     }
 
+    public function isNull() : bool { return $this->id == null; }
     public function getId() : int { return $this->id; }
     public function getName() : string { return $this->name; }
     public function getDeleted() : bool { return $this->deleted; }

@@ -4,12 +4,6 @@ namespace app\core\controller;
 
 class HomeController extends Controller {
 
-    public function index() {
-        $this->view("home/index", [
-            "title" => APP_NAME
-        ]);
-    }
-
     public function _404() : void {
         $this->view("error/_404", [
             "header" => PUBLIC_DIR . "home/header.php",
@@ -17,5 +11,125 @@ class HomeController extends Controller {
             "title" => APP_NAME . " - Erreur 404"
         ]);
         die();
+    }
+
+    public function coaching() {
+        $this->view("home/coaching", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function developers() {
+        $this->view("home/developers", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function direction() {
+        $this->view("home/direction", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function formations() {
+        $this->view("home/formations", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function forums() {
+        $this->view("home/forums", [
+            "title" => APP_NAME
+        ]);
+    }
+    
+    public function index() {
+        $this->view("home/index", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function inews() {
+        $this->view("home/inews", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function jobs() {
+        $this->view("home/jobs", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function laboratories() {
+        $this->view("home/laboratories", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function lnews() {
+        $this->view("home/lnews", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function login() {
+        $this->view("home/login", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function partnerships() {
+        $this->view("home/partnerships", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function phds() {
+        $this->view("home/phds", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function projects() {
+        $this->view("home/projects", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function publications() {
+        $this->view("home/publications", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function rdv() {
+        $this->view("home/rdv", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function researchers() {
+        $this->view("home/researchers", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function search() {
+        $this->view("home/search", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function ueh() {
+        $this->view("home/ueh", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function venir() {
+        $this->view("home/venir", [
+            "title" => APP_NAME
+        ]);
     }
 }

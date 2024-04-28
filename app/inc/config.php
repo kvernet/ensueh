@@ -1,7 +1,12 @@
 <?php
 
 define("APP_DIR", __DIR__ . "/../../");
-define("PUBLIC_DIR", APP_DIR . "public_html/view/");
+define("PUBLIC_DIR", APP_DIR . "public_html/");
+define("APP_DOMAIN", "http://127.0.0.1:8080/");
+
+/* Boostrap links */
+define("BOOTSTRAP_CSS", '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">');
+define("BOOSTRAP_JS", '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>');
 
 define("APP_NAME", "ENS UEH");
 
