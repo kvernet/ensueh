@@ -5,16 +5,23 @@ namespace app\core\controller;
 class HomeController extends Controller {
 
     public function _404() : void {
-        $this->view("error/_404", [
-            "header" => PUBLIC_DIR . "home/header.php",
-            "footer" => PUBLIC_DIR . "home/footer.php",
-            "title" => APP_NAME . " - Erreur 404"
+        $this->view("error/info", [
+            "header" => PUBLIC_DIR . "view/home/header.php",
+            "footer" => PUBLIC_DIR . "view/home/footer.php",
+            "title" => APP_NAME . " - Erreur 404",
+            "msg" => PAGE_NOT_EXISTS_MSG
         ]);
         die();
     }
 
     public function coaching() {
         $this->view("home/coaching", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function departments() {
+        $this->view("home/departments", [
             "title" => APP_NAME
         ]);
     }

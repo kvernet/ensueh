@@ -7,7 +7,7 @@ spl_autoload_register(function($class) {
     require_once(APP_DIR . $file);
 });
 
-function redirectMe($page, $params=[]) {
+function redirectMe($page) {
     header("Location: " . $page);
     exit(0);
 }

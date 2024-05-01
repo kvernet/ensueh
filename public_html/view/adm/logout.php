@@ -7,7 +7,7 @@ $user_name = $_SESSION["adm_user_name"];
 
 // update the database
 $admModel = new AdmModel;
-$admModel->logout($user_name);
+$admModel->updateConnection($user_name, false);
 
 // remove all session variables
 session_unset();

@@ -31,7 +31,7 @@ class Request {
     private function get() : array {
         $uri = parse_url($this->data["server"]["REQUEST_URI"]);
         $path = $uri["path"];
-        $query = $uri["query"];
+        $query = $uri["query"] ?? [];
 
         $explode_path = explode('/', $path);
 

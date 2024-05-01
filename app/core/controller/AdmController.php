@@ -8,66 +8,44 @@ session_start();
 
 class AdmController extends Controller {
     
-    public function index() {
-        if(AdmController::IsConnected()) {
-            $this->home();
-        }
-        else {
-            $this->view("adm/index", [
-                "title" => APP_NAME . " ADM"
-            ]);
-        }
+    public function _403() : void {
+        $this->view("error/info", [
+            "header" => PUBLIC_DIR . "view/adm/header.php",
+            "footer" => PUBLIC_DIR . "view/adm/footer.php",
+            "title" => APP_NAME . " - Erreur 403",
+            "msg" => ACCESS_DENIED_MSG
+        ]);
+        die();
     }
 
-    public function login() {
-        if(AdmController::IsConnected()) {
-            $this->home();
-        }
-        else {
-            $this->view("adm/login", [
-                "title" => APP_NAME . " ADM"
-            ]);
-        }
+    public function _404() : void {
+        $this->view("error/info", [
+            "header" => PUBLIC_DIR . "view/adm/header.php",
+            "footer" => PUBLIC_DIR . "view/adm/footer.php",
+            "title" => APP_NAME . " - Erreur 404",
+            "msg" => PAGE_NOT_EXISTS_MSG
+        ]);
+        die();
     }
 
     public function home() {
         if(AdmController::IsConnected()) {
             $this->view("adm/home", [
-                "title" => APP_NAME . " ADM"
+                "title" => APP_NAME . " - ADM"
             ]);
         }
         else {
             $this->_403();
         }
     }
-
-    public function logout() {
+    
+    public function index() {
         if(AdmController::IsConnected()) {
-            $this->view("adm/logout", [
-                "title" => APP_NAME . " ADM"
-            ]);
+            redirectMe("adm/home");
         }
         else {
-            $this->_403();
-        }
-    }
-
-    public function _404() : void {
-        $this->view("error/_404", [
-            "header" => PUBLIC_DIR . "adm/header.php",
-            "footer" => PUBLIC_DIR . "adm/footer.php",
-            "title" => APP_NAME . " - Erreur 404"
-        ]);
-        die();
-    }
-
-    public function info() {
-        if(AdmController::IsConnected()) {
-            $this->home();
-        }
-        else {
-            $this->view("adm/info", [
-                "title" => APP_NAME . " ADM"
+            $this->view("adm/index", [
+                "title" => APP_NAME . " - ADM"
             ]);
         }
     }
@@ -80,6 +58,28 @@ class AdmController extends Controller {
         }
         else {
             return false;
+        }
+    }
+
+    public function login() {
+        if(AdmController::IsConnected()) {
+            redirectMe("adm/home");
+        }
+        else {
+            $this->view("adm/login", [
+                "title" => APP_NAME . " - ADM"
+            ]);
+        }
+    }
+
+    public function logout() {
+        if(AdmController::IsConnected()) {
+            $this->view("adm/logout", [
+                "title" => APP_NAME . " - ADM"
+            ]);
+        }
+        else {
+            $this->_403();
         }
     }
 }

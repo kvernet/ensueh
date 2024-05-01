@@ -2,7 +2,10 @@
 
 session_start();
 
+use app\core\controller\AdmController;
 use app\core\model\AdmModel;
+
+$admController = new AdmController;
 
 if($_POST) {
     $user_name = $_POST["user_name"];
@@ -17,30 +20,33 @@ if($_POST) {
         if($adm->getActive()) {
             // check if already connected on another device/browser
             if(!$admModel->isConnected($user_name)) {
-                var_dump($adm);
                 $_SESSION["adm_user_name"] = $user_name;
                 // update ADM data
-                $admModel->login($user_name);
+                $admModel->updateConnection($user_name, true);
+
                 redirectMe("home");
             }
             else {
-                redirectMe("info", [
-                    "message" => "Vous êtes déjà connecté(e) sur un autre appareil/navigateur. Veuillez d'abord vous déconnecter."
-                ]);
+                $admController->info([
+                    "msg" => "Vous êtes déjà connecté(e) sur un autre appareil/navigateur. Veuillez d'abord vous déconnecter."
+                ]
+                );
             }
         }
         else {
-            redirectMe("info", [
-                "message" => "Cet ADM n'est pas actif. Veuillez contacter les responsables."
-            ]);
+            $admController->info([
+                "msg" => 'Cet ADM n\'est pas actif. Veuillez contacter les responsables.<br><a href="'. APP_DOMAIN .'adm">Retour</a>'
+            ]
+            );
         }
     }
     else {
-        redirectMe("info", [
-            "message" => "Cet ADM n'existe pas."
-        ]);
+        $admController->info([
+            "msg" => 'Cet ADM n\'existe pas.<br><a href="'. APP_DOMAIN .'adm">Retour</a>'
+        ]
+        );
     }
 }
 else {
-    redirectMe("index");
+    $admController->info();
 }

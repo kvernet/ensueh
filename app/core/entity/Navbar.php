@@ -5,7 +5,7 @@ namespace app\core\entity;
 class Navbar {
 
     public function __construct(private string $content="",
-        private $fsearch="") {        
+        private string $fsearch="") {        
     }
 
     // $text : the text to be displayed in the link

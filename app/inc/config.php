@@ -15,6 +15,9 @@ define("DB_NAME", "test");
 define("DB_USER", "ens");
 define("DB_PWD", "Test_xyz1");
 
+define("ACCESS_DENIED_MSG", "Désolé mais vous n'avez pas accès à la page démandée.");
+define("PAGE_NOT_EXISTS_MSG", "La page que vous demandez n'existe pas.");
+
 define("EMAIL_EXIST_MESSAGE", "Cet email a déjà été utilisé.");
 define("PHONE_EXIST_MESSAGE", "Ce numéro de téléphone a déjà été utilisé.");
 define("USERNAME_EXIST_MESSAGE", "Cet identifiant a déjà été utilisé.");

@@ -35,40 +35,26 @@ class AdmModel extends Model {
         return $adm;
     }
 
-    public function login(string $user_name) : bool {
+    public function updateConnection(string $user_name, bool $connected=false) : bool {
         try {
             $sql = "UPDATE " . $this->table . " SET connected=:connected WHERE user_name=:user_name";
             $c = $this->query($sql, [
-                [":connected", true, PDO::PARAM_BOOL],
+                [":connected", $connected, PDO::PARAM_BOOL],
                 [":user_name", $user_name, PDO::PARAM_STR]
             ])->execute();
             return true;
         }
         catch(PDOException $e) {
-            echo "Login error message: " . $e->getMessage();
-        }
-        return false;
-    }
-
-    public function logout(string $user_name) : bool {
-        try {
-            $sql = "UPDATE " . $this->table . " SET connected=:connected WHERE user_name=:user_name";
-            $c = $this->query($sql, [
-                [":connected", false, PDO::PARAM_BOOL],
-                [":user_name", $user_name, PDO::PARAM_STR]
-            ])->execute();
-            return true;
-        }
-        catch(PDOException $e) {
-            echo "Logout error message: " . $e->getMessage();
+            echo "Login/Logout error message: " . $e->getMessage();
         }
         return false;
     }
 
     public function isConnected(string $user_name) : bool {
-        $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
+        $sql = "SELECT * FROM " . $this->table . " WHERE (user_name=:user_name AND active=:active)";
         $data = $this->query($sql, [
-            [":user_name", $user_name, PDO::PARAM_STR]
+            [":user_name", $user_name, PDO::PARAM_STR],
+            [":active", true, PDO::PARAM_BOOL]
         ])->execute()->fetchAll();
         if(count($data)) {
             return $data[0]["connected"];

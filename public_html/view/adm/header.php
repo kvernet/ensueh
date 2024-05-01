@@ -9,7 +9,7 @@ session_start();
 $adm_user_name = $_SESSION["adm_user_name"];
 
 $header = new Header;
-$header->show();
+$header->setTitle($params["title"] ?? APP_NAME)->show();
 
 if(AdmController::IsConnected()) {
     $navbar = new Navbar;
