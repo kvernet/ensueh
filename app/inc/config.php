@@ -9,6 +9,7 @@ define("BOOTSTRAP_CSS", '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.
 define("BOOSTRAP_JS", '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>');
 
 define("APP_NAME", "ENS UEH");
+define("ACTIVE_DURATION", 60);  // in seconds
 
 define("DB_HOST", "127.0.0.1");
 define("DB_NAME", "test");
@@ -21,3 +22,12 @@ define("PAGE_NOT_EXISTS_MSG", "La page que vous demandez n'existe pas.");
 define("EMAIL_EXIST_MESSAGE", "Cet email a déjà été utilisé.");
 define("PHONE_EXIST_MESSAGE", "Ce numéro de téléphone a déjà été utilisé.");
 define("USERNAME_EXIST_MESSAGE", "Cet identifiant a déjà été utilisé.");
+
+
+/* ADM messages */
+define("ADM_STATUS_CONNECTED_MSG", "Vous êtes déjà connecté(e) sur un autre appareil/navigateur. Veuillez d'abord vous déconnecter.");
+define("ADM_STATUS_OFFLINE_MSG", "Vous êtes inatif(ve) trop lontemps. Veuillez d'abord vous reconnecter.");
+define("ADM_STATUS_INACTIVE_MSG", "Vous n'êtes pas actif(ve). Veuillez contacter les responsables.");
+define("ADM_STATUS_SUSPENDED_MSG", "Vous avez été suspendu(e). Veuillez contacter les responsables.");
+define("ADM_STATUS_UNKNOWN_MSG", "Vous avez un statut inconnu.");
+define("ADM_NOT_EXISTS_MSG", "Vos informations (identifiant/mot de passe) n'existent pas dans le système.");

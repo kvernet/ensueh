@@ -1,6 +1,7 @@
 <?php
 
 namespace app\core\entity;
+//use app\core\entity\Status;
 use DateTime;
 
 class Adm {
@@ -9,7 +10,8 @@ class Adm {
         private $id=null, private $first_name=null, private $last_name=null,
         private $email=null, private $phone=null, private $gender_id=null,
         private $section_id=null, private $user_name=null, private $pwd=null,
-        private $date_ins=null, private $connected=null, private $active=null) {
+        private $date_ins=null, private $uniqid=null, private $status=null,
+        private $last_activity=null) {
     }
 
     public function isNull() : bool { return $this->id == null; }
@@ -24,6 +26,8 @@ class Adm {
     public function getUserName() : string { return $this->user_name; }
     public function getPwd() : string { return $this->pwd; }
     public function getDateIns() : DateTime { return new DateTime($this->date_ins); }
-    public function getConnected() : bool { return $this->connected; }
-    public function getActive() : bool { return $this->active; }
+    public function getUniqId() : string { return $this->uniqid; }
+    public function getStatus() : Status { return $this->status; }
+    public function setStatus(Status $status) : void { $this->status = $status; }
+    public function getLastActivity() : DateTime { return new DateTime($this->last_activity); }
 }

@@ -3,6 +3,7 @@
 namespace app\core\model;
 
 use app\core\entity\Adm;
+use app\core\entity\Status;
 use PDO;
 use PDOException;
 
@@ -15,10 +16,10 @@ class AdmModel extends Model {
         return $this;
     }
 
-    public function get(string $user_name, string $pwd) : Adm {
+    public function getAdm(string $user_name, string $pwd) : Adm {
         $adm = new Adm;
 
-        $sql = "SELECT * FROM " . $this->table . " WHERE (user_name=:user_name AND pwd=:pwd)";
+        $sql = "SELECT *, TIMESTAMPDIFF(SECOND, last_activity, now()) as tdiff FROM " . $this->table . " WHERE (user_name=:user_name AND pwd=PASSWORD2(:pwd))";
         $data = $this->query($sql, [
             [":user_name", $user_name, PDO::PARAM_STR],
             [":pwd", $pwd, PDO::PARAM_STR]
@@ -28,36 +29,88 @@ class AdmModel extends Model {
                 $data[0]["last_name"], $data[0]["email"], $data[0]["phone"],
                 $data[0]["gender_id"], $data[0]["section_id"],
                 $data[0]["user_name"], $data[0]["pwd"],
-                $data[0]["date_ins"], $data[0]["connected"], $data[0]["active"]
+                $data[0]["date_ins"], $data[0]["uniqid"],
+                Status::tryFrom($data[0]["status"]) ?? Status::UNKNOWN,
+                $data[0]["last_activity"]
             );
+            
+            if($adm->getStatus() == Status::ONLINE && isOffline($data[0]['tdiff'])) {
+                $adm->setStatus(Status::OFFLINE);
+            }
+            
+            pretiffy($data);
         }
 
         return $adm;
     }
 
-    public function updateConnection(string $user_name, bool $connected=false) : bool {
+    public function getStatus(string $user_name) : array {
+        $sql = "SELECT uniqid, status, TIMESTAMPDIFF(SECOND, last_activity, now()) as tdiff FROM " . $this->table . " WHERE user_name=:user_name";
+        $data = $this->query($sql, [
+            [":user_name", $user_name, PDO::PARAM_STR]
+        ])->execute()->fetchAll();
+        if(count($data)) {
+            return [
+                'uniqid' => $data[0]['uniqid'],
+                'status' => $data[0]['status'],
+                'tdiff' => $data[0]['tdiff']
+            ];
+        }
+
+        return array();
+    }
+
+    public function updateLastActivity(string $user_name) : bool {
         try {
-            $sql = "UPDATE " . $this->table . " SET connected=:connected WHERE user_name=:user_name";
+            $sql = "UPDATE " . $this->table . " SET last_activity=now() WHERE user_name=:user_name";
             $c = $this->query($sql, [
-                [":connected", $connected, PDO::PARAM_BOOL],
                 [":user_name", $user_name, PDO::PARAM_STR]
             ])->execute();
             return true;
         }
         catch(PDOException $e) {
-            echo "Login/Logout error message: " . $e->getMessage();
+            echo "Update last activity error message: " . $e->getMessage();
         }
         return false;
     }
 
-    public function isConnected(string $user_name) : bool {
-        $sql = "SELECT * FROM " . $this->table . " WHERE (user_name=:user_name AND active=:active)";
+    public function updateUniqId(string $user_name, string $uniqid) : bool {
+        try {
+            $sql = "UPDATE " . $this->table . " SET uniqid=:uniqid WHERE user_name=:user_name";
+            $c = $this->query($sql, [
+                [":uniqid", $uniqid, PDO::PARAM_STR],
+                [":user_name", $user_name, PDO::PARAM_STR]
+            ])->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            echo "Update uniqid error message: " . $e->getMessage();
+        }
+        return false;
+    }
+
+    public function updateStatus(string $user_name, Status $status=Status::OFFLINE) : bool {
+        try {
+            $sql = "UPDATE " . $this->table . " SET status=:status WHERE user_name=:user_name";
+            $c = $this->query($sql, [
+                [":status", $status->value, PDO::PARAM_STR],
+                [":user_name", $user_name, PDO::PARAM_STR]
+            ])->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            echo "Update status error message: " . $e->getMessage();
+        }
+        return false;
+    }
+
+    public function isOnline(string $user_name) : bool {
+        $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
         $data = $this->query($sql, [
-            [":user_name", $user_name, PDO::PARAM_STR],
-            [":active", true, PDO::PARAM_BOOL]
+            [":user_name", $user_name, PDO::PARAM_STR]
         ])->execute()->fetchAll();
         if(count($data)) {
-            return $data[0]["connected"];
+            return Status::get($data[0]["status"]) == Status::ONLINE;
         }
         return false;
     }
