@@ -33,18 +33,49 @@ class AdmModel extends Model {
                 Status::tryFrom($data[0]["status"]) ?? Status::UNKNOWN,
                 $data[0]["last_activity"]
             );
-            
-            if($adm->getStatus() == Status::ONLINE && isOffline($data[0]['tdiff'])) {
-                $adm->setStatus(Status::OFFLINE);
-            }
-            
-            pretiffy($data);
+
+            $status = self::getStatus([
+                'uniqid' => $data[0]['uniqid'],
+                'status' => $data[0]['status'],
+                'tdiff' => $data[0]['tdiff']
+            ]);
+            $adm->setStatus($status);
         }
 
         return $adm;
     }
 
-    public function getStatus(string $user_name) : array {
+    static public function getStatus(array $ar) : Status {
+        if(count($ar) <= 0) return Status::UNKNOWN;
+
+        $status = Status::get($ar['status']);
+        if($status == Status::REQUESTED) return $status;
+
+        if($status == Status::CONNECTED) {
+            // same device/browser
+            if($ar['uniqid'] == $_COOKIE['adm_uniqid']) {
+                if($ar['tdiff'] <= ONLINE_DURATION) {
+                    return Status::ONLINE;
+                }
+                else {
+                    if($ar['tdiff'] <= ACTIVE_DURATION) {
+                        return Status::ACTIVE;
+                    }
+                    else {
+                        return Status::INACTIVE;
+                    }
+                    return Status::OFFLINE;
+                }
+            }
+            elseif($ar['tdiff'] > ACTIVE_DURATION) {
+                return Status::DISCONNECTED;
+            }
+        }
+
+        return $status;
+    }
+
+    public function getStatusDetails(string $user_name) : array {
         $sql = "SELECT uniqid, status, TIMESTAMPDIFF(SECOND, last_activity, now()) as tdiff FROM " . $this->table . " WHERE user_name=:user_name";
         $data = $this->query($sql, [
             [":user_name", $user_name, PDO::PARAM_STR]

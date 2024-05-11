@@ -36,48 +36,50 @@ class AdmController extends Controller {
 
     static public function getStatus() : Status {
         $user_name = AdmController::getUserName();
-
         if($user_name == null) return Status::UNKNOWN;
-        
-        $ar = (new AdmModel)->getStatus($user_name);
+
+        $ar = (new AdmModel)->getStatusDetails($user_name);
         if(count($ar) <= 0) return Status::UNKNOWN;
 
-        // check if status is Status::ONLINE
         $status = Status::get($ar['status']);
-        if($status != Status::ONLINE) return $status;
+        if($status == Status::REQUESTED) return $status;
 
-        // check if inactivity duration is higher than given parameter $duration
-        if($status == Status::ONLINE && isOffline($ar['tdiff'])) return Status::OFFLINE;
-        
-        // check if last browser is used
-        $uniqid = $_COOKIE['adm_uniqid'];
-        if(!isset($uniqid)) return false;
-        if($uniqid != $ar['uniqid']) return Status::CONNECTED;
-        
-        return Status::ONLINE;
+        if($status == Status::CONNECTED) {
+            // same device/browser
+            if($ar['uniqid'] == $_COOKIE['adm_uniqid']) {
+                if($ar['tdiff'] <= ONLINE_DURATION) {
+                    return Status::ONLINE;
+                }
+                else {
+                    if($ar['tdiff'] <= ACTIVE_DURATION) {
+                        return Status::ACTIVE;
+                    }
+                    else {
+                        return Status::INACTIVE;
+                    }
+                    return Status::OFFLINE;
+                }
+            }
+            elseif($ar['tdiff'] > ACTIVE_DURATION) {
+                return Status::DISCONNECTED;
+            }
+        }
+
+        return $status;
     }
 
     public function goCheck($page, $title=APP_NAME . " - ADM") {
         $status = AdmController::getStatus();
-        if($status == Status::ONLINE) {
+        if($status == Status::ONLINE || $status == Status::ACTIVE) {
             $this->view($page, [
                 "title" => $title
             ]);
         }
-        elseif($status == Status::CONNECTED) {
-            $this->view("error/info", [
-                "title" => APP_NAME . " - ADM",
-                "msg" => ADM_STATUS_CONNECTED_MSG
-            ]);
-        }
-        elseif($status == Status::OFFLINE) {
-            $this->view("error/info", [
-                "title" => APP_NAME . " - ADM",
-                "msg" => ADM_STATUS_OFFLINE_MSG
-            ]);
-        }
         else {
-            $this->_403();
+            $this->view("error/info", [
+                "title" => APP_NAME . " - ADM",
+                "msg" => Status::getCaseErrorMsg($status)
+            ]);
         }
     }
 

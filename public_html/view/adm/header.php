@@ -8,12 +8,13 @@ use app\core\model\AdmModel;
 
 session_start();
 
-$adm_user_name = AdmController::getUserName();
+$user_name = AdmController::getUserName();
 
 $header = new Header;
 $header->setTitle($params["title"] ?? APP_NAME)->show();
 
-if(AdmController::getStatus() == Status::ONLINE) {
+$status = AdmController::getStatus();
+if($status == Status::ONLINE || $status == Status::ACTIVE) {
     $navbar = new Navbar;
     $navbar->addLi("Accueil", APP_DOMAIN . "adm/home", ['active'], ["aria-current" => "page"])
         ->addLi("Etudiants", APP_DOMAIN . "adm/student")
@@ -22,8 +23,8 @@ if(AdmController::getStatus() == Status::ONLINE) {
             ["text" => "Changer mot de passe", "href" => APP_DOMAIN . "adm/cpwd"],
             ["text" => "Se déconnecter", "href" => APP_DOMAIN . "adm/logout"]
         ], 0)
-        ->addSearch(APP_DOMAIN . "adm/search");
-    $navbar->show();
+        ->addSearch(APP_DOMAIN . "adm/search")
+        ->show();
     // update last activity date
-    (new AdmModel)->updateLastActivity($adm_user_name);
+    (new AdmModel)->updateLastActivity($user_name);
 }

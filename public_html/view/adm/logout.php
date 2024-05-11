@@ -7,10 +7,11 @@ use app\core\model\AdmModel;
 session_start();
 $user_name = $_SESSION["adm_user_name"];
 
-if(AdmController::getStatus() == Status::ONLINE) {
+$status = AdmController::getStatus();
+if($status == Status::ONLINE || $status == Status::ACTIVE) {
     // update the database
     $admModel = new AdmModel;
-    $admModel->updateStatus($user_name, Status::OFFLINE);
+    $admModel->updateStatus($user_name, Status::DISCONNECTED);
 
     // remove all session variables
     session_unset();

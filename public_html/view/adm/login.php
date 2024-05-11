@@ -19,7 +19,7 @@ if($_POST) {
     if(!$adm->isNull()) {
         $status = $adm->getStatus();
         // check if ADM is active
-        if($status == Status::ACTIVE || $status == Status::OFFLINE) {
+        if($status == Status::VALIDATED || $status == Status::INACTIVE || $status == Status::DISCONNECTED) {
             // save session and cookie
             $_SESSION["adm_user_name"] = $user_name;
             setcookie("adm_user_name", $user_name, time() + 86400 * 1);  // one full day
@@ -27,7 +27,7 @@ if($_POST) {
             setcookie("adm_uniqid", $uid, time() + 86400 * 1);  // one full day
             // update database
             $admModel->updateUniqId($user_name, $uid);
-            $admModel->updateStatus($user_name, Status::ONLINE);
+            $admModel->updateStatus($user_name, Status::CONNECTED);
             $admModel->updateLastActivity($user_name);
             redirectMe("home");
         }
