@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 use app\core\controller\AdmController;
 use app\core\entity\Status;
 use app\core\model\AdmModel;

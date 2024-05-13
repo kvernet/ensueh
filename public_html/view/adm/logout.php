@@ -4,7 +4,6 @@ use app\core\controller\AdmController;
 use app\core\entity\Status;
 use app\core\model\AdmModel;
 
-session_start();
 $user_name = $_SESSION["adm_user_name"];
 
 $status = AdmController::getStatus();

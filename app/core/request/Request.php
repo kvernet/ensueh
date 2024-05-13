@@ -37,7 +37,9 @@ class Request {
 
         $controller = $explode_path[1] == "" ? "home" : $explode_path[1];
         $controller = ucfirst($controller) . "Controller";
-        $method = ($explode_path[2] == null || $explode_path[2] == "") ? "index" : $explode_path[2];
+        if(count($explode_path) < 3) $method = "index";
+        elseif($explode_path[2] == "") $method = "index";
+        else $method = $explode_path[2];
 
         if(count($explode_path) > 3) {
             if(strlen($explode_path[3]) != 0) {

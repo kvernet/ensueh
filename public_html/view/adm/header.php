@@ -6,8 +6,6 @@ use app\core\entity\Navbar;
 use app\core\entity\Status;
 use app\core\model\AdmModel;
 
-session_start();
-
 $user_name = AdmController::getUserName();
 
 $header = new Header;

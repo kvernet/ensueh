@@ -1,18 +1,18 @@
 <?php
 
-use app\core\controller\AdmController;
 use app\core\model\AdmModel;
 
 include_once("header.php");
 
 echo '<h3 style="text-align: center;">Gestion des professeurs (ADM) en construction...</h3>';
 
-$adm_user_name = AdmController::getUserName();
 $admModel = new AdmModel;
-$ar = $admModel->getStatusDetails($adm_user_name);
-$status = AdmModel::getStatus($ar);
+$users = $admModel->getUsers(2);
 
-pretiffy($ar);
-pretiffy($status);
+echo "<table>";
+foreach($users as $user) {
+    echo $user->asTableRow();
+}
+echo "</table>";
 
 include_once("footer.php");

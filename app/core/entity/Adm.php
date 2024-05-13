@@ -1,7 +1,6 @@
 <?php
 
 namespace app\core\entity;
-//use app\core\entity\Status;
 use DateTime;
 
 class Adm {

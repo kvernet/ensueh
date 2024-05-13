@@ -2,8 +2,6 @@
 
 namespace app\core\controller;
 
-session_start();
-
 use app\core\entity\Status;
 use app\core\model\AdmModel;
 use DateTime;
@@ -41,7 +39,7 @@ class AdmController extends Controller {
         $ar = (new AdmModel)->getStatusDetails($user_name);
         if(count($ar) <= 0) return Status::UNKNOWN;
 
-        $status = Status::get($ar['status']);
+        $status = Status::get($ar['status_id']);
         if($status == Status::REQUESTED) return $status;
 
         if($status == Status::CONNECTED) {
@@ -133,14 +131,9 @@ class AdmController extends Controller {
     }
 
     static public function getUserName() : string|null {
-        $session_user_name = $_SESSION["adm_user_name"];
-        $cookie_user_name  = $_COOKIE["adm_user_name"];
-
-        if(isset($session_user_name) || isset($cookie_user_name)) {
-            return isset($session_user_name) ? $session_user_name : $cookie_user_name;
-        }
-        else {
-            return null;
-        }
+        if(isset($_SESSION["adm_user_name"])) return $_SESSION["adm_user_name"];
+        elseif(isset($_COOKIE["adm_user_name"])) return $_COOKIE["adm_user_name"];
+        
+        return null;
     }
 }

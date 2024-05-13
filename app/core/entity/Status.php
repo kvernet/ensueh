@@ -2,20 +2,29 @@
 
 namespace app\core\entity;
 
-enum Status: string {
-    case REQUESTED = 'requested';
-    case VALIDATED = 'validated';
-    case CONNECTED = 'connected';
-    case DISCONNECTED = 'disconnected';
-    case ACTIVE = 'active';
-    case INACTIVE = 'inactive';
-    case ONLINE = 'online';
-    case OFFLINE = 'offline';
-    case SUSPENDED = 'suspended';
-    case UNKNOWN = 'unknown';
+use app\core\model\SingleModel;
+
+enum Status: int {
+    case REQUESTED    = 1;
+    case VALIDATED    = 2;
+    case CONNECTED    = 3;
+    case DISCONNECTED = 4;
+    case ACTIVE       = 5;
+    case INACTIVE     = 6;
+    case ONLINE       = 7;
+    case OFFLINE      = 8;
+    case SUSPENDED    = 9;
+    case UNKNOWN      = 0;
 
     static public function get($value) : Status {
         return Status::tryFrom($value) ?? Status::UNKNOWN;
+    }
+
+    public function toText() : string {
+        $single = (new SingleModel)->setTable("statuses")->get($this->value);
+        if($single == null) return "Inconnu";
+        
+        return $single->getName();
     }
 
     static public function getCaseErrorMsg(Status $status) : string {
