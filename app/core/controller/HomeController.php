@@ -14,12 +14,6 @@ class HomeController extends Controller {
         die();
     }
 
-    public function coaching() {
-        $this->view("home/coaching", [
-            "title" => APP_NAME
-        ]);
-    }
-
     public function departments() {
         $this->view("home/departments", [
             "title" => APP_NAME
