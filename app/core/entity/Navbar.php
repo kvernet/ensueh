@@ -63,8 +63,8 @@ class Navbar {
     }
 
     public function show(string $text=APP_NAME) {
-        echo '<nav class="navbar navbar-expand-lg bg-body-tertiary">';
-        echo '<div class="container-fluid">';
+        echo '<nav class="navbar navbar-expand-lg bg-body-tertiary ">';
+        echo '<div class="container-fluid py-2 my-0">';
         echo '<a class="navbar-brand" href="">'. $text .'</a>';
         echo '<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
         echo '<span class="navbar-toggler-icon"></span>';
