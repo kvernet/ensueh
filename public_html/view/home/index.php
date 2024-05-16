@@ -110,9 +110,9 @@ include_once("header.php");
             </div>
 
 
-        <div class="col-lg-2 col-md-3 border-left border-radius-3 px-2 py-2 d-none d-lg-block ">
+        <div class="col-lg-2 col-md-3 border-left border-radius-3 px-2 py-2 d-none d-lg-block bg-dark">
 
-            <p class="px-2 mt-5 shadow-lg"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            <p class="px-2 mt-5 shadow-lg text-light"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                 ex
                 ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -120,6 +120,8 @@ include_once("header.php");
                 nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
                 mollit
                 anim id est laborum.</p>
+
+                <hr class="my-4 text-light">
 
         </div>
 
