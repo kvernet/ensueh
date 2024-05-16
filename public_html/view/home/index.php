@@ -35,9 +35,9 @@ include_once("header.php");
     <div class="row">
 
 
-            <div class="col-lg-10 col-md-9 dashboard-content px-3 pt-4 border-5  ">
+            <div class="col-lg-10 col-md-9 dashboard-content px-3 pt-4 border-5  coul-gris-pale5 ">
 
-                <div class="jumbotron">
+                <div class="jumbotron coul-gris-pale5">
                     <h2 class="display-6 text-center fw-bolder ">Présentation de l'Ecole Normale Supérieure</h2>
                     <p class="lead ">L'Ecole Normale Supérieure (ENS) est une entité de l'Université d'Etat d'Haïti qui a
                         pour vocation de former des universitaires de haut niveau, des enseignants, des chercheurs et
@@ -92,7 +92,7 @@ include_once("header.php");
                     <hr class="my-4">
                 </div>
 
-                <div class="jumbotron">
+                <div class="jumbotron coul-gris-pale5">
                     <h2 class="display-6 text-center fw-bolder ">Vision de ENS</h2>
                     <p class="lead ">
                         L'ENS a pour vision de:
@@ -112,7 +112,7 @@ include_once("header.php");
 
         <div class="col-lg-2 col-md-3 border-left border-radius-3 px-2 py-2 d-none d-lg-block ">
 
-            <p class="px-2 mt-5 shadow-lg  "> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            <p class="px-2 mt-5 shadow-lg"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                 ex
                 ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
