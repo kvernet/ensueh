@@ -2,59 +2,6 @@
   text-align: justify;
 }
 
-.head {
-  background-color: rgb(146, 203, 227, 0.15);
-}
-
-.coul-bleu-pale15 {
-  background-color: rgb(146, 203, 227, 0.15);
-}
-
-.coul-bleu-pale25 {
-  background-color: rgb(146, 203, 227, 0.25);
-}
-
-.coul-bleu-pale45 {
-  background-color: rgb(146, 203, 227, 0.45);
-}
-
-.bord-t {
-  border-top: 10px solid rgb(146, 203, 227, 0.35);
-}
-
-.bord-b {
-  border-bottom: 10px solid rgb(146, 203, 227, 0.35);
-}
-
-.coul-vert-pale45 {
-  background-color: rgba(155, 202, 182, 0.45);
-}
-
-.coul-vert-pale15 {
-  background-color: rgba(155, 202, 182, 0.15);
-}
-
-.coul-gris-pale15 {
-  background-color: rgba(32, 45, 51, 0.15);
-}
-
 .coul-gris-pale5 {
   background-color: rgba(32, 45, 51, 0.05);
-}
-
-/*pour redimensionner*/
-.cadre-dim {
-  width: 600px;
-  height: 500px;
-  border: 2px solid;
-}
-
-.cadre-mini {
-  width: 200px;
-  height: 200px;
-}
-
-/*pour des margines jolies*/
-.cadre {
-  border: 2px solid;
 }
