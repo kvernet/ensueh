@@ -1,3 +1,27 @@
 .text-justify {
-    text-align: justify;
+  text-align: justify;
+}
+
+.coul-bleu-pale15 {
+  background-color: rgb(146, 203, 227, 0.15);
+}
+
+.coul-bleu-pale25 {
+  background-color: rgb(146, 203, 227, 0.25);
+}
+
+.coul-bleu-pale45 {
+  background-color: rgb(146, 203, 227, 0.45);
+}
+
+/*pour redimensionner*/
+.cadre-dim {
+  width: 600px;
+  height: 500px;
+  border: 2px solid;
+}
+
+/*pour des margines jolies*/
+.cadre {
+  border: 2px solid;
 }
