@@ -2,15 +2,15 @@
 include_once("header.php");
 ?>
 
-<div class="container-fluid coul-bleu-pale45">
+<div class="container-fluid ">
 
-    <div class="row coul-gris-pale15 bord-t bord-b">
+    <div class="row bord-t bord-b">
 
         <div class="col-lg-2 col-md-1 ">
             <div class="row">
                 <p class="lead display-6 fw-bolder text-center mt-5 pt-5">Bien venue !</p>
             </div>
-            <div class="d-none d-lg-block shadow-lg">
+            <div class="d-none d-lg-block ">
                 <img class="img-fluid" src="../../img/ima10.jpeg" alt="oups">
             </div>        
 
@@ -19,7 +19,7 @@ include_once("header.php");
         <div class="col-lg-8 col-md-10">
 
 
-            <div class="container card-body">
+            <div class="container ">
                 <div class="w-100 mx-auto">
                     <img class="img-fluid" src="../../img/ima2.jpg" alt="oups">
                 </div>
@@ -35,11 +35,11 @@ include_once("header.php");
     <div class="row">
 
 
-            <div class="col-lg-10 col-md-9 dashboard-content px-3 pt-4 coul-vert-pale15 border-5  ">
+            <div class="col-lg-10 col-md-9 dashboard-content px-3 pt-4 border-5  ">
 
                 <div class="jumbotron">
-                    <h2 class="display-6 text-center fw-bolder shadow">Présentation de l'Ecole Normale Supérieure</h2>
-                    <p class="lead fw-bolder ">L'Ecole Normale Supérieure (ENS) est une entité de l'Université d'Etat d'Haïti qui a
+                    <h2 class="display-6 text-center fw-bolder ">Présentation de l'Ecole Normale Supérieure</h2>
+                    <p class="lead ">L'Ecole Normale Supérieure (ENS) est une entité de l'Université d'Etat d'Haïti qui a
                         pour vocation de former des universitaires de haut niveau, des enseignants, des chercheurs et
                         des professeurs destinés à l’enseignement secondaire.
                         Elle offre des formations de premier et de deuxième cycles dans différents domaines. Elle
@@ -55,12 +55,12 @@ include_once("header.php");
                             <li class="list-inline-item shadow-sm fw-bolder "> Physique </li>
                             <li class="list-inline-item shadow-sm fw-bolder ">Sciences naturelles </li>
                         </ul>
-                        <p class="lead fw-bolder "> 
+                        <p class="lead "> 
                         Les formations de deuxième cycle sont offertes en partenariat avec des Universités étrangères
                         comme Paris8, l'Université des Antilles, l'Université de Poitiers, l'Université de Lyon,
                         l'Université d'Orléans, l'Université de Liège ou l'Université de Montréal, etc.
                     </p>
-                    <p class="lead fw-bolder ">
+                    <p class="lead ">
                         Les étudiants sont recrutés par un concours, qui a lieu chaque année, en principe, à la rentrée
                         de septembre. La durée des formations du premier cycle est de quatre (4) ans.
                         La première année est l'année préparatoire: elle sert de transition entre l'enseignement
@@ -80,8 +80,8 @@ include_once("header.php");
                     <hr class="my-4">
                 </div>
                 <div class="jumbotron">
-                    <h2 class="display-6 text-center shadow fw-bolder ">Historicité de ENS</h2>
-                    <p class="lead fw-bolder ">
+                    <h2 class="display-6 text-center fw-bolder ">Historicité de ENS</h2>
+                    <p class="lead ">
                         L'Ecole Normale Supérieure, inaugurée le 31 octobre 1947, a été créée par la Loi du 28 Juillet
                         1947 en vue de la formation et du recrutement des professeurs de l'enseignement secondaire et de
                         l'enseignement supérieur des Lettres et des Sciences.
@@ -93,10 +93,10 @@ include_once("header.php");
                 </div>
 
                 <div class="jumbotron">
-                    <h2 class="display-6 text-center shadow fw-bolder ">Vision de ENS</h2>
-                    <p class="lead fw-bolder ">
+                    <h2 class="display-6 text-center fw-bolder ">Vision de ENS</h2>
+                    <p class="lead ">
                         L'ENS a pour vision de:
-                    <ul class="lead fw-bolder ">
+                    <ul class="lead ">
                         <li> former des professeurs pour l'enseignement secondaire afin de résoudre le problème de
                             carence de professeurs qualifiés rencontré dans les différentes écoles au niveau national ;
                         <li> former des personnels qualifiés pour aborder les problèmes socio-politiques et économiques
@@ -110,9 +110,9 @@ include_once("header.php");
             </div>
 
 
-        <div class="col-lg-2 col-md-3 border-left border-radius-3 px-2 py-2 coul-bleu-pale25 d-none d-lg-block shadow">
+        <div class="col-lg-2 col-md-3 border-left border-radius-3 px-2 py-2 d-none d-lg-block ">
 
-            <p class="px-2 mt-5 shadow-lg fw-bolder "> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            <p class="px-2 mt-5 shadow-lg  "> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                 ex
                 ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
