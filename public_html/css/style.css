@@ -49,6 +49,11 @@
   border: 2px solid;
 }
 
+.cadre-mini {
+  width: 200px;
+  height: 200px;
+}
+
 /*pour des margines jolies*/
 .cadre {
   border: 2px solid;

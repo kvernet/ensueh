@@ -8,7 +8,7 @@ include_once("header.php");
 
         <div class="col-lg-2 col-md-1 ">
             <div class="row">
-                <p class="lead display-6 fw-bolder text-center mt-5 pt-5">Bien venue !</p>
+                <p class="lead display-6 fw-bolder text-center mt-5 pt-5">Bienvenue !</p>
             </div>
             <div class="d-none d-lg-block ">
                 <img class="img-fluid" src="../../img/ima10.jpeg" alt="oups">
@@ -46,7 +46,7 @@ include_once("header.php");
                         comprend actuellement les sept (7) <a href='<?=APP_DOMAIN . "home/departments"?>'>départements</a> qui suivent:
                         </p>
                         
-                        <ul class="list-unstyled lead text-center">
+                        <!-- <ul class="list-unstyled lead text-center">
                             <li class="list-inline-item shadow-sm fw-bolder "> Lettres modernes </li>
                             <li class="list-inline-item shadow-sm fw-bolder "> Philosophie </li>
                             <li class="list-inline-item shadow-sm fw-bolder "> Sciences sociales </li>
@@ -54,7 +54,37 @@ include_once("header.php");
                             <li class="list-inline-item shadow-sm fw-bolder "> Mathématiques </li>
                             <li class="list-inline-item shadow-sm fw-bolder "> Physique </li>
                             <li class="list-inline-item shadow-sm fw-bolder ">Sciences naturelles </li>
-                        </ul>
+                        </ul> -->
+
+                        <div class="container">
+
+                        <div class="row">
+                            <div class="col-lg-5 col-md-4">
+                                <img class="img-fluid " src="../../img/ima3.webp" alt="oups">
+                            </div>
+                            <div class="col-lg-3 col-md-3">
+                            <h3 class="text-center fw-bolder py-auto">Departements de l'ENS</h3>
+
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <ul class="lead">
+                                    <li> Lettres modernes </li>
+                                    <li> Philosophie </li>
+                                    <li> Sciences sociales </li>
+                                    <li>langues vivantes </li>
+                                    <li> Mathématiques </li>
+                                    <li> Physique </li>
+                                    <li>Sciences naturelles </li>
+                            </ul> 
+
+                            </div>
+                         
+
+                        </div>
+
+
+                        </div>
+
                         <p class="lead "> 
                         Les formations de deuxième cycle sont offertes en partenariat avec des Universités étrangères
                         comme Paris8, l'Université des Antilles, l'Université de Poitiers, l'Université de Lyon,
