@@ -6,6 +6,8 @@ require_once("config.php");
 require_once("bootstrap.php");
 
 spl_autoload_register(function($class) {
-    $file = str_replace("\\", "/", $class) . ".php";
-    require_once(APP_DIR . $file);
+    $file = APP_DIR . str_replace("\\", "/", $class) . ".php";
+    if(file_exists($file)) {
+        require_once($file);
+    }
 });

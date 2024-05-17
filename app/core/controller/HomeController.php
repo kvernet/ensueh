@@ -2,6 +2,8 @@
 
 namespace app\core\controller;
 
+use app\core\entity\Message;
+
 class HomeController extends Controller {
 
     public function _404() : void {
@@ -9,7 +11,7 @@ class HomeController extends Controller {
             "header" => PUBLIC_DIR . "view/home/header.php",
             "footer" => PUBLIC_DIR . "view/home/footer.php",
             "title" => APP_NAME . " - Erreur 404",
-            "msg" => PAGE_NOT_EXISTS_MSG
+            "msg" => Message::getMessage(Message::PAGE_NOT_EXISTS_MSG)
         ]);
         die();
     }

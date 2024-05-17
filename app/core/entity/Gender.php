@@ -17,6 +17,6 @@ enum Gender : int {
         $single = (new SingleModel)->setTable("genders")->get($this->value);
         if($single == null) return "Inconnu";
         
-        return $single->getName();
+        return $single->getContent();
     }
 }

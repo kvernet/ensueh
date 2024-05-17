@@ -16,8 +16,8 @@ enum Section : int {
 
     public function toText() : string {
         $single = (new SingleModel)->setTable("sections")->get($this->value);
-        if($single == null) return "Inconnu";
+        if($single == null) return "Message inconnu";
         
-        return $single->getName();
+        return $single->getContent();
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
 use app\core\controller\AdmController;
+use app\core\entity\Message;
 use app\core\entity\Status;
-use app\core\model\AdmModel;
+use app\core\model\UserModel;
 
 $admController = new AdmController;
 
@@ -10,11 +11,11 @@ if($_POST) {
     $user_name = $_POST["user_name"];
     $pwd = $_POST["pwd"];
 
-    $admModel = new AdmModel;
+    $userModel = new UserModel;
 
-    $adm = $admModel->getAdm($user_name, $pwd);
+    $adm = $userModel->get($user_name, $pwd);
 
-    if(!$adm->isNull()) {
+    if($adm != null) {
         $status = $adm->getStatus();
         // check if ADM is active
         if($status == Status::VALIDATED || $status == Status::INACTIVE || $status == Status::DISCONNECTED) {
@@ -24,9 +25,9 @@ if($_POST) {
             $uid = uniqid();
             setcookie("adm_uniqid", $uid, time() + 86400 * 1);  // one full day
             // update database
-            $admModel->updateUniqId($user_name, $uid);
-            $admModel->updateStatus($user_name, Status::CONNECTED);
-            $admModel->updateLastActivity($user_name);
+            $userModel->updateUniqId($user_name, $uid);
+            $userModel->updateStatusByUserName($user_name, Status::CONNECTED);
+            $userModel->updateLastActivity($user_name);
             redirectMe("home");
         }
         else {
@@ -38,7 +39,7 @@ if($_POST) {
     }
     else {
         $admController->info([
-            "msg" => ADM_NOT_EXISTS_MSG . '<br><a href="'. APP_DOMAIN .'adm">Retour</a>'
+            "msg" => Message::getMessage(Message::ADM_NOT_EXISTS_MSG) . '<br><a href="'. APP_DOMAIN .'adm">Retour</a>'
         ]
         );
     }

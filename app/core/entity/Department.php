@@ -25,6 +25,6 @@ enum Department : int {
         $single = (new SingleModel)->setTable("departments")->get($this->value);
         if($single == null) return "Inconnu";
         
-        return $single->getName();
+        return $single->getContent();
     }
 }

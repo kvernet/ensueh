@@ -2,9 +2,9 @@
 
 namespace app\core\controller;
 
+use app\core\entity\Message;
 use app\core\entity\Status;
-use app\core\model\AdmModel;
-use DateTime;
+use app\core\model\UserModel;
 
 class AdmController extends Controller {
     
@@ -13,7 +13,7 @@ class AdmController extends Controller {
             "header" => PUBLIC_DIR . "view/adm/header.php",
             "footer" => PUBLIC_DIR . "view/adm/footer.php",
             "title" => APP_NAME . " - Erreur 403",
-            "msg" => ACCESS_DENIED_MSG
+            "msg" => Message::getMessage(Message::ACCESS_DENIED_MSG)
         ]);
         die();
     }
@@ -23,12 +23,12 @@ class AdmController extends Controller {
             "header" => PUBLIC_DIR . "view/adm/header.php",
             "footer" => PUBLIC_DIR . "view/adm/footer.php",
             "title" => APP_NAME . " - Erreur 404",
-            "msg" => PAGE_NOT_EXISTS_MSG
+            "msg" => Message::getMessage(Message::PAGE_NOT_EXISTS_MSG)
         ]);
         die();
     }
 
-    public function cpwd() {
+    public function cpwd() : void {
         $this->goCheck("adm/cpwd");
     }
 
@@ -36,7 +36,7 @@ class AdmController extends Controller {
         $user_name = AdmController::getUserName();
         if($user_name == null) return Status::UNKNOWN;
 
-        $ar = (new AdmModel)->getStatusDetails($user_name);
+        $ar = (new UserModel)->getStatusDetails($user_name);
         if(count($ar) <= 0) return Status::UNKNOWN;
 
         $status = Status::get($ar['status_id']);
@@ -44,7 +44,8 @@ class AdmController extends Controller {
 
         if($status == Status::CONNECTED) {
             // same device/browser
-            if($ar['uniqid'] == $_COOKIE['adm_uniqid']) {
+            $uniqid = AdmController::getUniqid();
+            if($uniqid != null && $uniqid == $ar['uniqid']) {
                 if($ar['tdiff'] <= ONLINE_DURATION) {
                     return Status::ONLINE;
                 }
@@ -66,7 +67,7 @@ class AdmController extends Controller {
         return $status;
     }
 
-    public function goCheck($page, $title=APP_NAME . " - ADM") {
+    public function goCheck(string $page, string $title=APP_NAME . " - ADM") : void {
         $status = AdmController::getStatus();
         if($status == Status::ONLINE || $status == Status::ACTIVE) {
             $this->view($page, [
@@ -81,11 +82,11 @@ class AdmController extends Controller {
         }
     }
 
-    public function home() {
+    public function home() : void {
         $this->goCheck("adm/home");
     }
     
-    public function index() {
+    public function index() : void {
         if(AdmController::getStatus() == Status::ONLINE) {
             redirectMe("adm/home");
         }
@@ -96,7 +97,7 @@ class AdmController extends Controller {
         }
     }
 
-    public function login() {
+    public function login() : void {
         if(AdmController::getStatus() == Status::ONLINE) {
             redirectMe("adm/home");
         }
@@ -107,7 +108,7 @@ class AdmController extends Controller {
         }
     }
 
-    public function logout() {
+    public function logout() : void {
         if(AdmController::getStatus() == Status::ONLINE) {
             $this->view("adm/logout", [
                 "title" => APP_NAME . " - ADM"
@@ -118,16 +119,28 @@ class AdmController extends Controller {
         }
     }
 
-    public function professor() {
+    public function msg_received() {
+        $this->goCheck("adm/msg_received");
+    }
+
+    public function msg_sent() {
+        $this->goCheck("adm/msg_sent");
+    }
+
+    public function professor() : void {
         $this->goCheck("adm/professor");
     }
 
-    public function search() {
+    public function search() : void {
         $this->goCheck("adm/search");
     }
 
-    public function student() {
+    public function student() : void {
         $this->goCheck("adm/student");
+    }
+
+    static public function getUniqid() : string|null {
+        return $_COOKIE['adm_uniqid'] ?? null;
     }
 
     static public function getUserName() : string|null {
@@ -135,5 +148,17 @@ class AdmController extends Controller {
         elseif(isset($_COOKIE["adm_user_name"])) return $_COOKIE["adm_user_name"];
         
         return null;
+    }
+
+    public function user_suspend() : void {
+        $this->goCheck("adm/user_suspend");
+    }
+
+    public function user_update() : void {
+        $this->goCheck("adm/user_update");
+    }
+
+    public function user_validate() : void {
+        $this->goCheck("adm/user_validate");
     }
 }

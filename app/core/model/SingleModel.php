@@ -23,7 +23,7 @@ class SingleModel extends Model {
             [":deleted", false, PDO::PARAM_BOOL]
         ])->execute()->fetchAll();
         if(count($data)) {
-            $single = new Single($data[0]["id"], $data[0]["name"], $data[0]["deleted"]);
+            $single = new Single($data[0]["id"], $data[0]["content"], $data[0]["deleted"]);
         }
 
         return $single;
@@ -37,7 +37,7 @@ class SingleModel extends Model {
             [":deleted", false, PDO::PARAM_BOOL]
         ])->execute()->fetchAll();
         foreach($data as $d) {
-            $single = new Single($d["id"], $d["name"], $d["deleted"]);
+            $single = new Single($d["id"], $d["content"], $d["deleted"]);
             array_push($singles, $single);
         }
 

@@ -1,5 +1,6 @@
 <?php
 
+use app\core\controller\AdmController;
 use app\core\entity\Footer;
 use app\core\entity\Form;
 use app\core\entity\Header;

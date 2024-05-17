@@ -22,19 +22,19 @@ enum Status: int {
 
     public function toText() : string {
         $single = (new SingleModel)->setTable("statuses")->get($this->value);
-        if($single == null) return "Inconnu";
+        if($single == null) return "Message inconnu";
         
-        return $single->getName();
+        return $single->getContent();
     }
 
     static public function getCaseErrorMsg(Status $status) : string {
         return match($status) {
-            Status::REQUESTED => ADM_STATUS_REQUESTED_MSG,
-            Status::CONNECTED => ADM_STATUS_CONNECTED_MSG,
-            Status::DISCONNECTED => ACCESS_DENIED_MSG,
-            Status::INACTIVE => ADM_STATUS_INACTIVE_MSG,
-            Status::SUSPENDED => ADM_STATUS_SUSPENDED_MSG,
-            Status::UNKNOWN => ACCESS_DENIED_MSG,
+            Status::REQUESTED => Message::getMessage(Message::ADM_STATUS_REQUESTED_MSG),
+            Status::CONNECTED => Message::getMessage(Message::ADM_STATUS_CONNECTED_MSG),
+            Status::DISCONNECTED => Message::getMessage(Message::ACCESS_DENIED_MSG),
+            Status::INACTIVE => Message::getMessage(Message::ADM_STATUS_INACTIVE_MSG),
+            Status::SUSPENDED => Message::getMessage(Message::ADM_STATUS_SUSPENDED_MSG),
+            Status::UNKNOWN => Message::getMessage(Message::ACCESS_DENIED_MSG),
             Default => ""
         };
     }

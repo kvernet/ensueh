@@ -2,12 +2,14 @@
 
 namespace app\core\controller;
 
+use app\core\entity\Message;
+
 class Controller {
 
     public function _404() : void {
         $this->view("error/info", [
             "title" => APP_NAME . " - Erreur 404",
-            "msg" => PAGE_NOT_EXISTS_MSG
+            "msg" => Message::getMessage(Message::PAGE_NOT_EXISTS_MSG)
         ]);
         die();
     }
@@ -15,7 +17,7 @@ class Controller {
     public function _403() : void {
         $this->view("error/info", [
             "title" => APP_NAME . " - Erreur 403",
-            "msg" => ACCESS_DENIED_MSG
+            "msg" => Message::getMessage(Message::ACCESS_DENIED_MSG)
         ]);
         die();
     }

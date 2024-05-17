@@ -18,6 +18,6 @@ enum Grade : int {
         $single = (new SingleModel)->setTable("grades")->get($this->value);
         if($single == null) return "Inconnu";
         
-        return $single->getName();
+        return $single->getContent();
     }
 }

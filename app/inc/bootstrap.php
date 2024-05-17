@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once("config.php");
 
@@ -10,9 +10,20 @@ function redirectMe(string $page) : void {
     exit(0);
 }
 
-// check if inactivity duration is higher than given parameter $duration
-function isOffline(int $duration) : bool {
-    return ACTIVE_DURATION < $duration;
+// remove & destroy all sessions
+function deleteSessions() {
+    // remove all session variables
+    session_unset();
+    // destroy the session
+    session_destroy();
+}
+
+// delete all the cookies
+function deleteCookies() {
+    foreach($_COOKIE as $key => $value) {
+        unset($value);
+        setcookie($key, '', time() - 86400 * 365);
+    }
 }
 
 // pretiffy display

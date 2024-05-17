@@ -3,8 +3,7 @@
 use app\core\entity\Header;
 use app\core\entity\Navbar;
 
-$header = new Header;
-$header->show();
+(new Header)->show();
 
 $navbar = new Navbar;
 $navbar->addLi("Accueil", APP_DOMAIN . "home/index", ['active'], ["aria-current" => "page"])

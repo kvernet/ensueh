@@ -7,6 +7,7 @@ use app\core\model\SingleModel;
 enum WhoIam : int {
     case STUDENT   = 1;
     case PROFESSOR = 2;
+    case ADM       = 3;
     case UNKNOWN   = 0;
 
     static public function get(int $id) : WhoIam {
@@ -15,8 +16,8 @@ enum WhoIam : int {
 
     public function toText() : string {
         $single = (new SingleModel)->setTable("whoiam")->get($this->value);
-        if($single == null) return "Inconnu";
+        if($single == null) return "Message inconnu";
         
-        return $single->getName();
+        return $single->getContent();
     }
 }
