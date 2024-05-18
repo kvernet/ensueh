@@ -9,7 +9,7 @@ define("BOOTSTRAP_CSS", '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.
 define("BOOSTRAP_JS", '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>');
 
 define("APP_NAME", "ENS UEH");
-define("ACTIVE_DURATION", 300);  // in seconds
+define("ACTIVE_DURATION", 3000);  // in seconds
 define("ONLINE_DURATION", 60);  // in seconds and must be less than ACTIVE_DURATION
 
 

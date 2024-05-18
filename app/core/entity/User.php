@@ -2,6 +2,7 @@
 
 namespace app\core\entity;
 
+use app\core\model\SingleModel;
 use app\core\model\UserModel;
 use DateTime;
 
@@ -39,6 +40,8 @@ class User {
     static public function getModal(int $id, string $text="Modifier") : string {
         $user = (new UserModel)->getById($id);
         $target = "modal_update_user_" . $id;
+        $singleModel = new SingleModel;
+
         return '<a href="#" data-bs-toggle="modal" data-bs-target="#'.$target.'" data-bs-whatever="@mdo">'. $text .'</a>'
         .'<div class="modal fade" id="'.$target.'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">'
         .'<div class="modal-dialog">'
@@ -48,28 +51,82 @@ class User {
         .'<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>'
         .'</div>'
         .'<div class="modal-body">'
-        .'<form>'
+        .'<form action="user_update" method="post">'
+        .'<div class="mb-3">'
+        .'<input type="text" class="form-control" id="id" name="id" value="'. $user->getId() .'" hidden>'
+        .'</div>'
+
         .'<div class="mb-3">'
         .'<label for="first_name" class="col-form-label">Prénom:</label>'
-        .'<input type="text" class="form-control" id="first_name" value="'. $user->getFirstName() .'">'
+        .'<input type="text" class="form-control" id="first_name" name="first_name" value="'. $user->getFirstName() .'">'
+        .'</div>'
+
+        .'<div class="mb-3">'
+        .'<label for="last_name" class="col-form-label">Nom:</label>'
+        .'<input type="text" class="form-control" id="last_name" name="last_name" value="'. $user->getLastName() .'">'
         .'</div>'
         .'<div class="mb-3">'
-        .'<label for="first_name" class="col-form-label">Nom:</label>'
-        .'<input type="text" class="form-control" id="first_name" value="'. $user->getLastName() .'">'
+        .'<label for="gender" class="col-form-label">Sexe:</label>'
+        .'<select class="form-control" id="gender" name="gender">'
+        .$singleModel->setTable("genders")->getAllAsOptions($user->getGender()->value)
+        ."</select>"
         .'</div>'
         .'<div class="mb-3">'
-        .'<label for="first_name" class="col-form-label">Email:</label>'
-        .'<input type="text" class="form-control" id="first_name" value="'. $user->getEmail() .'">'
+        .'<label for="email" class="col-form-label">Email:</label>'
+        .'<input type="email" class="form-control" id="email" name="email" value="'. $user->getEmail() .'">'
         .'</div>'
         .'<div class="mb-3">'
-        .'<label for="first_name" class="col-form-label">Téléphone:</label>'
-        .'<input type="text" class="form-control" id="first_name" value="'. $user->getPhone() .'">'
+        .'<label for="phone" class="col-form-label">Téléphone:</label>'
+        .'<input type="text" class="form-control" id="phone" name="phone" value="'. $user->getPhone() .'">'
         .'</div>'
-        .'</form>'
+        .'<div class="mb-3">'
+        .'<label for="department" class="col-form-label">Département:</label>'
+        .'<select class="form-control" id="department" name="department">'
+        .$singleModel->setTable("departments")->getAllAsOptions($user->getDepartment()->value)
+        ."</select>"
         .'</div>'
+        .'<div class="mb-3">'
+        .'<label for="whoiam" class="col-form-label">Statut:</label>'
+        .'<select class="form-control" id="whoiam" name="whoiam">'
+        .$singleModel->setTable("whoiam")->getAllAsOptions($user->getWhoIam()->value)
+        ."</select>"
+        .'</div>'
+
+        .'<div class="mb-3">'
+        .'<label for="section" class="col-form-label">Section:</label>'
+        .'<select class="form-control" id="section" name="section">'
+        .$singleModel->setTable("sections")->getAllAsOptions($user->getSection()->value)
+        ."</select>"
+        .'</div>'
+
+        .'<div class="mb-3">'
+        .'<label for="grade" class="col-form-label">Niveau:</label>'
+        .'<select class="form-control" id="grade" name="grade">'
+        .$singleModel->setTable("grades")->getAllAsOptions($user->getGrade()->value)
+        ."</select>"
+        .'</div>'
+
+        .'<div class="mb-3">'
+        .'<label for="status" class="col-form-label">Statut d\'accès:</label>'
+        .'<select class="form-control" id="status" name="status">'
+        //.$singleModel->setTable("statuses")->getAllAsOptions($user->getStatus()->value)
+        .$singleModel->setTable("statuses")->getAllAsOptions($user->getStatus()->value,
+            [
+                Status::CONNECTED->value,
+                Status::ACTIVE->value,
+                Status::INACTIVE->value,
+                Status::ONLINE->value,
+                Status::OFFLINE->value
+            ]
+        )
+        ."</select>"
+        .'</div>'
+
         .'<div class="modal-footer">'
         .'<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>'
-        .'<button type="button" class="btn btn-primary">Enregistrer</button>'
+        .'<button type="submit" class="btn btn-primary">Enregistrer</button>'
+        .'</div>'
+        .'</form>'
         .'</div>'
         .'</div>'
         .'</div>'

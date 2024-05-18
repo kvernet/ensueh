@@ -110,6 +110,60 @@ class UserModel extends Model {
         return null;
     }
 
+    public function updateById(User $user) : bool {
+        try {
+            $sql = "UPDATE " . $this->table . " SET first_name=:first_name, last_name=:last_name, 
+            gender_id=:gender_id, email=:email, phone=:phone, department_id=:department_id, 
+            whoiam_id=:whoiam_id, section_id=:section_id, 
+            grade_id=:grade_id, status_id=:status_id WHERE id=:id";
+            $this->query($sql, [
+                [":first_name", $user->getFirstName(), PDO::PARAM_STR],
+                [":last_name", $user->getLastName(), PDO::PARAM_STR],
+                [":gender_id", $user->getGender()->value, PDO::PARAM_INT],
+                [":email", $user->getEmail(), PDO::PARAM_STR],
+                [":phone", $user->getPhone(), PDO::PARAM_STR],
+                [":department_id", $user->getDepartment()->value, PDO::PARAM_INT],
+                [":whoiam_id", $user->getWhoIam()->value, PDO::PARAM_INT],
+                [":section_id", $user->getSection()->value, PDO::PARAM_INT],
+                [":grade_id", $user->getGrade()->value, PDO::PARAM_INT],
+                [":status_id", $user->getStatus()->value, PDO::PARAM_INT],
+                [":id", $user->getId(), PDO::PARAM_INT]
+            ])->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            echo "Update user by id error message: " . $e->getMessage();
+        }
+        return false;
+    }
+
+    public function updateByUserName(User $user) : bool {
+        try {
+            $sql = "UPDATE " . $this->table . " SET first_name=:first_name, last_name=:last_name, 
+            gender_id=:gender_id, email=:email, phone=:phone, department_id=:department_id, 
+            whoiam_id=:whoiam_id, section_id=:section_id, 
+            grade_id=:grade_id, status_id=:status_id WHERE user_name=:user_name";
+            $this->query($sql, [
+                [":first_name", $user->getFirstName(), PDO::PARAM_STR],
+                [":last_name", $user->getLastName(), PDO::PARAM_STR],
+                [":gender_id", $user->getGender()->value, PDO::PARAM_INT],
+                [":email", $user->getEmail(), PDO::PARAM_STR],
+                [":phone", $user->getPhone(), PDO::PARAM_STR],
+                [":department_id", $user->getDepartment()->value, PDO::PARAM_INT],
+                [":whoiam_id", $user->getWhoIam()->value, PDO::PARAM_INT],
+                [":section_id", $user->getSection()->value, PDO::PARAM_INT],
+                [":grade_id", $user->getGrade()->value, PDO::PARAM_INT],
+                [":status_id", $user->getStatus()->value, PDO::PARAM_INT],
+                [":user_name", $user->getUserName(), PDO::PARAM_INT]
+            ])->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            echo "Update user by user name error message: " . $e->getMessage();
+        }
+        return false;
+    }
+
     public function updateStatusByUserName(string $user_name, Status $status=Status::OFFLINE) : bool {
         try {
             $sql = "UPDATE " . $this->table . " SET status_id=:status_id WHERE user_name=:user_name";
@@ -146,6 +200,35 @@ class UserModel extends Model {
         $sql = "SELECT * FROM users WHERE whoiam_id=:whoiam_id";
         $data = $this->query($sql, [
             [":whoiam_id", $iam->value, PDO::PARAM_INT]
+        ])->execute()->fetchAll();
+        foreach($data as $d) {
+            $user = new User(
+                $d["id"], $d["first_name"], $d["last_name"],
+                Gender::get($d["gender_id"]),
+                $d["email"], $d["phone"],
+                Department::get($d["department_id"]), 
+                WhoIam::get($d["whoiam_id"]),
+                Section::get($d["section_id"]),
+                Grade::get($d["grade_id"]),
+                $d["user_name"], $d["pwd"],
+                new DateTime($d["date_ins"]), $d["uniqid"],
+                Status::get($d["status_id"]),
+                new DateTime($d["last_activity"])
+            );
+
+            array_push($users, $user);
+        }
+
+        return $users;
+    }
+
+    public function searchUsersByUserNameLike(WhoIam $iam, string $user_name_like="") : array {
+        $users = array();
+
+        $sql = "SELECT * FROM users WHERE (whoiam_id=:whoiam_id AND user_name LIKE :user_name)";
+        $data = $this->query($sql, [
+            [":whoiam_id", $iam->value, PDO::PARAM_INT],
+            [":user_name", "%" . $user_name_like . "%", PDO::PARAM_STR]
         ])->execute()->fetchAll();
         foreach($data as $d) {
             $user = new User(

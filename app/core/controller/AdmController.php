@@ -161,4 +161,8 @@ class AdmController extends Controller {
     public function user_validate() : void {
         $this->goCheck("adm/user_validate");
     }
+
+    public function get_users_as_table() {
+        $this->goCheck("adm/get_users_as_table");
+    }
 }

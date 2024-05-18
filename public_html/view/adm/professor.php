@@ -1,79 +1,46 @@
 <?php
 
-use app\core\entity\Status;
-use app\core\entity\User;
 use app\core\entity\WhoIam;
-use app\core\model\UserModel;
+
+require_once("get_users_as_table.php");
 
 include_once("header.php");
 
 echo '<h3 style="text-align: center;">Gestion des professeurs</h3>';
 
-$users = (new UserModel)->getUsers(WhoIam::PROFESSOR);
+echo 'Filtrer par:<br>';
+echo '<input type="text" id="user_name_like" name="user_name_like" placeholder="Identifiant">';
 
-echo '<table class="table table-striped">';
+echo '<div id="user_data_tr"></div>';
+?>
 
-echo '<tr>'
-.'<th class="xxsm-hidden">Prénom</th>'
-.'<th class="xxxxxsm-hidden">Nom</th>'
-.'<th class="md-hidden">Sexe</th>'
-.'<th class="xsm-hidden">Email</th>'
-.'<th class="sm-hidden">Téléphone</th>'
-.'<th class="md-hidden">Département</th>'
-.'<th class="xxxxsm-hidden">Section</th>'
-.'<th class="xxxsm-hidden">Grade</th>'
-.'<th>Identifiant</th>'
-.'<th class="sm-hidden">Date</th>'
-.'<th>Action(s)</th>'
-.'</tr>';
+<script>
+    const user_name_like = document.getElementById("user_name_like");
+    const user_data_tr = document.getElementById("user_data_tr");
 
-$class_colors = [
-    "table-primary",
-    "table-secondary",
-    "table-success",
-    "table-danger",
-    "table-info",
-    "table-warning",
-    "table-active"
-];
+    postData();
 
-$index = 4;
+    user_name_like.addEventListener("keyup", function (e) {
+        e.preventDefault();
+        postData();
+    });
 
-foreach($users as $user) {
-    if($index >= count($class_colors)) {
-        $index = 0;
+    async function postData() {
+        const formData = new FormData();
+        formData.append("whoami_id", <?=WhoIam::PROFESSOR->value?>);
+        formData.append("user_name_like", user_name_like.value);
+        formData.append("color_index", 4);
+
+        const response = await fetch("get_users_as_table", {
+            method: "POST",
+            body: formData,
+        });
+        const data = await response.text();
+        user_data_tr.innerHTML = data;
+        console.log(data);
     }
+</script>
 
-    $id = $user->getId();
-    
-    $dummy = '<tr class="'. $class_colors[$index] .'">'
-    //$dummy = '<tr>'
-    .'<td class="xxsm-hidden">' . $user->getFirstName() . '</td>'
-    .'<td class="xxxxxsm-hidden">' . $user->getLastName() . '</td>'
-    .'<td class="md-hidden">' . $user->getGender()->toText() . '</td>'
-    .'<td class="xsm-hidden">' . $user->getEmail() . '</td>'
-    .'<td class="sm-hidden">' . $user->getPhone() . '</td>'
-    .'<td class="md-hidden">' . $user->getDepartment()->toText() . '</td>'
-    .'<td class="xxxxsm-hidden">' . $user->getSection()->toText() . '</td>'
-    .'<td class="xxxsm-hidden">' . $user->getGrade()->toText() . '</td>'
-    .'<td>' . $user->getUserName() . '</td>'
-    .'<td class="sm-hidden">' . $user->getDateIns()->format('d/m/Y') . '</td>';
-
-    if($user->getStatus() == Status::REQUESTED) {
-        $dummy .= '<td>' . '<a href="user_validate?id='. $id .'&method=professor">Valider</a>' . '</td>';
-    }
-    if($user->getStatus() != Status::SUSPENDED) {
-        $dummy .= '<td>' . '<a href="user_suspend?id='. $id .'&method=professor">Suspendre</a>' . '</td>';
-    }
-    
-    $dummy .= '<td>' . User::getModal($id) . '</td>';
-    $dummy .= '</tr>';
-
-    echo $dummy;
-
-    $index++;
-}
-
-echo '</table>';
-
+<?php
 include_once("footer.php");
+?>

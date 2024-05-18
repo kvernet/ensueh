@@ -4,6 +4,7 @@ namespace app\core\model;
 
 use app\core\entity\Single;
 use PDO;
+use PDOException;
 
 class SingleModel extends Model {
 
@@ -14,19 +15,21 @@ class SingleModel extends Model {
         return $this;
     }
 
-    public function get($id) : Single {
-        $single = new Single();
-
-        $sql = "SELECT * FROM " . $this->table . " WHERE (id=:id AND deleted=:deleted)";
-        $data = $this->query($sql, [
-            [":id", $id, PDO::PARAM_INT],
-            [":deleted", false, PDO::PARAM_BOOL]
-        ])->execute()->fetchAll();
-        if(count($data)) {
-            $single = new Single($data[0]["id"], $data[0]["content"], $data[0]["deleted"]);
+    public function get($id) : Single|null {
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE (id=:id AND deleted=:deleted)";
+            $data = $this->query($sql, [
+                [":id", $id, PDO::PARAM_INT],
+                [":deleted", false, PDO::PARAM_BOOL]
+            ])->execute()->fetchAll();
+            if(count($data)) {
+                return new Single($data[0]["id"], $data[0]["content"], $data[0]["deleted"]);
+            }
         }
-
-        return $single;
+        catch(PDOException $e) {
+            echo "Update status by user name error message: " . $e->getMessage();
+        }
+        return null;
     }
 
     public function getAll() : array {
@@ -44,12 +47,15 @@ class SingleModel extends Model {
         return $singles;
     }
 
-    public function getAllAsOptions() : string {
+    public function getAllAsOptions(int $selectId=-1, array $filteredIds=[]) : string {
         $options = "";
 
         $singles = $this->getAll();
         foreach($singles as $single) {
-            $options .= $single->getAsOption();
+            if(in_array($single->getId(), $filteredIds, true)) {
+                continue;
+            }
+            $options .= $single->getAsOption($single->getId() == $selectId);
         }
 
         return $options;
