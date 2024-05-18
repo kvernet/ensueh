@@ -48,10 +48,6 @@
 }
 
 /* Personnalisation de l'entete de la page d'acceuil. */
-.ac-height {
-  /* height: 850px; */
-  z-index: -2;
-}
 
 .entete-bg {
   background: radial-gradient(rgba(0, 0, 0, 0.6), rgba(35, 45, 124, 0.5));
