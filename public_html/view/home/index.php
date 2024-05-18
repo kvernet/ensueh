@@ -19,9 +19,27 @@ include_once("header.php");
         <div class="col-lg-8 col-md-10">
 
 
-            <div class="container ">
-                <div class="w-100 mx-auto">
-                    <img class="img-fluid" src="../../img/ima2.jpg" alt="oups">
+            <div class="container pt-5 mt-5 ">
+                <div id="coulisse" class="carousel slide " data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item ">
+                            <img src="../../img/caroussel-acceuil/ima3.webp" alt="" class="d-block w-100 img-fluid">
+                        </div>
+                        <div class="carousel-item active">
+                            <img src="../../img/caroussel-acceuil/ima2.jpg" alt="" class="d-block w-100 img-fluid">
+                        </div>
+                        <div class="carousel-item ">
+                            <img src="../../img/caroussel-acceuil/ima9.webp" alt="" class="d-block w-100 img-fluid">
+                        </div>
+
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#coulisse" data-bs-slide="prev"> 
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#coulisse" data-bs-slide="next" > 
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+
                 </div>
 
             </div>
@@ -46,27 +64,17 @@ include_once("header.php");
                         comprend actuellement les sept (7) <a href='<?=APP_DOMAIN . "home/departments"?>'>départements</a> qui suivent:
                         </p>
                         
-                        <!-- <ul class="list-unstyled lead text-center">
-                            <li class="list-inline-item shadow-sm fw-bolder "> Lettres modernes </li>
-                            <li class="list-inline-item shadow-sm fw-bolder "> Philosophie </li>
-                            <li class="list-inline-item shadow-sm fw-bolder "> Sciences sociales </li>
-                            <li class="list-inline-item shadow-sm fw-bolder ">langues vivantes </li>
-                            <li class="list-inline-item shadow-sm fw-bolder "> Mathématiques </li>
-                            <li class="list-inline-item shadow-sm fw-bolder "> Physique </li>
-                            <li class="list-inline-item shadow-sm fw-bolder ">Sciences naturelles </li>
-                        </ul> -->
+                        <div class="container p-3">
 
-                        <div class="container">
-
-                        <div class="row">
-                            <div class="col-lg-5 col-md-4">
+                        <div class="row border">
+                            <div class="col-lg-5 col-md-5">
                                 <img class="img-fluid " src="../../img/ima3.webp" alt="oups">
                             </div>
-                            <div class="col-lg-3 col-md-3">
+                            <div class="col-lg-4 col-md-4 border py-5 my-5">
                             <h3 class="text-center fw-bolder py-auto">Departements de l'ENS</h3>
 
                             </div>
-                            <div class="col-lg-2 col-md-2">
+                            <div class="col-lg-3 col-md-3 px-5 py-">
                                 <ul class="lead">
                                     <li> Lettres modernes </li>
                                     <li> Philosophie </li>
@@ -142,14 +150,29 @@ include_once("header.php");
 
         <div class="col-lg-2 col-md-3 border-left border-radius-3 px-2 py-2 d-none d-lg-block bg-dark">
 
-            <p class="px-2 mt-5 shadow-lg text-light"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            <table class="table table-striped table-dark text-center table-hover">
+                <thead>
+                    <tr>
+                        <th class="display-6 table-success">Actualites</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                 ex
                 ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
                 fugiat
                 nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
                 mollit
-                anim id est laborum.</p>
+                anim id est laborum.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            
 
                 <hr class="my-4 text-light">
 
