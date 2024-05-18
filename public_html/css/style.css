@@ -1,7 +1,31 @@
+/* @import  */
+
 .text-justify {
   text-align: justify;
 }
 
 .coul-gris-pale5 {
   background-color: rgba(32, 45, 51, 0.05);
+}
+
+/* Personnalisation de la navbar. */
+.navbg {
+  background-color: rgba(0, 0, 0, 0.6);
+  font-family: serif;
+  box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.navbg .nav-link {
+  border-bottom: 2px solid transparent;
+  transition: padding-bottom 0.3s ease-in, border-color 0.4s ease-in-out;
+}
+
+.navbg .nav-link:hover {
+  padding-bottom: 15px;
+  border-bottom-color: var(--bs-teal);
+}
+
+.navbouton {
+  color: var(--bs-teal);
+  border-color: aqua;
 }

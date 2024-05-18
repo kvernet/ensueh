@@ -57,13 +57,13 @@ class Navbar {
     public function addSearch(string $link="") : Navbar {
         $this->fsearch .= '<form class="d-flex" role="search" action="'. $link .'">'.
         '<input class="form-control me-2" type="search" name="p" placeholder="Mot(s)" aria-label="Search">'.
-        '<button class="btn btn-outline-success" type="submit">Rechercher</button>'.
+        '<button class="btn btn-outline-primary navbouton" type="submit">Rechercher</button>'.
         '</form>';
         return $this;
     }
 
     public function show(string $text=APP_NAME) {
-        echo '<nav class="navbar navbar-expand-lg bg-body-tertiary position-fixed w-100">';
+        echo '<nav class=" navbg navbar navbar-expand-lg navbar-dark position-fixed w-100">';
         echo '<div class="container-fluid py-2">';
         echo '<a class="navbar-brand" href="">'. $text .'</a>';
         echo '<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';

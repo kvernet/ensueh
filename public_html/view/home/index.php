@@ -8,7 +8,7 @@ include_once("header.php");
 
         <div class="col-lg-2 col-md-1 ">
             <div class="row">
-                <p class="lead display-6 fw-bolder text-center mt-5 pt-5">Bienvenue !</p>
+                <p class="lead display-6 fw-bolder text-center mt-5 pt-5 ">Bienvenue !</p>
             </div>
             <div class="d-none d-lg-block ">
                 <img class="img-fluid" src="../../img/ima10.jpeg" alt="oups">
@@ -23,13 +23,13 @@ include_once("header.php");
                 <div id="coulisse" class="carousel slide " data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item ">
-                            <img src="../../img/caroussel-acceuil/ima3.webp" alt="" class="d-block w-100 img-fluid">
+                            <img src="../../img/caroussel-acceuil/ima3.png" alt="" class="d-block w-100 img-fluid">
                         </div>
                         <div class="carousel-item active">
                             <img src="../../img/caroussel-acceuil/ima2.jpg" alt="" class="d-block w-100 img-fluid">
                         </div>
                         <div class="carousel-item ">
-                            <img src="../../img/caroussel-acceuil/ima9.webp" alt="" class="d-block w-100 img-fluid">
+                            <img src="../../img/caroussel-acceuil/ima9.png" alt="" class="d-block w-100 img-fluid">
                         </div>
 
                     </div>

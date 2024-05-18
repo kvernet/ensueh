@@ -13,7 +13,6 @@ include_once("header.php");
 
 </div>
 
-<h2 style="text-align: center;">Formations en construction...</h2>
     
 <?php
 include_once("footer.php");
