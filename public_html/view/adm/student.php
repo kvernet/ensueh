@@ -1,6 +1,7 @@
 <?php
 
-use app\core\entity\WhoIam;
+use app\core\entity\Message;
+use app\core\entity\WhoAmI;
 
 require_once("get_users_as_table.php");
 
@@ -9,7 +10,11 @@ include_once("header.php");
 echo '<h3 style="text-align: center;">Gestion des étudiants</h3>';
 
 echo 'Filtrer par:<br>';
-echo '<input type="text" id="user_name_like" name="user_name_like" placeholder="Identifiant">';
+echo '<input type="text" id="user_name_like" name="user_name_like" placeholder="Identifiant"><br>';
+
+if(isset($_GET["msg_id"]) && Message::get($_GET["msg_id"]) != Message::SUCCESS_MSG) {
+    echo '<span class="error-msg">'. Message::getMessage(Message::get($_GET["msg_id"])) .'</span><br>';
+}
 
 echo '<div id="user_data_tr"></div>';
 ?>
@@ -27,8 +32,9 @@ echo '<div id="user_data_tr"></div>';
 
     async function postData() {
         const formData = new FormData();
-        formData.append("whoami_id", <?=WhoIam::STUDENT->value?>);
+        formData.append("whoami_id", <?=WhoAmI::STUDENT->value?>);
         formData.append("user_name_like", user_name_like.value);
+        formData.append("return_page", "student");
         formData.append("color_index", 3);
 
         const response = await fetch("get_users_as_table", {

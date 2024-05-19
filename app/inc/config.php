@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 define("APP_DIR", __DIR__ . "/../../");
 define("PUBLIC_DIR", APP_DIR . "public_html/");
 define("APP_DOMAIN", "http://127.0.0.1:8080/");

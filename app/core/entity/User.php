@@ -12,7 +12,7 @@ class User {
         private int $id,
         private string $first_name, private string $last_name,
         private Gender $gender, private string $email, private string $phone, 
-        private Department $department, private WhoIam $whoiam,
+        private Department $department, private WhoAmI $whoAmI,
         private Section $section, private Grade $grade,
         private string $user_name, private string $pwd,
         private DateTime $date_ins, private string|null $uniqid,
@@ -26,7 +26,7 @@ class User {
     public function getEmail() : string { return $this->email; }
     public function getPhone() : string { return "" . $this->phone; }
     public function getDepartment() : Department { return $this->department; }
-    public function getWhoIam() : WhoIam { return $this->whoiam; }
+    public function getWhoAmI() : WhoAmI { return $this->whoAmI; }
     public function getSection() : Section { return $this->section; }
     public function getGrade() : Grade { return $this->grade; }
     public function getUserName() : string { return $this->user_name; }
@@ -37,7 +37,7 @@ class User {
     public function setStatus(Status $status) : void { $this->status = $status; }
     public function getLastActivity() : DateTime { return $this->last_activity; }
 
-    static public function getModal(int $id, string $text="Modifier") : string {
+    static public function getModal(int $id, string $return_page="", string $text="Modifier") : string {
         $user = (new UserModel)->getById($id);
         $target = "modal_update_user_" . $id;
         $singleModel = new SingleModel;
@@ -54,6 +54,9 @@ class User {
         .'<form action="user_update" method="post">'
         .'<div class="mb-3">'
         .'<input type="text" class="form-control" id="id" name="id" value="'. $user->getId() .'" hidden>'
+        .'</div>'
+        .'<div class="mb-3">'
+        .'<input type="text" class="form-control" id="return_page" name="return_page" value="'. $return_page .'" hidden>'
         .'</div>'
 
         .'<div class="mb-3">'
@@ -86,9 +89,9 @@ class User {
         ."</select>"
         .'</div>'
         .'<div class="mb-3">'
-        .'<label for="whoiam" class="col-form-label">Statut:</label>'
-        .'<select class="form-control" id="whoiam" name="whoiam">'
-        .$singleModel->setTable("whoiam")->getAllAsOptions($user->getWhoIam()->value)
+        .'<label for="whoami" class="col-form-label">Statut:</label>'
+        .'<select class="form-control" id="whoami" name="whoami">'
+        .$singleModel->setTable("whoami")->getAllAsOptions($user->getWhoAmI()->value)
         ."</select>"
         .'</div>'
 

@@ -1,10 +1,10 @@
 <?php
 
 use app\core\entity\User;
-use app\core\entity\WhoIam;
+use app\core\entity\WhoAmI;
 use app\core\model\UserModel;
 
-function getUsersAsTable(WhoIam $whoiam, $user_name_like, $color_index=0) : void {
+function getUsersAsTable(WhoAmI $whoAmI, string $user_name_like, string $return_page, $color_index=0) : void {
     
     $class_colors = [
         "table-primary",
@@ -30,7 +30,7 @@ function getUsersAsTable(WhoIam $whoiam, $user_name_like, $color_index=0) : void
     .'<th class="sm-hidden">Date</th>'
     .'</tr>';
     
-    $users = (new UserModel)->searchUsersByUserNameLike($whoiam, $user_name_like);
+    $users = (new UserModel)->searchUsersByUserNameLike($whoAmI, $user_name_like);
     
     $index = $color_index;
     foreach($users as $user) {
@@ -52,7 +52,7 @@ function getUsersAsTable(WhoIam $whoiam, $user_name_like, $color_index=0) : void
         .'<td>' . $user->getUserName() . '</td>'
         .'<td class="sm-hidden">' . $user->getDateIns()->format('d/m/Y') . '</td>';
         
-        $dummy .= '<td>' . User::getModal($id) . '</td>';
+        $dummy .= '<td>' . User::getModal($id, $return_page) . '</td>';
         $dummy .= '</tr>';
     
         echo $dummy;
@@ -63,9 +63,10 @@ function getUsersAsTable(WhoIam $whoiam, $user_name_like, $color_index=0) : void
 }
 
 if($_POST) {
-    $whoiam_id = $_POST['whoami_id'];
+    $whoami_id = $_POST['whoami_id'];
     $user_name_like = $_POST['user_name_like'];
+    $return_page = $_POST['return_page'];
     $color_index = $_POST['color_index'];
 
-    getUsersAsTable(WhoIam::get($whoiam_id), $user_name_like, $color_index);
+    getUsersAsTable(WhoAmI::get($whoami_id), $user_name_like, $return_page, $color_index);
 }

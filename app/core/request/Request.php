@@ -20,14 +20,6 @@ class Request {
         unset($this->data);
     }
 
-    public function getData() : array {
-        $d = $this->get();
-        $this->data["controller"] = $d["controller"];
-        $this->data["method"] = $d["method"];
-        $this->data["query"] = $d["query"];
-        return $this->data;
-    }
-
     private function get() : array {
         $uri = parse_url($this->data["server"]["REQUEST_URI"]);
         $path = $uri["path"];
@@ -52,5 +44,13 @@ class Request {
             "method" =>$method,
             "query" => $query
         ];
+    }
+
+    public function getData() : array {
+        $d = $this->get();
+        $this->data["controller"] = $d["controller"];
+        $this->data["method"] = $d["method"];
+        $this->data["query"] = $d["query"];
+        return $this->data;
     }
 }

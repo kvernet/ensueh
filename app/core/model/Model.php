@@ -27,24 +27,6 @@ class Model {
         $this->pdo = null;
     }
 
-    protected function query($sql, $params) : Model {
-        try {
-            // prepare sql
-            $this->stmt = $this->pdo->prepare($sql);
-            // bind parameters
-            for($i = 0; $i < count($params); $i++) {
-                $this->stmt->bindParam(
-                    $params[$i][0], $params[$i][1], $params[$i][2]
-                );
-            }
-            return $this;
-        }
-        catch(PDOException $e) {
-            echo "Error message : " . $e->getMessage();
-        }
-        die("<br><br>Query failed.");
-    }
-
     protected function execute() : Model {
         try {
             // execute
@@ -68,5 +50,39 @@ class Model {
             echo "Error message : " . $e->getMessage();
         }
         die("<br><br>Fetch failed.");
+    }
+
+    public function getEncryptedPwd(string $pwd) : string|null {
+        try {
+            $sql = "SELECT ENCRYPT_PASSWORD(:pwd) as encrypted_pwd";
+            $data = $this->query($sql, [
+                [":pwd", $pwd, PDO::PARAM_STR]
+            ])->execute()->fetchAll();
+            if(count($data)) {
+                return $data[0]['encrypted_pwd'];
+            }
+        }
+        catch(PDOException $e) {
+            echo "Error message : " . $e->getMessage();
+        }
+        die("<br><br>Encrypt password failed.");
+    }
+
+    protected function query($sql, $params) : Model {
+        try {
+            // prepare sql
+            $this->stmt = $this->pdo->prepare($sql);
+            // bind parameters
+            for($i = 0; $i < count($params); $i++) {
+                $this->stmt->bindParam(
+                    $params[$i][0], $params[$i][1], $params[$i][2]
+                );
+            }
+            return $this;
+        }
+        catch(PDOException $e) {
+            echo "Error message : " . $e->getMessage();
+        }
+        die("<br><br>Query failed.");
     }
 }

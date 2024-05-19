@@ -10,11 +10,6 @@ class SingleModel extends Model {
 
     private $table = null;
 
-    public function setTable($table) : SingleModel {
-        $this->table = $table;
-        return $this;
-    }
-
     public function get($id) : Single|null {
         try {
             $sql = "SELECT * FROM " . $this->table . " WHERE (id=:id AND deleted=:deleted)";
@@ -59,5 +54,10 @@ class SingleModel extends Model {
         }
 
         return $options;
+    }
+
+    public function setTable($table) : SingleModel {
+        $this->table = $table;
+        return $this;
     }
 }
