@@ -1,12 +1,12 @@
 <?php
 
-use app\core\controller\AdmController;
+use app\core\controller\ProfessorController;
 use app\core\entity\Message;
 use app\core\entity\Status;
 use app\core\entity\WhoAmI;
 use app\core\model\UserModel;
 
-$admController = new AdmController;
+$controller = new ProfessorController;
 
 if($_POST) {
     $user_name = $_POST["user_name"];
@@ -14,11 +14,11 @@ if($_POST) {
 
     $userModel = new UserModel;
 
-    $adm = $userModel->get($user_name, $pwd, WhoAmI::ADM);
+    $professor = $userModel->get($user_name, $pwd, WhoAmI::PROFESSOR);
 
-    if($adm != null) {
-        $status = $adm->getStatus();
-        // check if ADM is active
+    if($professor != null) {
+        $status = $professor->getStatus();
+        // check if Professor is active
         if($status == Status::VALIDATED || $status == Status::INACTIVE || $status == Status::DISCONNECTED) {
             // save session and cookie
             $_SESSION["user_name"] = $user_name;
@@ -32,19 +32,19 @@ if($_POST) {
             redirectMe("home");
         }
         else {
-            $admController->info([
-                "msg" => Status::getCaseErrorMsg($status) . '<br><a href="'. APP_DOMAIN .'adm">Retour</a>'
+            $controller->info([
+                "msg" => Status::getCaseErrorMsg($status) . '<br><a href="'. APP_DOMAIN .'professor">Retour</a>'
             ]
             );
         }
     }
     else {
-        $admController->info([
-            "msg" => Message::getMessage(Message::USER_NOT_EXISTS_MSG) . '<br><a href="'. APP_DOMAIN .'adm">Retour</a>'
+        $controller->info([
+            "msg" => Message::getMessage(Message::USER_NOT_EXISTS_MSG) . '<br><a href="'. APP_DOMAIN .'professor">Retour</a>'
         ]
         );
     }
 }
 else {
-    $admController->info();
+    $controller->info();
 }

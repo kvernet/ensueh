@@ -4,15 +4,15 @@ use app\core\entity\Footer;
 use app\core\entity\Form;
 use app\core\entity\Header;
 
-$header = new Header(APP_NAME . " - ADM", [
+$header = new Header(APP_NAME . " - Professeur", [
     '<link rel="stylesheet" href="../../css/login.css">'
 ]);
 $header->show();
 
 $form = new Form;
 $form->add('<div class="form-container">')
-    ->add('<form action="'. APP_DOMAIN .'adm/login" method="post">')
-    ->add('<h1>Connexion - ADM</h1>')
+    ->add('<form action="'. APP_DOMAIN .'professor/login" method="post">')
+    ->add('<h1>Connexion - Professeur</h1>')
     ->add('<table>')
     ->add('<tr>')
     ->add('<td><label for="user_name">Identifiant</label></td>')

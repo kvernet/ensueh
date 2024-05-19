@@ -15,7 +15,7 @@ enum Message : int {
     case ADM_STATUS_CONNECTED_MSG = 8;
     case ADM_STATUS_INACTIVE_MSG = 9;
     case ADM_STATUS_SUSPENDED_MSG = 10;
-    case ADM_NOT_EXISTS_MSG = 11;
+    case USER_NOT_EXISTS_MSG = 11;
     case UNKNOWN = 0;
 
     static public function get(int $value) : Message {
