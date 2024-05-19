@@ -10,9 +10,12 @@ include_once("header.php");
             <div class="row">
                 <p class="lead display-6 fw-bolder text-center mt-5 pt-5 text-light font-redressed ">Bienvenue !</p>
             </div>
-            <div class="d-none d-lg-block ">
+            <div class=" row d-none d-lg-block ">
                 <img class="img-fluid" src="../../img/ima10.jpeg" alt="oups">
-            </div>        
+            </div>   
+            <div class="row">
+            <p class="lead display-6 fw-bolder text-center mt-5 pt-5 text-light font-dance ">Ecole <br> Normale <br> Superieure</p>
+            </div>    
 
         </div>
 
@@ -21,20 +24,37 @@ include_once("header.php");
 
             <div class="container pt-1 mt-1 ">
                 <div id="coulisse" class="carousel slide " data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#coulisse" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#coulisse" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#coulisse" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
                     <div class="carousel-inner">
                         <div class="carousel-item ">
-                            <img src="../../img/caroussel-acceuil/ima3.png" alt="" class="d-block w-100 img-fluid">
+                            <img src="../../img/caroussel-acceuil/ima10.jpeg" alt="" class="d-block w-100 img-fluid">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>ENS</h5>
+                                <p>Toujours plus haut.</p>
+                            </div>
                         </div>
                         <div class="carousel-item active">
-                            <img src="../../img/caroussel-acceuil/ima2.jpg" alt="" class="d-block w-100 img-fluid">
+                            <img src="../../img/caroussel-acceuil/ima8.png" alt="" class="d-block w-100 img-fluid">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>ENS</h5>
+                                <p>Toujours plus fort.</p>
+                            </div>
                         </div>
                         <div class="carousel-item ">
                             <img src="../../img/caroussel-acceuil/ima9.png" alt="" class="d-block w-100 img-fluid">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>ENS</h5>
+                                <p>Toujours plus grand.</p>
+                            </div>
                         </div>
 
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#coulisse" data-bs-slide="prev"> 
-                        <span class="carousel-control-prev-icon"></span>
+                        <span class="carousel-control-prev-icon" ></span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#coulisse" data-bs-slide="next" > 
                         <span class="carousel-control-next-icon"></span>
@@ -46,23 +66,49 @@ include_once("header.php");
 
         </div>
         <div class="col-lg-2 col-md-1">
+            
 
         </div>
     </div>
 
     <div class="row">
-
+    
 
             <div class="col-lg-10 col-md-9 dashboard-content px-3 pt-4 border-5  coul-gris-pale5 ">
 
                 <div class="jumbotron coul-gris-pale5">
                     <h2 class="display-6 text-center fw-bolder font-redressed">Présentation de l'Ecole Normale Supérieure</h2>
-                    <p class="lead font-serif">L'Ecole Normale Supérieure (ENS) est une entité de l'Université d'Etat d'Haïti qui a
+                    <p class="lead font-dance">L'Ecole Normale Supérieure (ENS) est une entité de l'Université d'Etat d'Haïti qui a
                         pour vocation de former des universitaires de haut niveau, des enseignants, des chercheurs et
                         des professeurs destinés à l’enseignement secondaire.
-                        Elle offre des formations de premier et de deuxième cycles dans différents domaines. Elle
-                        comprend actuellement les sept (7) <a href='<?=APP_DOMAIN . "home/departments"?>'>départements</a> qui suivent:
+                        Elle offre des formations de premier et de deuxième cycles dans différents domaines. 
                         </p>
+
+                        <p class="lead font-dance"> 
+                        Les formations de deuxième cycle sont offertes en partenariat avec des Universités étrangères
+                        comme Paris8, l'Université des Antilles, l'Université de Poitiers, l'Université de Lyon,
+                        l'Université d'Orléans, l'Université de Liège ou l'Université de Montréal, etc.
+                    </p>
+
+                    <p class="lead font-dance">
+                        Les étudiants sont recrutés par un concours, qui a lieu chaque année, en principe, à la rentrée
+                        de septembre. La durée des formations du premier cycle est de quatre (4) ans.
+                        La première année est l'année préparatoire: elle sert de transition entre l'enseignement
+                        secondaire et l'enseignement supérieur. La deuxième, troisième et quatrième années préparent aux
+                        différents certificats d'Etudes Supérieures et au diplôme de fin d'études.
+                        Ces documents confèrent aux anciens élèves de l'Ecole Normale Supérieure qui les détiennent, le
+                        droit d'être nommés dans une chaire de leur spécialité, professeurs titulaires de l'enseignement
+                        secondaire.
+                        Ils permettent également aux étudiants de poursuivre leur formation en deuxième cycle dans les
+                        domaines comme la Philosophie, la Littérature, les Mathématiques, la Physique, la Chimie et en
+                        Français Langue Etrangère (FLE).
+
+                        La durée de ces formations de deuxième cycle est de deux (2) ans. Les diplômes de deuxième cycle
+                        délivrés permettent aux étudiants de continuer en doctorat ou d'intégrer facilement le marché du
+                        travail.
+                    </p>
+                    <p class="lead font-dance"> Elle
+                        comprend actuellement les sept (7) <a href='<?=APP_DOMAIN . "home/departments"?>'>départements</a> qui suivent: </p>
                         
                         <div class="container p-3">
 
@@ -93,28 +139,8 @@ include_once("header.php");
 
                         </div>
 
-                        <p class="lead font-dance"> 
-                        Les formations de deuxième cycle sont offertes en partenariat avec des Universités étrangères
-                        comme Paris8, l'Université des Antilles, l'Université de Poitiers, l'Université de Lyon,
-                        l'Université d'Orléans, l'Université de Liège ou l'Université de Montréal, etc.
-                    </p>
-                    <p class="lead font-dance">
-                        Les étudiants sont recrutés par un concours, qui a lieu chaque année, en principe, à la rentrée
-                        de septembre. La durée des formations du premier cycle est de quatre (4) ans.
-                        La première année est l'année préparatoire: elle sert de transition entre l'enseignement
-                        secondaire et l'enseignement supérieur. La deuxième, troisième et quatrième années préparent aux
-                        différents certificats d'Etudes Supérieures et au diplôme de fin d'études.
-                        Ces documents confèrent aux anciens élèves de l'Ecole Normale Supérieure qui les détiennent, le
-                        droit d'être nommés dans une chaire de leur spécialité, professeurs titulaires de l'enseignement
-                        secondaire.
-                        Ils permettent également aux étudiants de poursuivre leur formation en deuxième cycle dans les
-                        domaines comme la Philosophie, la Littérature, les Mathématiques, la Physique, la Chimie et en
-                        Français Langue Etrangère (FLE).
-
-                        La durée de ces formations de deuxième cycle est de deux (2) ans. Les diplômes de deuxième cycle
-                        délivrés permettent aux étudiants de continuer en doctorat ou d'intégrer facilement le marché du
-                        travail.
-                    </p>
+                        
+                   
                     <hr class="my-4">
                 </div>
                 <div class="jumbotron">
