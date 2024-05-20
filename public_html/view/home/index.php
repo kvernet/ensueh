@@ -14,7 +14,7 @@ include_once("header.php");
                 <img class="img-fluid" src="../../img/ima10.jpeg" alt="oups">
             </div>   
             <div class="row">
-            <p class="lead display-6 fw-bolder text-center mt-5 pt-5 text-light font-dance ">Ecole <br> Normale <br> Superieure</p>
+            <p class="lead display-6 fw-bolder text-center mt-md-4 pt-md-4 text-light font-dance ">Ecole <br> Normale <br> Superieure</p>
             </div>    
 
         </div>
@@ -31,7 +31,7 @@ include_once("header.php");
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item ">
-                            <img src="../../img/caroussel-acceuil/ima10.jpeg" alt="" class="d-block w-100 img-fluid">
+                            <img src="../../img/caroussel-acceuil/ima10.jpg" alt="" class="d-block w-100 img-fluid">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>ENS</h5>
                                 <p>Toujours plus haut.</p>
