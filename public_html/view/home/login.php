@@ -145,7 +145,7 @@ include_once("header.php");
   </div>
 </div> 
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mx-4">
     <label for="validationServer05" class="form-label">Confirmez votre mot de passe</label>
     <div class="row g-3 align-items-center">
   <div class="col-auto">
