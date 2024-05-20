@@ -129,19 +129,37 @@ include_once("header.php");
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3 mx-4">
     <label for="validationServer05" class="form-label">Mot de passe</label>
-      <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
-      <div id="validationServer05Feedback" class="invalid-feedback">
-      veuillez communiquer votre section s'il vous plait.
-      </div>
+    <div class="row g-3 align-items-center">
+  <div class="col-auto">
+    <label for="inputPassword6" class="col-form-label">Password</label>
+  </div>
+  <div class="col-auto">
+    <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+  </div>
+  <div class="col-auto">
+    <span id="passwordHelpInline" class="form-text ">
+      Must be 8-20 characters long.
+    </span>
+  </div>
+</div> 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
     <label for="validationServer05" class="form-label">Confirmez votre mot de passe</label>
-      <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
-      <div id="validationServer05Feedback" class="invalid-feedback">
-      veuillez communiquer votre section s'il vous plait.
-      </div>
+    <div class="row g-3 align-items-center">
+  <div class="col-auto">
+    <label for="inputPassword6" class="col-form-label">Password</label>
+  </div>
+  <div class="col-auto">
+    <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+  </div>
+  <div class="col-auto">
+    <span id="passwordHelpInline" class="form-text">
+      Must be 8-20 characters long.
+    </span>
+  </div>
+</div>
     </div>
 
 <div class="row g-3 mt-5 mx-2 border bg-secondary text-light">
