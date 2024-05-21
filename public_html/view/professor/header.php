@@ -17,15 +17,14 @@ $params["n_received_msg"] = 0;
 $status = ProfessorController::getStatus();
 if($status == Status::ONLINE || $status == Status::ACTIVE) {
     $navbar = new Navbar;
-    $navbar->addLi("Accueil", APP_DOMAIN . "professor/home", ['active'], ["aria-current" => "page"])
+    $navbar->addLi("Cours", APP_DOMAIN . "professor/courses", ['active'], ["aria-current" => "page"])
+        ->addLi("Notes", APP_DOMAIN . "professor/notes")
+        ->addLi("Mon calendrier", APP_DOMAIN . "professor/calendar")
+        ->addLi("Mes projets", APP_DOMAIN . "professor/projets")
         ->addLiDropdown("Mes messages", [
             ["text" => "Envoyés", "href" => APP_DOMAIN . "professor/msg_sent"],
             ["text" => "Reçus(" . $params["n_received_msg"] . ")", "href" => APP_DOMAIN . "professor/msg_received"]
         ], -1)
-        ->addLi("Cours", APP_DOMAIN . "professor/courses")
-        ->addLi("Notes", APP_DOMAIN . "professor/notes")
-        ->addLi("Mon calendrier", APP_DOMAIN . "professor/calendar")
-        ->addLi("Mes projets", APP_DOMAIN . "professor/projets")
         ->addLiDropdown("Mon compte", [
             ["text" => "Changer mot de passe", "href" => APP_DOMAIN . "professor/cpwd"],
             ["text" => "Se déconnecter", "href" => APP_DOMAIN . "professor/logout"]

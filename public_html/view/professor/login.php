@@ -29,7 +29,7 @@ if($_POST) {
             $userModel->updateUniqId($user_name, $uid);
             $userModel->updateStatusByUserName($user_name, Status::CONNECTED);
             $userModel->updateLastActivity($user_name);
-            redirectMe("home");
+            redirectMe("courses");
         }
         else {
             $controller->info([

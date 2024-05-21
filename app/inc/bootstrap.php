@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use app\core\entity\Message;
+
 require_once("config.php");
 
 // redirect to a page
@@ -31,4 +33,27 @@ function pretiffy($ar) : void {
     echo "<pre>";
     print_r($ar);
     echo "</pre>";
+}
+
+//
+function uploadFile(array $file_data, string $file_name) : Message {
+    if(count($file_data) < 1) return Message::FILE_UPLOAD_FAILED;
+    if($file_data['error'] != 0) return Message::FILE_UPLOAD_FAILED;
+
+    $MB = 1000**2;
+    $sizeMB = $file_data['size'] / $MB;
+    
+    if($sizeMB > MAX_UPLOAD_FILE_SIZE) {
+        return Message::FILE_UPLOAD_TOO_BIG;
+    }
+
+    $to = PUBLIC_DIR . "/" . UPLOAD_BASE_DIR . "/" . $file_name;
+    if(move_uploaded_file($file_data['tmp_name'], $to)) {
+        return Message::SUCCESS_MSG;
+    }
+    return Message::FILE_UPLOAD_FAILED;
+}
+
+function getUploadedFilePath(string $file_name) : string {
+    return APP_DOMAIN . "/" . UPLOAD_BASE_DIR . "/" . $file_name;
 }

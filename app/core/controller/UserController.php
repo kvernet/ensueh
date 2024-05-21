@@ -90,7 +90,7 @@ class UserController extends Controller {
             else {
                 $this->view("error/info", [
                     "title" => $this->title,
-                    "msg" => Status::getCaseErrorMsg($status)
+                    "msg" => Status::getCaseErrorMsg($status) . "<br>[$page]"
                 ]);
             }
         }
@@ -129,14 +129,7 @@ class UserController extends Controller {
     }
 
     public function logout() : void {
-        if($this->canAccesIt() && self::getStatus() == Status::ONLINE) {
-            $this->view($this->dir . "logout", [
-                "title" => $this->title
-            ]);
-        }
-        else {
-            $this->_403();
-        }
+        $this->goCheck($this->dir . "logout");
     }
 
     public function msg_received() {

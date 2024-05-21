@@ -12,6 +12,10 @@ class ProfessorController extends UserController {
         $this->setWhoAmI(WhoAmI::PROFESSOR);
     }
 
+    public function add_course() {
+        $this->goCheck($this->dir . "add_course");
+    }
+
     public function calendar() {
         $this->goCheck($this->dir . "calendar");
     }
@@ -20,11 +24,19 @@ class ProfessorController extends UserController {
         $this->goCheck($this->dir . "courses");
     }
 
+    public function get_courses_as_table() {
+        $this->goCheck($this->dir . "get_courses_as_table");
+    }
+
     public function notes() {
         $this->goCheck($this->dir . "notes");
     }
 
     public function projets() {
         $this->goCheck($this->dir . "projets");
+    }
+
+    public function update_course() {
+        $this->goCheck($this->dir . "update_course");
     }
 }

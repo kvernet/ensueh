@@ -175,7 +175,7 @@ class UserModel extends Model {
     public function getUsers(WhoAmI $whoAmI) : array {
         $users = array();
 
-        $sql = "SELECT * FROM users WHERE whoami_id=:whoami_id";
+        $sql = "SELECT * FROM ". $this->table ." WHERE whoami_id=:whoami_id";
         $data = $this->query($sql, [
             [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
         ])->execute()->fetchAll();

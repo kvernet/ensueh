@@ -3,8 +3,6 @@
 use app\core\entity\Message;
 use app\core\entity\WhoAmI;
 
-require_once("get_users_as_table.php");
-
 include_once("header.php");
 
 echo '<h3 style="text-align: center;">Gestion des étudiants</h3>';

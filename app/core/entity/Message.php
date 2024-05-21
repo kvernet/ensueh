@@ -16,6 +16,8 @@ enum Message : int {
     case ADM_STATUS_INACTIVE_MSG = 9;
     case ADM_STATUS_SUSPENDED_MSG = 10;
     case USER_NOT_EXISTS_MSG = 11;
+    case FILE_UPLOAD_TOO_BIG = 12;
+    case FILE_UPLOAD_FAILED = 13;
     case UNKNOWN = 0;
 
     static public function get(int $value) : Message {
