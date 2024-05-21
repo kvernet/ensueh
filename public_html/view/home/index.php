@@ -80,7 +80,7 @@ include_once("header.php");
             <div class="col-lg-10 col-md-9 dashboard-content px-3 pt-4 border-5  coul-gris-pale5 ">
 
                 <div class="jumbotron coul-gris-pale5 pt-4">
-                    <h2 class="display-6 text-center fw-bolder font-redressed">Présentation de l'Ecole Normale Supérieure</h2>
+                    <h2 class="display-6 text-center fw-bolder font-redressed"> <i class="bi bi-circle-fill"></i> Présentation de l'Ecole Normale Supérieure</h2>
                     <p class="lead font-dance">L'Ecole Normale Supérieure (ENS) est une entité de l'Université d'Etat d'Haïti qui a
                         pour vocation de former des universitaires de haut niveau, des enseignants, des chercheurs et
                         des professeurs destinés à l’enseignement secondaire.
@@ -115,7 +115,7 @@ include_once("header.php");
                         <hr class="my-4">
 
                         <div class="jumbotron bg-light pt-4">
-                    <h2 class="display-6 text-center fw-bolder font-redressed ">Historicité de ENS</h2>
+                    <h2 class="display-6 text-center fw-bolder font-redressed "> <i class="bi bi-circle-fill"></i> Historicité de ENS</h2>
                     <p class="lead font-dance">
                         L'Ecole Normale Supérieure, inaugurée le 31 octobre 1947, a été créée par la Loi du 28 Juillet
                         1947 en vue de la formation et du recrutement des professeurs de l'enseignement secondaire et de
@@ -129,7 +129,7 @@ include_once("header.php");
 
 
 <div class="jumbotron pt-4">
-                    <h2 class="display-6 text-center fw-bolder font-redressed">Vision de ENS</h2>
+                    <h2 class="display-6 text-center fw-bolder font-redressed"> <i class="bi bi-circle-fill"></i> Vision de ENS</h2>
                     <p class="lead ">
                         L'ENS a pour vision de:
                     <ul class="lead font-dance">
@@ -223,7 +223,7 @@ include_once("header.php");
 
   </div>
   <div class="col-md-6 p-4 px-5 ps-md-0">
-    <h5 class="mt-0 px-md-3">Departement de l'ENS</h5>
+    <h5 class="mt-0 px-md-3"> <i class="bi bi-egg-fill"></i> Departement de l'ENS</h5>
     <p class="lead px-md-3">Pour palier a cette vision l'ecole Normale Superieure met a la disposition de sa communaute des formations poussees dans les departements suivants:</p>
     <div class="col-lg-6 col-md-6 px-md-5 py-">
                                 <ul class="lead">
@@ -235,9 +235,11 @@ include_once("header.php");
                                     <li> Physique </li>
                                     <li>Sciences naturelles </li>
                             </ul> 
+                            
 
                             </div>
-    <a href='<?=APP_DOMAIN . "home/departments"?>' class="stretched-link px-md-5 mx-md-5">Allez aux departements</a>
+    <a href='<?=APP_DOMAIN . "home/departments"?>' class="stretched-link px-md-5 mx-md-5"> <i class="bi bi-box-arrow-in-right"></i>  Allez aux departements</a>
+    
   </div>
 </div> 
 

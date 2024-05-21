@@ -24,6 +24,10 @@
   font-family: "Redressed", cursive;
 }
 
+.transpar {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
 /* Personnalisation de la navbar. */
 .navbg {
   background-color: rgba(0, 0, 0, 0.6);
@@ -51,4 +55,22 @@
 
 .entete-bg {
   background: radial-gradient(rgba(0, 0, 0, 0.6), rgba(35, 45, 124, 0.5));
+}
+
+/* personnalisation de la video en fond d'ecran */
+
+.video {
+  height: 700px;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Les medias queries  */
+
+@media (max-width: 960px) {
+  .video {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+  }
 }

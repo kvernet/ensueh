@@ -32,6 +32,7 @@ class Header {
         echo '<meta charset="UTF-8">';
         echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
         echo '<link rel="shortcut icon" type="image/x-icon" href="../../img/ensueh-logo.webp"/>';
+        echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">';
         echo '<title>'. $this->title .'</title>';
         echo $clinks;
         echo '</head>';
