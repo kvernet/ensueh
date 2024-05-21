@@ -126,6 +126,31 @@ class UserModel extends Model {
         return null;
     }
 
+    public function getByUserName(string $user_name) : User|null {
+        $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
+        $data = $this->query($sql, [
+            [":user_name", $user_name, PDO::PARAM_STR]
+        ])->execute()->fetchAll();
+        if(count($data)) {
+            return new User(
+                $data[0]["id"],
+                $data[0]["first_name"], $data[0]["last_name"], 
+                Gender::get($data[0]["gender_id"]),
+                $data[0]["email"], $data[0]["phone"],
+                Department::get($data[0]["department_id"]), 
+                WhoAmI::get($data[0]["whoami_id"]),
+                Section::get($data[0]["section_id"]),
+                Grade::get($data[0]["grade_id"]),
+                $data[0]["user_name"], $data[0]["pwd"],
+                new DateTime($data[0]["date_ins"]), $data[0]["uniqid"],
+                Status::get($data[0]["status_id"]),
+                new DateTime($data[0]["last_activity"])
+            );
+        }
+
+        return null;
+    }
+
     static public function getStatus(array $ar) : Status {
         if(count($ar) <= 0) return Status::UNKNOWN;
 

@@ -53,18 +53,23 @@ class CourseModel extends Model {
         return null;
     }
 
-    public function searchCoursesByTitleLike(string $user_name, Section $section, Grade $grade, string $title_like="", int $limit=100) {
+    public function searchCoursesByTitleLike(Section $section, Grade $grade, string $title_like="", string $user_name="", int $limit=100) {
         $courses = array();
-
-        $sql = "SELECT * FROM ". $this->table ." WHERE (section_id=:section_id AND grade_id=:grade_id AND added_by=:added_by AND title LIKE :title AND deleted=:deleted) ORDER BY id DESC LIMIT :limit";
-        $data = $this->query($sql, [
+        $parameters = [
             [":section_id", $section->value, PDO::PARAM_INT],
             [":grade_id", $grade->value, PDO::PARAM_INT],
-            [":added_by", $user_name, PDO::PARAM_STR],
             [":title", "%" . $title_like . "%", PDO::PARAM_STR],
             [":deleted", false, PDO::PARAM_BOOL],
             [":limit", $limit, PDO::PARAM_INT]
-        ])->execute()->fetchAll();
+        ];
+        if($user_name == "") {
+            $sql = "SELECT * FROM ". $this->table ." WHERE (section_id=:section_id AND grade_id=:grade_id AND title LIKE :title AND deleted=:deleted) ORDER BY id DESC LIMIT :limit";
+        }else {
+            $sql = "SELECT * FROM ". $this->table ." WHERE (section_id=:section_id AND grade_id=:grade_id AND added_by=:added_by AND title LIKE :title AND deleted=:deleted) ORDER BY id DESC LIMIT :limit";
+            array_push($parameters, [":added_by", $user_name, PDO::PARAM_STR]);
+        }
+
+        $data = $this->query($sql, $parameters)->execute()->fetchAll();
         foreach($data as $d) {
             $course = new Course(
                 $d['id'], $d['title'], $d['description'],
