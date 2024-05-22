@@ -90,7 +90,7 @@ class UserController extends Controller {
             else {
                 $this->view("error/info", [
                     "title" => $this->title,
-                    "msg" => Status::getCaseErrorMsg($status) . "<br>[$page]"
+                    "msg" => Status::getCaseErrorMsg($status)
                 ]);
             }
         }

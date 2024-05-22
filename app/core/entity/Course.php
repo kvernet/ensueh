@@ -157,15 +157,14 @@ class Course {
         .'</div>';
     }
 
-    static public function getDisplayModal(int $id, string $action="", string $text="Visualiser") {
+    static public function getDisplayModal(int $id, string $action="", string $text="Visualiser/Télécharger") {
         $course = (new CourseModel)->getById($id);
         $target = "modal_display_course_" . $id;
-        $base_dir = "/uploads/courses/";
         $file_path = getUploadedFilePath($course->getFilePath());
 
         return '<a href="#" data-bs-toggle="modal" data-bs-target="#'.$target.'" data-bs-whatever="@mdo">'. $text .'</a>'
         .'<div class="modal fade" id="'.$target.'" tabindex="-1" aria-labelledby="displayModalLabel" aria-hidden="true">'
-        .'<div class="modal-dialog">'
+        .'<div class="modal-dialog modal-dialog modal-fullscreen">'
         .'<div class="modal-content">'
         .'<div class="modal-header">'
         .'<h1 class="modal-title fs-5" id="displayModalLabel">Lecture du cours</h1>'
@@ -174,9 +173,9 @@ class Course {
         .'<div class="modal-body">'
 
         .'<form action="'. $action .'" method="post" enctype="multipart/form-data">'
-        
-        .'<div class="">'
-        .'<object class="pdf" data="'.$file_path.'"></object>'
+
+        .'<div class="row">'
+        .'<iframe width="100%" height="1500hv" scrolling="no" allowfullscreen webkitallowfullscreen src="'. $file_path .'"></iframe>'
         .'</div>'
 
         .'<div class="modal-footer">'

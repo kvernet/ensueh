@@ -8,8 +8,7 @@ use app\core\model\UserModel;
 
 $user_name = ProfessorController::getUserName();
 
-$header = new Header;
-$header->setTitle($params["title"] ?? APP_NAME)->show();
+(new Header)->setTitle($params["title"] ?? APP_NAME)->show();
 
 //TODO, read from database
 $params["n_received_msg"] = 0;

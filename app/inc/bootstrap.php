@@ -47,7 +47,7 @@ function uploadFile(array $file_data, string $file_name) : Message {
         return Message::FILE_UPLOAD_TOO_BIG;
     }
 
-    $to = PUBLIC_DIR . "/" . UPLOAD_BASE_DIR . "/" . $file_name;
+    $to = PUBLIC_DIR . "uploads/courses/pdf/" . $file_name;
     if(move_uploaded_file($file_data['tmp_name'], $to)) {
         return Message::SUCCESS_MSG;
     }
@@ -55,5 +55,5 @@ function uploadFile(array $file_data, string $file_name) : Message {
 }
 
 function getUploadedFilePath(string $file_name) : string {
-    return APP_DOMAIN . "/" . UPLOAD_BASE_DIR . "/" . $file_name;
+    return APP_DOMAIN . "uploads/courses/pdf/" . $file_name;
 }
