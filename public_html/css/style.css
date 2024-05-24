@@ -28,6 +28,86 @@
   background-color: rgba(0, 0, 0, 0.75);
 }
 
+/* Les cartes de la page laboratoire */
+.card-lg {
+  transition: all 0.3s;
+}
+.card-lg:hover {
+  transform: scale(1.15);
+}
+
+/* Animation de l'entete */
+
+.loader {
+  height: 8em;
+  width: 8em;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.circle {
+  position: absolute;
+  height: 80%;
+  width: 80%;
+  border-radius: 50%;
+  border-style: solid;
+}
+.white {
+  border-radius: 3px 3px 0 0;
+  border-color: white white transparent transparent;
+  animation: 1s rotate-white linear infinite;
+}
+.red {
+  border-radius: 0 0 3px 3px;
+  border-color: transparent transparent red red;
+  animation: 1s rotate-red linear infinite;
+}
+.orange {
+  border-radius: 0 3px 3px 0;
+  border-color: transparent orange orange transparent;
+  animation: 1s rotate-orange linear infinite;
+}
+.yellow {
+  border-radius: 3px 0 0 3px;
+  border-color: yellow transparent transparent yellow;
+  animation: 1s rotate-yellow linear infinite;
+}
+
+@keyframes rotate-white {
+  from {
+    transform: rotateX(45deg) rotateY(-35deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(45deg) rotateY(-35deg) rotateZ(360deg);
+  }
+}
+
+@keyframes rotate-red {
+  from {
+    transform: rotateX(45deg) rotateY(35deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(45deg) rotateY(35deg) rotateZ(360deg);
+  }
+}
+
+@keyframes rotate-orange {
+  from {
+    transform: rotateX(70deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(70deg) rotateZ(360deg);
+  }
+}
+@keyframes rotate-yellow {
+  from {
+    transform: rotateY(70deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateY(70deg) rotateZ(360deg);
+  }
+}
 /* Personnalisation de la navbar. */
 .navbg {
   background-color: rgba(0, 0, 0, 0.6);
@@ -54,16 +134,97 @@
 /* Personnalisation de l'entete de la page d'acceuil. */
 
 .entete-bg {
-  background: radial-gradient(rgba(0, 0, 0, 0.6), rgba(35, 45, 124, 0.5));
+  background-color: rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 700px;
+  z-index: -1000;
+}
+
+#coulisse {
+  z-index: 10;
+}
+
+.carousel-caption h5 {
+  font-size: 45px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 25px;
+}
+.carousel-caption p {
+  width: 60%;
+  margin: auto;
+  font-size: 18px;
+  line-height: 1.8;
+}
+.carousel-caption a {
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #1977cc;
+  padding: 5px 20px;
+  display: inline-block;
+  color: #fff;
+  margin-top: 15px;
+  border-radius: 15px;
+}
+
+.carousel-inner:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(255, 34, 59, 0.4)),
+    url(../../img/caroussel-acceuil/ima10.jpg);
+  z-index: -100000;
 }
 
 /* personnalisation de la video en fond d'ecran */
 
-.video {
-  height: 700px;
-  width: 100%;
-  object-fit: cover;
+/* .sombre {
+  backdrop-filter: brightness(40%);
+  z-index: 100;
+} */
+
+/* .carousel-item {
+  height: 100vh;
+  min-height: 300px;
 }
+.carousel-caption {
+  bottom: 220px;
+  z-index: 2;
+}
+.carousel-caption h5 {
+  font-size: 45px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 25px;
+}
+.carousel-caption p {
+  width: 60%;
+  margin: auto;
+  font-size: 18px;
+  line-height: 1.8;
+}
+.carousel-caption a {
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #1977cc;
+  padding: 5px 20px;
+  display: inline-block;
+  color: #fff;
+  margin-top: 15px;
+  border-radius: 15px;
+}
+.carousel-inner:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+} */
 
 /* Les medias queries  */
 
@@ -72,5 +233,19 @@
     height: 400px;
     width: 100%;
     object-fit: cover;
+    z-index: -1000;
+  }
+
+  .carousel-caption h5 {
+    font-size: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 25px;
+  }
+  .carousel-caption p {
+    width: 100%;
+    margin: auto;
+    font-size: 15px;
+    line-height: 1.8;
   }
 }
