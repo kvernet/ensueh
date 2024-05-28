@@ -157,7 +157,7 @@ class Course {
         .'</div>';
     }
 
-    static public function getDisplayModal(int $id, string $action="", string $text="Visualiser/Télécharger") {
+    static public function getDisplayModal(int $id, string $action="", string $text="Visualiser") {
         $course = (new CourseModel)->getById($id);
         $target = "modal_display_course_" . $id;
         $file_path = getUploadedFilePath($course->getFilePath());

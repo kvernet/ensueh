@@ -35,6 +35,6 @@ class Header {
         echo '<title>'. $this->title .'</title>';
         echo $clinks;
         echo '</head>';
-        echo '<body>';
+        echo '<body class="container-fluid bg-light">';
     }
 }

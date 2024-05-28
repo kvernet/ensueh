@@ -40,6 +40,30 @@ class HomeController extends Controller {
         ]);
     }
 
+    public function ens_admission() {
+        $this->view("home/ens_admission", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function ens_history() {
+        $this->view("home/ens_history", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function ens_presention() {
+        $this->view("home/ens_presention", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function ens_vision() {
+        $this->view("home/ens_vision", [
+            "title" => APP_NAME
+        ]);
+    }
+
     public function formations() {
         $this->view("home/formations", [
             "title" => APP_NAME
