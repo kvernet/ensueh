@@ -65,11 +65,10 @@ class UserModel extends Model {
         return count($data) > 0;
     }
 
-    public function get(string $user_name, string $pwd, WhoAmI $whoAmI) : User|null {
+    public function get(string $user_name, string $pwd) : User|null {
         $encrypted_pwd = $this->getEncryptedPwd($pwd);
-        $sql = "SELECT *, TIMESTAMPDIFF(SECOND, last_activity, now()) as tdiff FROM " . $this->table . " WHERE (whoami_id=:whoami_id AND user_name=:user_name AND pwd=:pwd)";
+        $sql = "SELECT *, TIMESTAMPDIFF(SECOND, last_activity, now()) as tdiff FROM " . $this->table . " WHERE (user_name=:user_name AND pwd=:pwd)";
         $data = $this->query($sql, [
-            [":whoami_id", $whoAmI->value, PDO::PARAM_STR],
             [":user_name", $user_name, PDO::PARAM_STR],
             [":pwd", $encrypted_pwd, PDO::PARAM_STR]
         ])->execute()->fetchAll();

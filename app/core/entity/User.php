@@ -115,7 +115,6 @@ class User {
         //.$singleModel->setTable("statuses")->getAllAsOptions($user->getStatus()->value)
         .$singleModel->setTable("statuses")->getAllAsOptions($user->getStatus()->value,
             [
-                Status::CONNECTED->value,
                 Status::ACTIVE->value,
                 Status::INACTIVE->value,
                 Status::ONLINE->value,

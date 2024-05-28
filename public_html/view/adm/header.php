@@ -17,13 +17,12 @@ $params["n_received_msg"] = 0;
 $status = AdmController::getStatus();
 if($status == Status::ONLINE || $status == Status::ACTIVE) {
     $navbar = new Navbar;
-    $navbar->addLi("Accueil", APP_DOMAIN . "adm/home", ['active'], ["aria-current" => "page"])
+    $navbar->addLi("Etudiants", APP_DOMAIN . "adm/students", ['active'], ["aria-current" => "page"])
+        ->addLi("Professeurs", APP_DOMAIN . "adm/professors")
         ->addLiDropdown("Mes messages", [
             ["text" => "Envoyés", "href" => APP_DOMAIN . "adm/msg_sent"],
             ["text" => "Reçus(" . $params["n_received_msg"] . ")", "href" => APP_DOMAIN . "adm/msg_received"]
         ], -1)
-        ->addLi("Etudiants", APP_DOMAIN . "adm/student")
-        ->addLi("Professeurs", APP_DOMAIN . "adm/professor")
         ->addLiDropdown("Mon compte", [
             ["text" => "Changer mot de passe", "href" => APP_DOMAIN . "adm/cpwd"],
             ["text" => "Se déconnecter", "href" => APP_DOMAIN . "adm/logout"]

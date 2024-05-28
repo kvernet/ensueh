@@ -12,6 +12,10 @@ class StudentController extends UserController {
         $this->setWhoAmI(WhoAmI::STUDENT);
     }
 
+    public function certificates() {
+        $this->goCheck($this->dir . "certificates");
+    }
+
     public function courses() {
         $this->goCheck($this->dir . "courses");
     }
@@ -20,7 +24,7 @@ class StudentController extends UserController {
         $this->goCheck($this->dir . "get_courses_as_table");
     }
 
-    public function notes() {
-        $this->goCheck($this->dir . "notes");
+    public function rnotes() {
+        $this->goCheck($this->dir . "rnotes");
     }
 }

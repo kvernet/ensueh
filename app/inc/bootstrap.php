@@ -24,7 +24,7 @@ function deleteSessions() {
 function deleteCookies() {
     foreach($_COOKIE as $key => $value) {
         unset($value);
-        setcookie($key, '', time() - 86400 * 365);
+        setcookie($key, '', time() - 86400 * 30);
     }
 }
 
@@ -35,7 +35,7 @@ function pretiffy($ar) : void {
     echo "</pre>";
 }
 
-//
+// move file to uploads folder
 function uploadFile(array $file_data, string $file_name) : Message {
     if(count($file_data) < 1) return Message::FILE_UPLOAD_FAILED;
     if($file_data['error'] != 0) return Message::FILE_UPLOAD_FAILED;
@@ -54,6 +54,7 @@ function uploadFile(array $file_data, string $file_name) : Message {
     return Message::FILE_UPLOAD_FAILED;
 }
 
+// get file from uploads folder
 function getUploadedFilePath(string $file_name) : string {
     return APP_DOMAIN . "uploads/courses/pdf/" . $file_name;
 }

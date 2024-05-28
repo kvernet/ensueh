@@ -16,5 +16,5 @@ if($status == Status::ONLINE || $status == Status::ACTIVE) {
     // delete cookies
     deleteCookies();
 
-    redirectMe("index");
+    redirectMe("..");
 }

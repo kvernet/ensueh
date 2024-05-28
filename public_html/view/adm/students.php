@@ -5,7 +5,7 @@ use app\core\entity\WhoAmI;
 
 include_once("header.php");
 
-echo '<h3 style="text-align: center;">Gestion des professeurs</h3>';
+echo '<h3 style="text-align: center;">Gestion des étudiants</h3>';
 
 echo 'Filtrer par:<br>';
 echo '<input type="text" id="user_name_like" name="user_name_like" placeholder="Identifiant"><br>';
@@ -30,10 +30,10 @@ echo '<div id="user_data_tr"></div>';
 
     async function postData() {
         const formData = new FormData();
-        formData.append("whoami_id", <?=WhoAmI::PROFESSOR->value?>);
+        formData.append("whoami_id", <?=WhoAmI::STUDENT->value?>);
         formData.append("user_name_like", user_name_like.value);
-        formData.append("return_page", "professor");
-        formData.append("color_index", 4);
+        formData.append("return_page", "students");
+        formData.append("color_index", 3);
 
         const response = await fetch("get_users_as_table", {
             method: "POST",

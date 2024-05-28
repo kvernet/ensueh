@@ -17,7 +17,8 @@ $status = StudentController::getStatus();
 if($status == Status::ONLINE || $status == Status::ACTIVE) {
     $navbar = new Navbar;
     $navbar->addLi("Cours", APP_DOMAIN . "student/courses", ['active'], ["aria-current" => "page"])
-        ->addLi("Notes", APP_DOMAIN . "student/notes")
+        ->addLi("Relevés de notes", APP_DOMAIN . "student/rnotes")
+        ->addLi("Certificats de scolarité", APP_DOMAIN . "student/certificates")
         ->addLiDropdown("Mes messages", [
             ["text" => "Envoyés", "href" => APP_DOMAIN . "student/msg_sent"],
             ["text" => "Reçus(" . $params["n_received_msg"] . ")", "href" => APP_DOMAIN . "student/msg_received"]

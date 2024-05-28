@@ -14,6 +14,15 @@ enum WhoAmI : int {
         return WhoAmI::tryFrom($id) ?? WhoAmI::UNKNOWN;
     }
 
+    public function getHome() : string {
+        return match($this) {
+            WhoAmI::STUDENT => "student/courses",
+            WhoAmI::PROFESSOR => "professor/courses",
+            WhoAmI::ADM => "adm/students",
+            Default => ""
+        };
+    }
+
     public function toText() : string {
         $single = (new SingleModel)->setTable("WhoAmI")->get($this->value);
         if($single == null) return "Message inconnu";

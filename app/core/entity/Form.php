@@ -5,7 +5,7 @@ namespace app\core\entity;
 class Form {
 
     public function __construct(
-        private $content=null
+        private string $content=""
     ) {
     }
 

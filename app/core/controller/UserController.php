@@ -102,32 +102,6 @@ class UserController extends Controller {
         }        
     }
 
-    public function home() : void {
-        $this->goCheck($this->dir . "home");
-    }
-    
-    public function index() : void {
-        if($this->canAccesIt() && self::getStatus() == Status::ONLINE) {
-            redirectMe($this->dir . "home");
-        }
-        else {
-            $this->view($this->dir . "index", [
-                "title" => $this->title
-            ]);
-        }
-    }
-
-    public function login() : void {
-        if($this->canAccesIt() && self::getStatus() == Status::ONLINE) {
-            redirectMe($this->dir . "home");
-        }
-        else {
-            $this->view($this->dir . "login", [
-                "title" => $this->title
-            ]);
-        }
-    }
-
     public function logout() : void {
         $this->goCheck($this->dir . "logout");
     }
@@ -138,10 +112,6 @@ class UserController extends Controller {
 
     public function msg_sent() {
         $this->goCheck($this->dir . "msg_sent");
-    }
-
-    public function professor() : void {
-        $this->goCheck($this->dir . "professor");
     }
 
     public function search() : void {
@@ -161,10 +131,6 @@ class UserController extends Controller {
     public function setWhoAmI(WhoAmI $whoAmI) : self {
         $this->whoAmI = $whoAmI;
         return $this;
-    }
-
-    public function student() : void {
-        $this->goCheck($this->dir . "student");
     }
 
     static public function getUniqid() : string|null {

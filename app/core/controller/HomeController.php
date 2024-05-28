@@ -118,6 +118,18 @@ class HomeController extends Controller {
         ]);
     }
 
+    public function request_login() {
+        $this->view("home/request_login", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function request_signup() {
+        $this->view("home/request_signup", [
+            "title" => APP_NAME
+        ]);
+    }
+
     public function researchers() {
         $this->view("home/researchers", [
             "title" => APP_NAME
@@ -126,6 +138,12 @@ class HomeController extends Controller {
 
     public function search() {
         $this->view("home/search", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function signup() {
+        $this->view("home/signup", [
             "title" => APP_NAME
         ]);
     }
