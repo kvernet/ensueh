@@ -2,14 +2,21 @@
 include_once("header.php");
 ?>
 
-<div class="container-fluid py-3">
-    <div class="row">
-        <h2 style="text-align: center;">Formations en construction...</h2>
+<div class="container-fluid bg-dark">
+
+    <div class="container py-lg-5">
+
+        <div class="row pt-lg-5"></div>
+
+        <div class="row">
+            <h2 class="text-light" style="text-align: center;">Formation en construction...</h2>
+        </div>
+        
+
+
     </div>
 
-    <div class="row">
 
-    </div>
 
 </div>
 

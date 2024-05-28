@@ -2,7 +2,23 @@
 include_once("header.php");
 ?>
 
-<h2 style="text-align: center;">Venir à l'<?=APP_NAME?> en construction...</h2>
+<div class="container-fluid bg-dark">
+
+    <div class="container py-lg-5">
+
+        <div class="row pt-lg-5"></div>
+
+        <div class="row">
+            <h2 class="text-light" style="text-align: center;">Venir à l'<?=APP_NAME?> en construction...</h2>
+        </div>
+        
+
+
+    </div>
+
+
+
+</div>
     
 <?php
 include_once("footer.php");
