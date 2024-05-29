@@ -7,6 +7,17 @@
 .coul-gris-pale5 {
   background-color: rgba(32, 45, 51, 0.05);
 }
+.coul-bleue-pale75 {
+  background-color: rgba(57, 175, 230, 0.75);
+}
+
+.coul-gris-pale75 {
+  background-color: rgba(50, 68, 77, 0.75);
+}
+
+.texte-bleu {
+  color: rgba(10, 143, 231, 0.75);
+}
 
 .font-dance {
   font-family: "Dancing+Script", serif;

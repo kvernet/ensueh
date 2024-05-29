@@ -68,7 +68,7 @@ include_once("header.php");
         </div>
         <div class="d-flex">
             <i class="bi bi-telephone-inbound-fill"></i>
-            <p > (+509) 4409 7683 </p>
+            <p class="primary"> (+509) 4409 7683 </p>
         </div>
     <a href="#" class="stretched-link">Go somewhere</a>
   </div>
