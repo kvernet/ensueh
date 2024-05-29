@@ -145,8 +145,11 @@ include_once("header.php");
                         Lettres est redevenue Ecole Normale Supérieure jusqu'aujourd'hui.
                     </p>
     <!-- <a href="#" class="stretched-link">Go somewhere</a> -->
+  </div>
+  <div>
+    <img src="../../img/caroussel-acceuil/ima10.jpg" alt="" class=" d-none d-lg-block w-100 img-fluid">
   </div> 
-  <img src="../../img/caroussel-acceuil/ima10.jpg" alt="" class=" d-none d-lg-block w-100 img-fluid">
+  
 </div>
 
 </div>
