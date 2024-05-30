@@ -2,8 +2,10 @@
 include_once("header.php");
 ?>
 
-<h2 style="text-align: center;">Publications en construction...</h2>
-    
+<div class="jumbotron">
+    <h2 class="display-5">Nos publications</h2>
+</div>
+
 <?php
 include_once("footer.php");
 ?>

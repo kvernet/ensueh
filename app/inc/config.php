@@ -4,6 +4,9 @@
 /*To change*/
 define("APP_DOMAIN", "http://127.0.0.1:8080/");
 define("APP_NAME", "ENS UEH");
+define("APP_FULL_NAME", "Ecole Normale Supérieure");
+define("APP_SLOGAN", "Un slogan, une philosophie ???");
+define("UEH", "Université d'Etat d'Haïti");
 define("ACTIVE_DURATION", 600);         // in seconds
 define("ONLINE_DURATION", 60);          // in seconds and must be less than ACTIVE_DURATION
 define("MAX_UPLOAD_FILE_SIZE", 25);     // in MegaByte

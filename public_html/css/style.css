@@ -55,43 +55,43 @@ h1 {
 }
 
 
-@media  screen and (max-width: 1225px) {
+@media screen and (max-width: 1225px) {
     .md-hidden {
         display: none;
     }
 }
 
-@media  screen and (max-width: 1100px) {
+@media screen and (max-width: 1100px) {
     .sm-hidden {
         display: none;
     }
 }
 
-@media  screen and (max-width: 900px) {
+@media screen and (max-width: 900px) {
     .xsm-hidden {
         display: none;
     }
 }
 
-@media  screen and (max-width: 700px) {
+@media screen and (max-width: 700px) {
     .xxsm-hidden {
         display: none;
     }
 }
 
-@media  screen and (max-width: 600px) {
+@media screen and (max-width: 600px) {
     .xxxsm-hidden {
         display: none;
     }
 }
 
-@media  screen and (max-width: 500px) {
+@media screen and (max-width: 500px) {
     .xxxxsm-hidden {
         display: none;
     }
 }
 
-@media  screen and (max-width: 400px) {
+@media screen and (max-width: 400px) {
     .xxxxxsm-hidden {
         display: none;
     }

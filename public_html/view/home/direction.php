@@ -1,7 +1,13 @@
 <?php
-
 include_once("header.php");
+?>
 
-echo '<h2 style="text-align: center;">Direction en construction...</h2>';
- 
+<div class="jumbotron">
+    <h2 class="display-5">Direction de l'ENS</h2>
+</div>
+
+Cette page doit/peut contenir les différents membres que composent la direction de l'ENS ansi que les contacts(émail et/ou téléphone pour contacter le secrétariat)
+
+<?php
 include_once("footer.php");
+?>

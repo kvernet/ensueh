@@ -16,169 +16,157 @@ class HomeController extends Controller {
         die();
     }
 
-    public function coaching() {
+    public function admission() : void {
+        $this->view("home/admission", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function coaching() : void {
         $this->view("home/coaching", [
             "title" => APP_NAME
         ]);
     }
 
-    public function departments() {
+    public function departments() : void {
         $this->view("home/departments", [
             "title" => APP_NAME
         ]);
     }
 
-    public function developers() {
-        $this->view("home/developers", [
-            "title" => APP_NAME
-        ]);
-    }
-
-    public function direction() {
+    public function direction() : void {
         $this->view("home/direction", [
             "title" => APP_NAME
         ]);
     }
 
-    public function ens_admission() {
-        $this->view("home/ens_admission", [
-            "title" => APP_NAME
-        ]);
-    }
-
-    public function ens_history() {
-        $this->view("home/ens_history", [
-            "title" => APP_NAME
-        ]);
-    }
-
-    public function ens_presention() {
-        $this->view("home/ens_presention", [
-            "title" => APP_NAME
-        ]);
-    }
-
-    public function ens_vision() {
-        $this->view("home/ens_vision", [
-            "title" => APP_NAME
-        ]);
-    }
-
-    public function formations() {
+    public function formations() : void {
         $this->view("home/formations", [
             "title" => APP_NAME
         ]);
     }
 
-    public function forums() {
+    public function forums() : void {
         $this->view("home/forums", [
             "title" => APP_NAME
         ]);
     }
-    
-    public function index() {
+
+    public function index() : void {
         $this->view("home/index", [
             "title" => APP_NAME
         ]);
     }
 
-    public function inews() {
+    public function inews() : void {
         $this->view("home/inews", [
             "title" => APP_NAME
         ]);
     }
 
-    public function jobs() {
+    public function jobs() : void {
         $this->view("home/jobs", [
             "title" => APP_NAME
         ]);
     }
 
-    public function laboratories() {
+    public function laboratories() : void {
         $this->view("home/laboratories", [
             "title" => APP_NAME
         ]);
     }
 
-    public function lnews() {
+    public function lnews() : void {
         $this->view("home/lnews", [
             "title" => APP_NAME
         ]);
     }
 
-    public function login() {
+    public function login() : void {
         $this->view("home/login", [
             "title" => APP_NAME
         ]);
     }
 
-    public function partnerships() {
+    public function news() : void {
+        $this->view("home/news", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function partnerships() : void {
         $this->view("home/partnerships", [
             "title" => APP_NAME
         ]);
     }
 
-    public function phds() {
+    public function presentation() : void {
+        $this->view("home/presentation", [
+            "title" => APP_NAME
+        ]);
+    }    
+
+    public function phds() : void {
         $this->view("home/phds", [
             "title" => APP_NAME
         ]);
     }
 
-    public function projects() {
+    public function projects() : void {
         $this->view("home/projects", [
             "title" => APP_NAME
         ]);
     }
 
-    public function publications() {
+    public function publications() : void {
         $this->view("home/publications", [
             "title" => APP_NAME
         ]);
     }
 
-    public function rdv() {
+    public function rdv() : void {
         $this->view("home/rdv", [
             "title" => APP_NAME
         ]);
     }
 
-    public function request_login() {
+    public function request_login() : void {
         $this->view("home/request_login", [
             "title" => APP_NAME
         ]);
     }
 
-    public function request_signup() {
+    public function request_signup() : void {
         $this->view("home/request_signup", [
             "title" => APP_NAME
         ]);
     }
 
-    public function researchers() {
+    public function researchers() : void {
         $this->view("home/researchers", [
             "title" => APP_NAME
         ]);
     }
 
-    public function search() {
+    public function search() : void {
         $this->view("home/search", [
             "title" => APP_NAME
         ]);
     }
 
-    public function signup() {
+    public function signup() : void {
         $this->view("home/signup", [
             "title" => APP_NAME
         ]);
     }
 
-    public function ueh() {
+    public function ueh() : void {
         $this->view("home/ueh", [
             "title" => APP_NAME
         ]);
     }
 
-    public function venir() {
+    public function venir() : void {
         $this->view("home/venir", [
             "title" => APP_NAME
         ]);

@@ -2,9 +2,14 @@
 include_once("header.php");
 ?>
 
-<div class="dashboard-content px-3 pt-4 text-justify">
 <div class="jumbotron">
-        <h2 class="display-6">Admission à <?=APP_NAME?></h2>
+    <h2 class="display-5">Admission à l'<?= APP_FULL_NAME ?></h2>
+</div>
+
+<hr class="my-4">
+
+<div class="dashboard-content px-3 pt-4 text-justify">
+    <div class="jumbotron">
         <p class="lead">
             Les étudiants sont recrutés par un concours, qui a lieu chaque année, en principe, à la rentrée de septembre. La durée des formations du premier cycle est de quatre (4) ans.
             La première année est l'année préparatoire: elle sert de transition entre l'enseignement secondaire et l'enseignement supérieur. La deuxième, troisième et quatrième années préparent aux différents certificats d'Etudes Supérieures et au diplôme de fin d'études.

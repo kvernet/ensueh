@@ -1,7 +1,11 @@
 <?php
-
 include_once("header.php");
+?>
 
-echo '<h2 style="text-align: center;">Actualités locales en construction...</h2>';
+<div class="jumbotron">
+    <h2 class="display-5">Actualités locales</h2>
+</div>
 
+<?php
 include_once("footer.php");
+?>
