@@ -47,7 +47,7 @@ function getMsg() : string {
 ->add('</div>')
 ->add('</div>')
 ->add('<div class="mb-2">')
-->add('<input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Se connecter" onclick="sendData();" />')
+->add('<input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Se connecter" />')
 ->add('</div>')
 ->add('<div class="row">')
 ->add('<div class="mb-4">')

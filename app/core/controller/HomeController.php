@@ -160,6 +160,12 @@ class HomeController extends Controller {
         ]);
     }
 
+    public function signup_welcome() {
+        $this->view("home/signup_welcome", [
+            "title" => APP_NAME
+        ]);
+    }
+
     public function ueh() : void {
         $this->view("home/ueh", [
             "title" => APP_NAME

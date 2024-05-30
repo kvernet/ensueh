@@ -6,11 +6,23 @@ function checkLength(tag, min_length, msg, span) {
     return true;
 }
 
-function sendLoginForm(form, page, spanTag) {
-    sendData(form, page, spanTag);
+function emailValid (email) {
+    var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(email);
 }
 
-async function sendData(form, page, spanTag, method = "POST") {
+function passwordValid(password) {
+    var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return re.test(password);
+}
+
+function phoneNumberValid(phone) {
+    // various international formats
+    var re = /^\+?\d{1,4}?[-.\s]?(\d{1,3}?[-.\s]?){1,4}\d{1,4}$/;
+    return re.test(phone);
+}
+
+async function sendData(form, page, spanTag, method) {
     // Associate the FormData object with the form element
     const formData = new FormData(form);
 
@@ -31,4 +43,8 @@ async function sendData(form, page, spanTag, method = "POST") {
     } catch (e) {
         //alert(e);
     }
+}
+
+function sendLoginForm(form, page, spanTag, method = "POST") {
+    sendData(form, page, spanTag, method);
 }

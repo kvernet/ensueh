@@ -18,24 +18,26 @@ class UserModel extends Model {
 
     private $table = "users";
 
-    public function add(User $user) : bool {
+    public function add(User $user) : Message {
         try {
             if($this->emailExists($user->getEmail())) {
-                return Message::getMessage(Message::EMAIL_EXIST_MESSAGE);
+                return Message::EMAIL_EXIST_MESSAGE;
             }
             elseif($this->phoneExists($user->getPhone())) {
-                return Message::getMessage(Message::PHONE_EXIST_MESSAGE);
+                return Message::PHONE_EXIST_MESSAGE;
             }
             elseif($this->userNameExists($user->getUserName())) {
-                return Message::getMessage(Message::USERNAME_EXIST_MESSAGE);
+                return Message::USERNAME_EXIST_MESSAGE;
             }
+
+            $encrypted_pwd = $this->getEncryptedPwd($user->getPwd());
             
             $sql = "INSERT INTO " . $this->table . "(first_name, last_name, 
             gender_id, email, phone, department_id, whoami_id, section_id, 
             grade_id, user_name, pwd) VALUES(:first_name, :last_name, 
             :gender_id, :email, :phone, :department_id, :whoami_id, :section_id, 
             :grade_id, :user_name, :pwd)";
-            $c = $this->query($sql, [
+            $this->query($sql, [
                 [":first_name", $user->getFirstName(), PDO::PARAM_STR],
                 [":last_name", $user->getLastName(), PDO::PARAM_STR],
                 [":gender_id", $user->getGender()->value, PDO::PARAM_INT],
@@ -46,14 +48,14 @@ class UserModel extends Model {
                 [":section_id", $user->getSection()->value, PDO::PARAM_INT],
                 [":grade_id", $user->getGrade()->value, PDO::PARAM_INT],
                 [":user_name", $user->getUserName(), PDO::PARAM_STR],
-                [":pwd", $user->getPwd(), PDO::PARAM_STR]
+                [":pwd", $encrypted_pwd, PDO::PARAM_STR]
             ])->execute();
-            return true;
+            return Message::SUCCESS_MSG;
         }
         catch(PDOException $e) {
             echo "Add user error message: " . $e->getMessage();
         }
-        return false;
+        return Message::UNKNOWN;
     }
 
     public function emailExists(string $email, int $id=-1) : bool {

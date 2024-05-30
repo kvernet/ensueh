@@ -44,7 +44,7 @@ if($_POST) {
 
             $home = $user->getWhoAmI()->getHome();
             
-            $result['page'] = "../" . $home;
+            $result['page'] = APP_DOMAIN . $home;
             $result['msg_id'] = Message::SUCCESS_MSG->value;
             $result['msg'] = Message::getMessage(Message::SUCCESS_MSG);
             //XXX
