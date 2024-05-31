@@ -3,6 +3,8 @@
 use app\core\entity\Form;
 use app\core\entity\Message;
 
+$params['nav_item_active'] = "Connexion";
+
 include_once("header.php");
 
 function getMsg() : string {
@@ -73,7 +75,8 @@ function getMsg() : string {
 ->add('details.innerHTML = "";')
 ->add('if (checkLength(user_name, 3, "L\'identifiant doit contenir au moins trois (3) caractères.", details)) {')
 ->add('if (checkLength(pwd, 7, "Le mot de passe doit contenir au moins sept (7) caractères.", details)) {')
-->add('sendLoginForm(form, "request_login", details);')
+->add('const formData = new FormData(form);')
+->add('sendForm(formData, "request_login", details);')
 ->add('}}});')
 ->add('</script>')
 ->show();

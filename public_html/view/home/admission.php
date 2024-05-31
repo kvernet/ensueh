@@ -1,4 +1,6 @@
 <?php
+$params['nav_item_active'] = "Admission";
+
 include_once("header.php");
 ?>
 

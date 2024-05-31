@@ -12,10 +12,13 @@ class Navbar {
     // $link : the link to go through when clicking
     // $class : the table that contains all the classes to design the element
     // $attributes : the associative table that contains all other attributes. Example aria-current="page"
-    public function addLi(string $text, string $link,
+    public function addLi(string $text, string $link, bool $isActive=false,
             array $class=[], array $attributes=[]) : Navbar {
         $this->content .= '<li class="nav-item">';
         $a = '<a class="nav-link';
+        if($isActive) {
+            $a .= ' active';
+        }
         foreach($class as $cls) {
             $a .= ' ' . $cls;
         }

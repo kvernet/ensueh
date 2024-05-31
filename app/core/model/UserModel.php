@@ -247,13 +247,12 @@ class UserModel extends Model {
         return count($data) > 0;
     }
 
-    public function searchUsersByUserNameLike(WhoAmI $whoAmI, string $user_name_like="") : array {
+    public function searchUsersByUserNameLike(WhoAmI $whoAmI) : array {
         $users = array();
 
-        $sql = "SELECT * FROM users WHERE (whoami_id=:whoami_id AND user_name LIKE :user_name)";
+        $sql = "SELECT * FROM users WHERE (whoami_id=:whoami_id)";
         $data = $this->query($sql, [
-            [":whoami_id", $whoAmI->value, PDO::PARAM_INT],
-            [":user_name", "%" . $user_name_like . "%", PDO::PARAM_STR]
+            [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
         ])->execute()->fetchAll();
         foreach($data as $d) {
             $user = new User(

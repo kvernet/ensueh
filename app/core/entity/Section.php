@@ -8,6 +8,10 @@ enum Section : int {
     case PHYSICS    = 1;
     case MATH       = 2;
     case PHYLOSOPHY = 3;
+    case NATURAL_SCIENCES = 4;
+    case MODERN_LANGUAGES = 5;
+    case LIVING_LANGUAGES = 6;
+    case HISTORY_GEOGRAPHY = 7;
     case UNKNOWN    = 0;
 
     static public function get(int $id) : Section {

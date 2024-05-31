@@ -1,4 +1,7 @@
 <?php
+
+$params['nav_item_active'] = "Bienvenue";
+
 include_once("header.php");
 ?>
 

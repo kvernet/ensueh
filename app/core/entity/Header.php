@@ -7,6 +7,8 @@ class Header {
     public function __construct(private $title=APP_NAME,
         private $css_links=[
             BOOTSTRAP_CSS,
+            TABLE_CSS,
+            TABLE_JS,
             '<link rel="stylesheet" href="../../css/style.css">'
         ]){
     }

@@ -24,7 +24,7 @@ enum WhoAmI : int {
     }
 
     public function toText() : string {
-        $single = (new SingleModel)->setTable("WhoAmI")->get($this->value);
+        $single = (new SingleModel)->setTable("whoami")->get($this->value);
         if($single == null) return "Message inconnu";
         
         return $single->getContent();

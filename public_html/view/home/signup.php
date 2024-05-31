@@ -5,6 +5,8 @@ use app\core\entity\Message;
 use app\core\entity\WhoAmI;
 use app\core\model\SingleModel;
 
+$params['nav_item_active'] = "Inscription";
+
 include_once("header.php");
 
 function getMsg(): string
@@ -83,7 +85,7 @@ $singleModel = new SingleModel;
     ->add('</div>')
     ->add('</div>')
     ->add('<div class="row">')
-    ->add('<div class="col-md-4 mb-4">')
+    ->add('<div class="col-md-6 mb-4">')
     ->add('<div data-mdb-input-init class="form-outline">')
     ->add('<select class="select form-control form-control-lg" id="whoami" name="whoami">')
     ->add($singleModel->setTable("whoami")->getAllAsOptions(
@@ -94,7 +96,7 @@ $singleModel = new SingleModel;
     ->add('<label class="form-label" for="whoami">Statut</label>')
     ->add('</div>')
     ->add('</div>')
-    ->add('<div class="col-md-4 mb-4">')
+    ->add('<div class="col-md-6 mb-4">')
     ->add('<div data-mdb-input-init class="form-outline">')
     ->add('<select class="select form-control form-control-lg" id="section" name="section">')
     ->add($singleModel->setTable("sections")->getAllAsOptions())
@@ -102,7 +104,7 @@ $singleModel = new SingleModel;
     ->add('<label class="form-label" for="section">Section</label>')
     ->add('</div>')
     ->add('</div>')
-    ->add('<div class="col-md-4 mb-4">')
+    ->add('<div class="col-md-6 mb-4">')
     ->add('<div data-mdb-input-init class="form-outline">')
     ->add('<select class="select form-control form-control-lg" id="grade" name="grade">')
     ->add($singleModel->setTable("grades")->getAllAsOptions())
@@ -180,7 +182,8 @@ $singleModel = new SingleModel;
                         if(checkLength(user_name, 5, "L'identifiant doit contenir au moins cing  (5) caractères.", details)) {
                             if(passwordValid(pwd.value)) {
                                 if(pwd.value == conf_pwd.value) {
-                                    sendLoginForm(form, "request_signup", details);
+                                    const formData = new FormData(form);
+                                    sendForm(formData, "request_signup", details);
                                 }
                                 else {
                                     details.textContent = "Les mots de passe ne se correspondent pas.";

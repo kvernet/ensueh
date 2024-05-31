@@ -154,8 +154,4 @@ class UserController extends Controller {
     public function user_validate() : void {
         $this->goCheck($this->dir . "user_validate");
     }
-
-    public function get_users_as_table() {
-        $this->goCheck($this->dir . "get_users_as_table");
-    }
 }

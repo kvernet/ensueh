@@ -1,4 +1,7 @@
 <?php
+
+$params['nav_item_active'] = "Direction";
+
 include_once("header.php");
 ?>
 

@@ -12,6 +12,11 @@ class AdmController extends UserController {
         $this->setWhoAmI(WhoAmI::ADM);
     }
 
+    public function get_users_as_table() {
+        //$this->goCheck($this->dir . "get_users_as_table");
+        $this->view($this->dir . "get_users_as_table");
+    }
+
     public function students() : void {
         $this->goCheck($this->dir . "students");
     }

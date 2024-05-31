@@ -22,10 +22,7 @@ function phoneNumberValid(phone) {
     return re.test(phone);
 }
 
-async function sendData(form, page, spanTag, method) {
-    // Associate the FormData object with the form element
-    const formData = new FormData(form);
-
+async function sendData(formData, page, spanTag, method) {
     try {
         const response = await fetch(page, {
             method: method,
@@ -33,7 +30,6 @@ async function sendData(form, page, spanTag, method) {
             body: formData
         });
         const data = await response.json();
-        console.log(data);
 
         if(data['msg_id'] == data['msg_id_success']) {
             window.open(data['page'], "_self");
@@ -45,6 +41,6 @@ async function sendData(form, page, spanTag, method) {
     }
 }
 
-function sendLoginForm(form, page, spanTag, method = "POST") {
-    sendData(form, page, spanTag, method);
+function sendForm(formData, page, spanTag, method = "POST") {
+    sendData(formData, page, spanTag, method);
 }

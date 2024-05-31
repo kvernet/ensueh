@@ -3,10 +3,14 @@
 use app\core\entity\Header;
 use app\core\entity\Navbar;
 
+if(!isset($params['nav_item_active'])) {
+    $params['nav_item_active'] = "";
+}
+
 (new Header)->show();
 
 $navbar = new Navbar;
-$navbar->addLi("Accueil", APP_DOMAIN . "home/index", ['active'], ["aria-current" => "page"])
+$navbar->addLi("Accueil", APP_DOMAIN . "home/index", $params['nav_item_active'] == "Accueil")
 ->addLiDropdown("Recherche", [
     ["text" => "Actualités", "href" => APP_DOMAIN . "home/lnews"],
     ["text" => "Laboratoires", "href" => APP_DOMAIN . "home/laboratories"],
@@ -22,8 +26,7 @@ $navbar->addLi("Accueil", APP_DOMAIN . "home/index", ['active'], ["aria-current"
 ->addLiDropdown("Contact", [
     ["text" => "Direction", "href" => APP_DOMAIN . "home/direction"],
     ["text" => "UEH", "href" => APP_DOMAIN . "home/ueh"],
-    ["text" => "Forums", "href" => APP_DOMAIN . "home/forums"],
     ["text" => "Prendre un rendez-vous", "href" => APP_DOMAIN . "home/rdv"]
-], 2)
+], 1)
 ->addSearch(APP_DOMAIN . "home/search");
 $navbar->show();

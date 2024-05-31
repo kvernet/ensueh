@@ -5,9 +5,13 @@ namespace app\core\entity;
 use app\core\model\SingleModel;
 
 enum Grade : int {
-    case LICENCE = 1;
-    case MASTER  = 2;
-    case PHD     = 3;
+    case L0      = 1;
+    case L1      = 2;
+    case L2      = 3;
+    case L3      = 4;
+    case M1      = 5;
+    case M2      = 6;
+    case PHD     = 7;
     case UNKNOWN = 0;
 
     static public function get(int $id) : Grade {

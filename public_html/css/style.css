@@ -54,6 +54,12 @@ h1 {
     background-color: green;
 }
 
+/* Tabulator */
+/*Horizontally center header and footer*/
+.tabulator-print-header,
+tabulator-print-footer {
+    text-align: center;
+}
 
 @media screen and (max-width: 1225px) {
     .md-hidden {

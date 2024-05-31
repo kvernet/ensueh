@@ -4,6 +4,8 @@ use app\core\entity\Course;
 use app\core\entity\Message;
 use app\core\model\SingleModel;
 
+$params['nav_item_active'] = "Cours";
+
 include_once("header.php");
 
 echo '<h3 style="text-align: center;">Gestion des cours</h3>';

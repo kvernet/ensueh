@@ -1,4 +1,7 @@
 <?php
+
+$params['nav_item_active'] = "Formation";
+
 include_once("header.php");
 ?>
 

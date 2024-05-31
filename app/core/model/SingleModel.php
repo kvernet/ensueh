@@ -42,6 +42,20 @@ class SingleModel extends Model {
         return $singles;
     }
 
+    public function getAllAsJSON(array $filteredIds=[]) : string {
+        $data = [];
+
+        $singles = $this->getAll();
+        foreach($singles as $single) {
+            if(in_array($single->getId(), $filteredIds, true)) {
+                continue;
+            }
+            $data[$single->getId()] = $single->getContent();
+        }
+
+        return json_encode($data);
+    }
+
     public function getAllAsOptions(int $selectId=-1, array $filteredIds=[]) : string {
         $options = "";
 

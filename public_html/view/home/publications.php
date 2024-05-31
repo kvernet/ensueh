@@ -1,4 +1,7 @@
 <?php
+
+$params['nav_item_active'] = "Recherche";
+
 include_once("header.php");
 ?>
 

@@ -1,4 +1,6 @@
 <?php
+$params['nav_item_active'] = "Accueil";
+
 include_once("header.php");
 function getCard(
     string $imgPath,

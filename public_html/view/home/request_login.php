@@ -1,6 +1,5 @@
 <?php
 
-use app\core\controller\UserController;
 use app\core\entity\Message;
 use app\core\entity\Status;
 use app\core\model\UserModel;
@@ -12,8 +11,6 @@ $result = [
     "msg_id_success" => Message::SUCCESS_MSG->value
 ];
 
-$userController = new UserController;
-
 if($_POST) {
     $user_name = $_POST["user_name"];
     $pwd = $_POST["pwd"];
@@ -24,9 +21,6 @@ if($_POST) {
 
     if($user != null) {
         $status = $user->getStatus();
-        error_log("=== request_login.php : status = " . $status->toText()); //XXX
-        //XXX
-        error_log("=== UserController::goCheck() : uniqid = " . json_encode($_COOKIE));
         // check if ADM is active
         if($status == Status::VALIDATED || $status == Status::INACTIVE || $status == Status::DISCONNECTED) {
             // save session and cookie
@@ -35,8 +29,6 @@ if($_POST) {
             $uid = uniqid();
             setcookie("uniqid", $uid, time() + 86400 * 30, "/");  // one full day
 
-            //XXX
-            error_log("=== UserController::goCheck() : uniqid = " . json_encode($_COOKIE));
             // update database
             $userModel->updateUniqId($user_name, $uid);
             $userModel->updateStatusByUserName($user_name, Status::CONNECTED);
@@ -47,8 +39,6 @@ if($_POST) {
             $result['page'] = APP_DOMAIN . $home;
             $result['msg_id'] = Message::SUCCESS_MSG->value;
             $result['msg'] = Message::getMessage(Message::SUCCESS_MSG);
-            //XXX
-            error_log("=== UserController::goCheck() : uniqid = " . json_encode($_COOKIE));
         }
         else {
             $result['msg'] = Status::getCaseErrorMsg($status);
