@@ -53,100 +53,130 @@ class UserModel extends Model {
             return Message::SUCCESS_MSG;
         }
         catch(PDOException $e) {
-            echo "Add user error message: " . $e->getMessage();
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
         return Message::UNKNOWN;
     }
 
     public function emailExists(string $email, int $id=-1) : bool {
-        $sql = "SELECT * FROM " . $this->table . " WHERE (email=:email AND id!=:id)";
-        $data = $this->query($sql, [
-            [":email", $email, PDO::PARAM_STR],
-            [":id", $id, PDO::PARAM_INT]
-        ])->execute()->fetchAll();
-        return count($data) > 0;
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE (email=:email AND id!=:id)";
+            $data = $this->query($sql, [
+                [":email", $email, PDO::PARAM_STR],
+                [":id", $id, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            return count($data) > 0;
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+
+        return false;
     }
 
     public function get(string $user_name, string $pwd) : User|null {
-        $encrypted_pwd = $this->getEncryptedPwd($pwd);
-        $sql = "SELECT *, TIMESTAMPDIFF(SECOND, last_activity, now()) as tdiff FROM " . $this->table . " WHERE (user_name=:user_name AND pwd=:pwd)";
-        $data = $this->query($sql, [
-            [":user_name", $user_name, PDO::PARAM_STR],
-            [":pwd", $encrypted_pwd, PDO::PARAM_STR]
-        ])->execute()->fetchAll();
-        if(count($data)) {
-            $user = new User(
-                $data[0]["id"],
-                $data[0]["first_name"], $data[0]["last_name"],
-                Gender::get($data[0]["gender_id"]),
-                $data[0]["email"], $data[0]["phone"],
-                Department::get($data[0]["department_id"]),
-                WhoAmI::get($data[0]["whoami_id"]),
-                Section::get($data[0]["section_id"]),
-                Grade::get($data[0]["grade_id"]),
-                $data[0]["user_name"], $data[0]["pwd"],
-                new DateTime($data[0]["date_ins"]), $data[0]["uniqid"],
-                Status::get($data[0]["status_id"]),
-                new DateTime($data[0]["last_activity"])
-            );
+        try {
+            $encrypted_pwd = $this->getEncryptedPwd($pwd);
+            $sql = "SELECT *, TIMESTAMPDIFF(SECOND, last_activity, now()) as tdiff FROM " . $this->table . " WHERE (user_name=:user_name AND pwd=:pwd)";
+            $data = $this->query($sql, [
+                [":user_name", $user_name, PDO::PARAM_STR],
+                [":pwd", $encrypted_pwd, PDO::PARAM_STR]
+            ])->execute()->fetchAll();
+            if (count($data)) {
+                $user = new User(
+                    $data[0]["id"],
+                    $data[0]["first_name"],
+                    $data[0]["last_name"],
+                    Gender::get($data[0]["gender_id"]),
+                    $data[0]["email"],
+                    $data[0]["phone"],
+                    Department::get($data[0]["department_id"]),
+                    WhoAmI::get($data[0]["whoami_id"]),
+                    Section::get($data[0]["section_id"]),
+                    Grade::get($data[0]["grade_id"]),
+                    $data[0]["user_name"],
+                    $data[0]["pwd"],
+                    new DateTime($data[0]["date_ins"]),
+                    $data[0]["uniqid"],
+                    Status::get($data[0]["status_id"]),
+                    new DateTime($data[0]["last_activity"])
+                );
 
-            $status = self::getStatus([
-                'uniqid' => $data[0]['uniqid'],
-                'status_id' => $data[0]['status_id'],
-                'tdiff' => $data[0]['tdiff']
-            ]);
-            $user->setStatus($status);
-            return $user;
+                $status = self::getStatus([
+                    'uniqid' => $data[0]['uniqid'],
+                    'status_id' => $data[0]['status_id'],
+                    'tdiff' => $data[0]['tdiff']
+                ]);
+                $user->setStatus($status);
+                return $user;
+            }
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
 
         return null;
     }
 
     public function getById(int $id) : User|null {
-        $sql = "SELECT * FROM " . $this->table . " WHERE id=:id";
-        $data = $this->query($sql, [
-            [":id", $id, PDO::PARAM_INT]
-        ])->execute()->fetchAll();
-        if(count($data)) {
-            return new User(
-                $data[0]["id"],
-                $data[0]["first_name"], $data[0]["last_name"], 
-                Gender::get($data[0]["gender_id"]),
-                $data[0]["email"], $data[0]["phone"],
-                Department::get($data[0]["department_id"]), 
-                WhoAmI::get($data[0]["whoami_id"]),
-                Section::get($data[0]["section_id"]),
-                Grade::get($data[0]["grade_id"]),
-                $data[0]["user_name"], $data[0]["pwd"],
-                new DateTime($data[0]["date_ins"]), $data[0]["uniqid"],
-                Status::get($data[0]["status_id"]),
-                new DateTime($data[0]["last_activity"])
-            );
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE id=:id";
+            $data = $this->query($sql, [
+                [":id", $id, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            if (count($data)) {
+                return new User(
+                    $data[0]["id"],
+                    $data[0]["first_name"],
+                    $data[0]["last_name"],
+                    Gender::get($data[0]["gender_id"]),
+                    $data[0]["email"],
+                    $data[0]["phone"],
+                    Department::get($data[0]["department_id"]),
+                    WhoAmI::get($data[0]["whoami_id"]),
+                    Section::get($data[0]["section_id"]),
+                    Grade::get($data[0]["grade_id"]),
+                    $data[0]["user_name"],
+                    $data[0]["pwd"],
+                    new DateTime($data[0]["date_ins"]),
+                    $data[0]["uniqid"],
+                    Status::get($data[0]["status_id"]),
+                    new DateTime($data[0]["last_activity"])
+                );
+            }
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
 
         return null;
     }
 
     public function getByUserName(string $user_name) : User|null {
-        $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
-        $data = $this->query($sql, [
-            [":user_name", $user_name, PDO::PARAM_STR]
-        ])->execute()->fetchAll();
-        if(count($data)) {
-            return new User(
-                $data[0]["id"],
-                $data[0]["first_name"], $data[0]["last_name"], 
-                Gender::get($data[0]["gender_id"]),
-                $data[0]["email"], $data[0]["phone"],
-                Department::get($data[0]["department_id"]), 
-                WhoAmI::get($data[0]["whoami_id"]),
-                Section::get($data[0]["section_id"]),
-                Grade::get($data[0]["grade_id"]),
-                $data[0]["user_name"], $data[0]["pwd"],
-                new DateTime($data[0]["date_ins"]), $data[0]["uniqid"],
-                Status::get($data[0]["status_id"]),
-                new DateTime($data[0]["last_activity"])
-            );
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
+            $data = $this->query($sql, [
+                [":user_name", $user_name, PDO::PARAM_STR]
+            ])->execute()->fetchAll();
+            if (count($data)) {
+                return new User(
+                    $data[0]["id"],
+                    $data[0]["first_name"],
+                    $data[0]["last_name"],
+                    Gender::get($data[0]["gender_id"]),
+                    $data[0]["email"],
+                    $data[0]["phone"],
+                    Department::get($data[0]["department_id"]),
+                    WhoAmI::get($data[0]["whoami_id"]),
+                    Section::get($data[0]["section_id"]),
+                    Grade::get($data[0]["grade_id"]),
+                    $data[0]["user_name"],
+                    $data[0]["pwd"],
+                    new DateTime($data[0]["date_ins"]),
+                    $data[0]["uniqid"],
+                    Status::get($data[0]["status_id"]),
+                    new DateTime($data[0]["last_activity"])
+                );
+            }
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
 
         return null;
@@ -183,96 +213,126 @@ class UserModel extends Model {
     }
 
     public function getStatusDetails(string $user_name) : array {
-        $sql = "SELECT uniqid, status_id, TIMESTAMPDIFF(SECOND, last_activity, now()) as tdiff FROM " . $this->table . " WHERE user_name=:user_name";
-        $data = $this->query($sql, [
-            [":user_name", $user_name, PDO::PARAM_STR]
-        ])->execute()->fetchAll();
-        if(count($data)) {
-            return [
-                'uniqid' => $data[0]['uniqid'],
-                'status_id' => $data[0]['status_id'],
-                'tdiff' => $data[0]['tdiff']
-            ];
+        try {
+            $sql = "SELECT uniqid, status_id, TIMESTAMPDIFF(SECOND, last_activity, now()) as tdiff FROM " . $this->table . " WHERE user_name=:user_name";
+            $data = $this->query($sql, [
+                [":user_name", $user_name, PDO::PARAM_STR]
+            ])->execute()->fetchAll();
+            if (count($data)) {
+                return [
+                    'uniqid' => $data[0]['uniqid'],
+                    'status_id' => $data[0]['status_id'],
+                    'tdiff' => $data[0]['tdiff']
+                ];
+            }
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
 
         return array();
     }
 
     public function getUsers(WhoAmI $whoAmI) : array {
-        $users = array();
+        try {
+            $users = array();
 
-        $sql = "SELECT * FROM ". $this->table ." WHERE whoami_id=:whoami_id";
-        $data = $this->query($sql, [
-            [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
-        ])->execute()->fetchAll();
-        foreach($data as $d) {
-            $user = new User(
-                $d["id"], $d["first_name"], $d["last_name"],
-                Gender::get($d["gender_id"]),
-                $d["email"], $d["phone"],
-                Department::get($d["department_id"]), 
-                WhoAmI::get($d["whoiam_id"]),
-                Section::get($d["section_id"]),
-                Grade::get($d["grade_id"]),
-                $d["user_name"], $d["pwd"],
-                new DateTime($d["date_ins"]), $d["uniqid"],
-                Status::get($d["status_id"]),
-                new DateTime($d["last_activity"])
-            );
+            $sql = "SELECT * FROM " . $this->table . " WHERE whoami_id=:whoami_id";
+            $data = $this->query($sql, [
+                [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            foreach ($data as $d) {
+                $user = new User(
+                    $d["id"],
+                    $d["first_name"],
+                    $d["last_name"],
+                    Gender::get($d["gender_id"]),
+                    $d["email"],
+                    $d["phone"],
+                    Department::get($d["department_id"]),
+                    WhoAmI::get($d["whoiam_id"]),
+                    Section::get($d["section_id"]),
+                    Grade::get($d["grade_id"]),
+                    $d["user_name"],
+                    $d["pwd"],
+                    new DateTime($d["date_ins"]),
+                    $d["uniqid"],
+                    Status::get($d["status_id"]),
+                    new DateTime($d["last_activity"])
+                );
 
-            array_push($users, $user);
+                array_push($users, $user);
+            }
+            return $users;
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
-
-        return $users;
+        return array();
     }
 
     public function getWhoAmI(string $user_name) : WhoAmI {
-        $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
-        $data = $this->query($sql, [
-            [":user_name", $user_name, PDO::PARAM_STR]
-        ])->execute()->fetchAll();
-        if(count($data)) {
-            return WhoAmI::get($data[0]["whoami_id"]);
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
+            $data = $this->query($sql, [
+                [":user_name", $user_name, PDO::PARAM_STR]
+            ])->execute()->fetchAll();
+            if (count($data)) {
+                return WhoAmI::get($data[0]["whoami_id"]);
+            }
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
-
         return WhoAmI::UNKNOWN;
     }
 
     public function phoneExists(string $phone, int $id=-1) : bool {
-        $sql = "SELECT * FROM " . $this->table . " WHERE (phone=:phone AND id!=:id)";
-        $data = $this->query($sql, [
-            [":phone", $phone, PDO::PARAM_STR],
-            [":id", $id, PDO::PARAM_INT]
-        ])->execute()->fetchAll();
-        return count($data) > 0;
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE (phone=:phone AND id!=:id)";
+            $data = $this->query($sql, [
+                [":phone", $phone, PDO::PARAM_STR],
+                [":id", $id, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            return count($data) > 0;
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return false;
     }
 
     public function searchUsersByUserNameLike(WhoAmI $whoAmI) : array {
-        $users = array();
+        try {
+            $users = array();
 
-        $sql = "SELECT * FROM users WHERE (whoami_id=:whoami_id)";
-        $data = $this->query($sql, [
-            [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
-        ])->execute()->fetchAll();
-        foreach($data as $d) {
-            $user = new User(
-                $d["id"], $d["first_name"], $d["last_name"],
-                Gender::get($d["gender_id"]),
-                $d["email"], $d["phone"],
-                Department::get($d["department_id"]), 
-                WhoAmI::get($d["whoami_id"]),
-                Section::get($d["section_id"]),
-                Grade::get($d["grade_id"]),
-                $d["user_name"], $d["pwd"],
-                new DateTime($d["date_ins"]), $d["uniqid"],
-                Status::get($d["status_id"]),
-                new DateTime($d["last_activity"])
-            );
+            $sql = "SELECT * FROM users WHERE (whoami_id=:whoami_id)";
+            $data = $this->query($sql, [
+                [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            foreach ($data as $d) {
+                $user = new User(
+                    $d["id"],
+                    $d["first_name"],
+                    $d["last_name"],
+                    Gender::get($d["gender_id"]),
+                    $d["email"],
+                    $d["phone"],
+                    Department::get($d["department_id"]),
+                    WhoAmI::get($d["whoami_id"]),
+                    Section::get($d["section_id"]),
+                    Grade::get($d["grade_id"]),
+                    $d["user_name"],
+                    $d["pwd"],
+                    new DateTime($d["date_ins"]),
+                    $d["uniqid"],
+                    Status::get($d["status_id"]),
+                    new DateTime($d["last_activity"])
+                );
 
-            array_push($users, $user);
+                array_push($users, $user);
+            }
+            return $users;
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
-
-        return $users;
+        return array();
     }
 
     public function setTable(string $table) : UserModel {
@@ -311,7 +371,7 @@ class UserModel extends Model {
             return Message::SUCCESS_MSG;
         }
         catch(PDOException $e) {
-            echo "Update user by id error message: " . $e->getMessage();
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
         return Message::UNKNOWN;
     }
@@ -347,7 +407,7 @@ class UserModel extends Model {
             return Message::SUCCESS_MSG;
         }
         catch(PDOException $e) {
-            echo "Update user by user name error message: " . $e->getMessage();
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
         return Message::UNKNOWN;
     }
@@ -361,7 +421,7 @@ class UserModel extends Model {
             return true;
         }
         catch(PDOException $e) {
-            echo "Update last activity error message: " . $e->getMessage();
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
         return false;
     }
@@ -376,7 +436,7 @@ class UserModel extends Model {
             return true;
         }
         catch(PDOException $e) {
-            echo "Update status by id error message: " . $e->getMessage();
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
         return false;
     }
@@ -391,7 +451,7 @@ class UserModel extends Model {
             return true;
         }
         catch(PDOException $e) {
-            echo "Update status by user name error message: " . $e->getMessage();
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
         return false;
     }
@@ -399,23 +459,27 @@ class UserModel extends Model {
     public function updateUniqId(string $user_name, string $uniqid) : bool {
         try {
             $sql = "UPDATE " . $this->table . " SET uniqid=:uniqid WHERE user_name=:user_name";
-            $c = $this->query($sql, [
+            $this->query($sql, [
                 [":uniqid", $uniqid, PDO::PARAM_STR],
                 [":user_name", $user_name, PDO::PARAM_STR]
             ])->execute();
             return true;
-        }
-        catch(PDOException $e) {
-            echo "Update uniqid error message: " . $e->getMessage();
+        } catch(PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
         return false;
     }
 
     public function userNameExists(string $user_name) : bool {
-        $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
-        $data = $this->query($sql, [
-            [":user_name", $user_name, PDO::PARAM_STR]
-        ])->execute()->fetchAll();
-        return count($data) > 0;
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
+            $data = $this->query($sql, [
+                [":user_name", $user_name, PDO::PARAM_STR]
+            ])->execute()->fetchAll();
+            return count($data) > 0;
+        } catch(PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return false;
     }
 }

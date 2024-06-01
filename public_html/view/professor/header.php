@@ -22,7 +22,7 @@ if($status == Status::ONLINE || $status == Status::ACTIVE) {
     $navbar->addLi("Cours", APP_DOMAIN . "professor/courses", $params['nav_item_active'] == "Cours")
         ->addLi("Notes", APP_DOMAIN . "professor/notes", $params['nav_item_active'] == "Notes")
         ->addLi("Mon calendrier", APP_DOMAIN . "professor/calendar", $params['nav_item_active'] == "Mon calendrier")
-        ->addLi("Mes projets", APP_DOMAIN . "professor/projets", $params['nav_item_active'] == "Mes projets")
+        ->addLi("Mes projets", APP_DOMAIN . "professor/projects", $params['nav_item_active'] == "Mes projets")
         ->addLiDropdown("Mes messages", [
             ["text" => "Envoyés", "href" => APP_DOMAIN . "professor/msg_sent"],
             ["text" => "Reçus(" . $params["n_received_msg"] . ")", "href" => APP_DOMAIN . "professor/msg_received"]

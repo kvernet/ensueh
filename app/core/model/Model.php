@@ -18,8 +18,9 @@ class Model {
             $this->pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PWD, $options);
             // set the PDO error mode to exception
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e) {
-            echo "Connection failed : " . $e->getMessage();
+        } catch(PDOException) {
+            echo '<h2 style="text-align:center;">Connection to the database failed.<br>';
+            die();
         }
     }
 
@@ -27,16 +28,16 @@ class Model {
         $this->pdo = null;
     }
 
-    protected function execute() : Model {
+    protected function execute() : Model|null {
         try {
             // execute
             $this->stmt->execute();
             return $this;
         }
         catch(PDOException $e) {
-            echo "Error message : " . $e->getMessage();
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
-        die("<br><br>Execute failed.");
+        return null;
     }
 
     protected function fetchAll() : array {
@@ -47,9 +48,9 @@ class Model {
             return $this->stmt->fetchAll();
         }
         catch(PDOException $e) {
-            echo "Error message : " . $e->getMessage();
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
-        die("<br><br>Fetch failed.");
+        return array();
     }
 
     public function getEncryptedPwd(string $pwd) : string|null {
@@ -63,12 +64,12 @@ class Model {
             }
         }
         catch(PDOException $e) {
-            echo "Error message : " . $e->getMessage();
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
-        die("<br><br>Encrypt password failed.");
+        return null;
     }
 
-    protected function query($sql, $params) : Model {
+    protected function query($sql, $params) : Model|null {
         try {
             // prepare sql
             $this->stmt = $this->pdo->prepare($sql);
@@ -81,8 +82,8 @@ class Model {
             return $this;
         }
         catch(PDOException $e) {
-            echo "Error message : " . $e->getMessage();
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
-        die("<br><br>Query failed.");
+        return null;
     }
 }

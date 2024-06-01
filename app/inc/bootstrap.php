@@ -6,6 +6,22 @@ use app\core\entity\Message;
 
 require_once("config.php");
 
+function getUserIP() : string {
+    // Check for shared internet/ISP IP address
+    if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    }
+    // Check for proxy user
+    elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
+    // Check for remote address
+    else{
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+}
+
 // redirect to a page
 function redirectMe(string $page) : void {
     header("Location: " . $page);

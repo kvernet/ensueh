@@ -5,6 +5,7 @@ namespace app\core\controller;
 use app\core\entity\Message;
 use app\core\entity\Status;
 use app\core\entity\WhoAmI;
+use app\core\model\HistoryModel;
 use app\core\model\UserModel;
 
 class UserController extends Controller {
@@ -13,6 +14,8 @@ class UserController extends Controller {
     protected $whoAmI = WhoAmI::STUDENT;
 
     public function _403() : void {
+        (new HistoryModel)->add("Page [__403] visitée", $this->getWho());
+        
         $this->view("error/info", [
             "header" => PUBLIC_DIR . "view/". $this->dir ."header.php",
             "footer" => PUBLIC_DIR . "view/". $this->dir ."footer.php",
@@ -23,6 +26,8 @@ class UserController extends Controller {
     }
 
     public function _404() : void {
+        (new HistoryModel)->add("Page [__404] visitée", $this->getWho());
+        
         $this->view("error/info", [
             "header" => PUBLIC_DIR . "view/". $this->dir ."header.php",
             "footer" => PUBLIC_DIR . "view/". $this->dir ."footer.php",
@@ -79,7 +84,20 @@ class UserController extends Controller {
         return $status;
     }
 
+    private function getWho() : string {
+        if($this->whoAmI == WhoAmI::ADM) {
+            return AdmController::getUserName();
+        } elseif($this->whoAmI == WhoAmI::PROFESSOR) {
+            return ProfessorController::getUserName();
+        } elseif($this->whoAmI == WhoAmI::STUDENT) {
+            return StudentController::getUserName();
+        }
+        return getUserIP();
+    }
+
     public function goCheck(string $page) : void {
+        (new HistoryModel)->add("Page [" . $page ."] visitée", $this->getWho());
+        
         $status = self::getStatus();
         if($this->canAccesIt()) {
             if($this->canAccesIt() && ($status == Status::ONLINE || $status == Status::ACTIVE)) {

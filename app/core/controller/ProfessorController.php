@@ -32,8 +32,8 @@ class ProfessorController extends UserController {
         $this->goCheck($this->dir . "notes");
     }
 
-    public function projets() {
-        $this->goCheck($this->dir . "projets");
+    public function projects() {
+        $this->goCheck($this->dir . "projects");
     }
 
     public function update_course() {

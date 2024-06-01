@@ -9,7 +9,7 @@ $params['nav_item_active'] = "Professeurs";
 
 include_once("header.php");
 
-echo '<h3 style="text-align: center;">Gestion des étudiants</h3>';
+echo '<h3 style="text-align: center;">Gestion des professeurs</h3>';
 
 echo '<div>'
     . '<a href="#" id="print-table" class="btn btn-success my-2">Imprimer tableau</a>'
@@ -72,7 +72,7 @@ echo '<hr class="my-4">';
         ajaxConfig: "POST",
 
         printAsHtml: true,
-        printHeader: "<h1>Liste des étudiants<h1>",
+        printHeader: "<h1>Liste des professeurs<h1>",
         printFooter: "<h2> <?= APP_NAME ?> <h2>",
 
         columns: [{

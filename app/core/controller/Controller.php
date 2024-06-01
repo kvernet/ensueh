@@ -3,11 +3,14 @@
 namespace app\core\controller;
 
 use app\core\entity\Message;
+use app\core\model\HistoryModel;
 
 class Controller {
 
     public function _404() : void {
-        $this->view("error/info", [
+        (new HistoryModel)->add("Page [_404] visitée", getUserIP());
+        
+        $this->info([
             "title" => APP_NAME . " - Erreur 404",
             "msg" => Message::getMessage(Message::PAGE_NOT_EXISTS_MSG)
         ]);
@@ -15,7 +18,9 @@ class Controller {
     }
 
     public function _403() : void {
-        $this->view("error/info", [
+        (new HistoryModel)->add("Page [_403] visitée", getUserIP());
+        
+        $this->info([
             "title" => APP_NAME . " - Erreur 403",
             "msg" => Message::getMessage(Message::ACCESS_DENIED_MSG)
         ]);
