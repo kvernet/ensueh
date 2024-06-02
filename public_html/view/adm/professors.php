@@ -4,10 +4,13 @@ use app\core\entity\Message;
 use app\core\entity\Status;
 use app\core\entity\WhoAmI;
 use app\core\model\SingleModel;
+use app\core\model\UserModel;
 
 $params['nav_item_active'] = "Professeurs";
 
 include_once("header.php");
+
+$whoAmI = WhoAmI::PROFESSOR;
 
 echo '<h3 style="text-align: center;">Gestion des professeurs</h3>';
 
@@ -33,7 +36,7 @@ echo '<hr class="my-4">';
 <script>
     const genderValues = <?php echo getFormatedList("genders"); ?>;
     const departmentValues = <?php echo getFormatedList("departments"); ?>;
-    const whoamiValues = <?php echo getFormatedList("whoami", [WhoAmI::ADM->value]); ?>;
+    const whoamiValues = <?php echo getFormatedList("whoami", [$whoAmI->value]); ?>;
     const sectionValues = <?php echo getFormatedList("sections"); ?>;
     const gradeValues = <?php echo getFormatedList("grades"); ?>;
     const statusValues = <?php echo getFormatedList("statuses", [
@@ -43,14 +46,22 @@ echo '<hr class="my-4">';
                                 Status::OFFLINE->value
                             ]); ?>;
 
-
     var table = new Tabulator("#user-data-tr", {
         pagination: true, //enable pagination
         paginationMode: "remote", //enable remote pagination
-        paginationSize: 10,
-        paginationInitialPage: 2,
-        paginationSizeSelector: [10, 25, 50, 100],
-        paginationAddRow: "table",
+        paginationSize: 15,
+        paginationInitialPage: 1,
+        paginationSizeSelector: [10, 15, 25, 50, 100],
+        movableColumns:true,
+        paginationCounter:"rows",
+        paginationDataSent: { // Customize the parameter names sent to the server
+            "page": "page",
+            "size": "size",
+        },
+        paginationDataReceived: { // Customize the parameter names received from the server
+            "last_page": "last_page",
+            "data": "data",
+        },
 
         layout: "fitDataFill",
         responsiveLayout: "collapse",
@@ -64,10 +75,9 @@ echo '<hr class="my-4">';
         },
 
         ajaxURL: "get_users_as_table",
-        progressiveLoad: "scroll",
         placeholder: "Aucune entrée",
         ajaxParams: {
-            whoami_id: <?= WhoAmI::PROFESSOR->value ?>
+            whoami_id: <?= $whoAmI->value ?>
         },
         ajaxConfig: "POST",
 
@@ -204,15 +214,15 @@ echo '<hr class="my-4">';
     let details = document.getElementById("details");
     //update a user's info
     function update_user(id) {
-        var row = table.getRow(id);
-        var rowData = row.getData();
+        var row = table.getRow(id); // Gets the row at index 3
+        var rowData = row.getData(); // Get the data of the row
         console.log(rowData);
 
         let formData = new FormData();
         for (let row in rowData) {
             formData.append(row, rowData[row]);
         }
-        formData.append("return_page", "professors");
+        formData.append("return_page", "students");
         sendForm(formData, "user_update", details);
 
         return false;

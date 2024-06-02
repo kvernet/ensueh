@@ -182,6 +182,57 @@ class UserModel extends Model {
         return null;
     }
 
+    public function getPaginatedData(WhoAmI $whoAmI, int $offset, int $size): array {
+        $users = array();
+        try {
+            $sql = "SELECT * FROM ". $this->table . " WHERE (whoami_id=:whoami_id) LIMIT :offset, :size";
+            $data = $this->query($sql, [
+                [":whoami_id", $whoAmI->value, PDO::PARAM_INT],
+                [":offset", $offset, PDO::PARAM_INT],
+                [":size", $size, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            foreach ($data as $d) {
+                $user = new User(
+                    $d["id"],
+                    $d["first_name"],
+                    $d["last_name"],
+                    Gender::get($d["gender_id"]),
+                    $d["email"],
+                    $d["phone"],
+                    Department::get($d["department_id"]),
+                    WhoAmI::get($d["whoami_id"]),
+                    Section::get($d["section_id"]),
+                    Grade::get($d["grade_id"]),
+                    $d["user_name"],
+                    $d["pwd"],
+                    new DateTime($d["date_ins"]),
+                    $d["uniqid"],
+                    Status::get($d["status_id"]),
+                    new DateTime($d["last_activity"])
+                );
+
+                array_push($users, $user);
+            }
+            return $users;
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return $users;
+    }
+
+    public function getUsersCount(WhoAmI $whoAmI) : int {
+        try {
+            $sql = "SELECT count(*) AS total FROM users WHERE (whoami_id=:whoami_id)";
+            $data = $this->query($sql, [
+                [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            return $data[0]['total'];
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return 0;
+    }
+
     static public function getStatus(array $ar) : Status {
         if(count($ar) <= 0) return Status::UNKNOWN;
 
@@ -296,43 +347,6 @@ class UserModel extends Model {
             (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
         return false;
-    }
-
-    public function searchUsersByUserNameLike(WhoAmI $whoAmI) : array {
-        try {
-            $users = array();
-
-            $sql = "SELECT * FROM users WHERE (whoami_id=:whoami_id)";
-            $data = $this->query($sql, [
-                [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
-            ])->execute()->fetchAll();
-            foreach ($data as $d) {
-                $user = new User(
-                    $d["id"],
-                    $d["first_name"],
-                    $d["last_name"],
-                    Gender::get($d["gender_id"]),
-                    $d["email"],
-                    $d["phone"],
-                    Department::get($d["department_id"]),
-                    WhoAmI::get($d["whoami_id"]),
-                    Section::get($d["section_id"]),
-                    Grade::get($d["grade_id"]),
-                    $d["user_name"],
-                    $d["pwd"],
-                    new DateTime($d["date_ins"]),
-                    $d["uniqid"],
-                    Status::get($d["status_id"]),
-                    new DateTime($d["last_activity"])
-                );
-
-                array_push($users, $user);
-            }
-            return $users;
-        } catch (PDOException $e) {
-            (new HistoryModel)->add($e->getMessage(), getUserIP());
-        }
-        return array();
     }
 
     public function setTable(string $table) : UserModel {
