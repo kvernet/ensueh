@@ -84,7 +84,7 @@ class UserController extends Controller {
         return $status;
     }
 
-    private function getWho() : string {
+    private function getWho() : string|null {
         if($this->whoAmI == WhoAmI::ADM) {
             return AdmController::getUserName();
         } elseif($this->whoAmI == WhoAmI::PROFESSOR) {

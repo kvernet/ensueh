@@ -39,8 +39,7 @@ function deleteSessions() {
 // delete all the cookies
 function deleteCookies() {
     foreach($_COOKIE as $key => $value) {
-        unset($value);
-        setcookie($key, '', time() - 86400 * 30);
+        setcookie($key, '', time() - 86400 * COOKIE_DURATION, "/");
     }
 }
 

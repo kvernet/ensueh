@@ -9,7 +9,7 @@ class HistoryModel extends Model {
 
     private $table = "histories";
 
-    public function add(string $what, string $who="") : void {
+    public function add(string|null $what, string|null $who="") : void {
         try {
             $sql = "INSERT INTO " . $this->table . "(who, what) VALUES(:who, :what)";
             $this->query($sql, [

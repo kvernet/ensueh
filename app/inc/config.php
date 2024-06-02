@@ -10,6 +10,7 @@ define("UEH", "Université d'Etat d'Haïti");
 define("ACTIVE_DURATION", 600);         // in seconds
 define("ONLINE_DURATION", 60);          // in seconds and must be less than ACTIVE_DURATION
 define("MAX_UPLOAD_FILE_SIZE", 25);     // in MegaByte
+define("COOKIE_DURATION", 1);           // in days
 
 define("DB_HOST", "127.0.0.1");
 define("DB_NAME", "ens_db_2024");
