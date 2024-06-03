@@ -67,6 +67,38 @@ class HomeController extends Controller {
         ]);
     }
 
+    public function forum_msg() : void {
+        (new HistoryModel)->add("Page [forum_msg] visitée", getUserIP());
+        
+        $this->view("home/forum_msg", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function forum_msg_add() {
+        (new HistoryModel)->add("Page [forum_msg_add] visitée", getUserIP());
+        
+        $this->view("home/forum_msg_add", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function get_forum_msg() {
+        (new HistoryModel)->add("Page [get_forum_msgs] visitée", getUserIP());
+        
+        $this->view("home/get_forum_msg", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function get_forum_subjects() {
+        (new HistoryModel)->add("Page [get_forum_subjects] visitée", getUserIP());
+        
+        $this->view("home/get_forum_subjects", [
+            "title" => APP_NAME
+        ]);
+    }
+
     public function index() : void {
         (new HistoryModel)->add("Page [index] visitée", getUserIP());
         
@@ -215,6 +247,14 @@ class HomeController extends Controller {
         (new HistoryModel)->add("Page [signup_welcome] visitée", getUserIP());
         
         $this->view("home/signup_welcome", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function terms() {
+        (new HistoryModel)->add("Page [terms] visitée", getUserIP());
+        
+        $this->view("home/terms", [
             "title" => APP_NAME
         ]);
     }

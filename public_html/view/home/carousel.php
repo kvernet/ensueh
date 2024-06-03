@@ -19,16 +19,16 @@ function getCarouselItem(string $imgPath, string $title, string $content, string
         <button type="button" data-bs-target="#carousel-news" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-        <?= getCarouselItem("../../uploads/news/001.png", "Prix nobel en Math", "Some representative placeholder content for the first slide.", APP_DOMAIN . "home/news?id=1"); ?>
-        <?= getCarouselItem("../../uploads/news/002.png", "Information no 2", "Some representative placeholder content for the first slide.", APP_DOMAIN . "home/news?id=2"); ?>
-        <?= getCarouselItem("../../uploads/news/003.png", "Information no 3", "Some representative placeholder content for the first slide.", APP_DOMAIN . "home/news?id=3"); ?>
+        <?php echo getCarouselItem("../../uploads/news/001.png", "Bourses Eiffel", "Bourses Eiffel.", APP_DOMAIN . "home/news?id=1"); ?>
+        <?php echo getCarouselItem("../../uploads/news/002.png", "Installation d'une centrale d'eau", "Installation d'une centrale d'eau traitée par osmose inverse.", APP_DOMAIN . "home/news?id=2"); ?>
+        <?php echo getCarouselItem("../../uploads/news/003.png", "Deux systèmes Starlink installés à l'ENS", "Deux systèmes Starlink installés à l'ENS afin d'améliorer la connectivité de l'administration.", APP_DOMAIN . "home/news?id=3"); ?>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carousel-news" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <span class="visually-hidden">Précédent</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carousel-news" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <span class="visually-hidden">Suivant</span>
     </button>
 </div>

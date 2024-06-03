@@ -44,7 +44,9 @@ async function sendData(formData, page, spanTag, method) {
         if(data['msg_id'] == data['msg_id_success']) {
             window.open(data['page'], "_self");
         }else {
-            spanTag.innerHTML = data['msg'];
+            if(spanTag) {
+                spanTag.innerHTML = data['msg'];
+            }
         }
     } catch (e) {
         //alert(e);
@@ -53,4 +55,25 @@ async function sendData(formData, page, spanTag, method) {
 
 function sendForm(formData, page, spanTag, method = "POST") {
     sendData(formData, page, spanTag, method);
+}
+
+function setData(formData, page, div, method="POST") {
+    var request;
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        request = new XMLHttpRequest();
+    }
+    else {
+        // code for IE6, IE5
+        request = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    request.onreadystatechange = function () {
+        if (request.readyState == 4 && request.status == 200) {
+            if(div) {
+                div.innerHTML = request.responseText;
+            }
+        }
+    };
+    request.open(method, page);;
+    request.send(formData)
 }

@@ -1,4 +1,7 @@
 <?php
+
+use app\core\model\SingleModel;
+
 $params['nav_item_active'] = "Accueil";
 
 include_once("header.php");
@@ -18,6 +21,21 @@ function getCard(
         . '</div>'
         . '</div>'
         . '</div>';
+}
+
+function getForumLists() : string {
+    $result = '';
+    $data = (new SingleModel)->setTable("forum_terms")->getAll();
+    $size = count($data);
+
+    if($size <= 0) return "";
+
+    $result .= $data[0]->getContent();
+
+    for($i=1; $i < $size; $i++) {
+        $result .= ', ' . $data[$i]->getContent();
+    }
+    return $result;
 }
 ?>
 
@@ -80,13 +98,13 @@ echo '<div class="dashboard-content px-3 pt-4 text-justify">'
     . getCard(
         "../../uploads/features/admission.webp",
         "Partenariats",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque et est tenetur. Hic illo repudiandae cupiditate voluptatibus sed! Quibusdam omnis odio dolores modi veritatis quasi labore magnam animi, quaerat numquam. Doloremque molestiae rem esse, voluptatibus ut officiis facere, consectetur repellat...",
+        "La coopération internationale est un facteur clé dans le processus de développement de toute université. L'Ecole Normale Supérieure de l'Université d'Etat d'Haïti (ENS) collabore au niveau académique avec plusieurs universités européennes et nord-américaines qui nous envoient des enseignants.es et reçoivent comme boursiers.ères ...",
         "partnerships"
     )
     . getCard(
         "../../uploads/features/admission.webp",
         "Forums",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque et est tenetur. Hic illo repudiandae cupiditate voluptatibus sed! Quibusdam omnis odio dolores modi veritatis quasi labore magnam animi, quaerat numquam. Doloremque molestiae rem esse, voluptatibus ut officiis facere, consectetur repellat...",
+        "Le forum de l'ENS est l'endroit idéal pour partager ses opinions et échanger avec d'autres personnes sur différents sujets. Sur ce forum, vous pouvez trouver des sujets sur les termes suivants : " . getForumLists(),
         "forums"
     )
     . '</div></div>'

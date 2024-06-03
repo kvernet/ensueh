@@ -1,3 +1,4 @@
 *.sql
 *.pdf
 credentials.txt
+/docs
