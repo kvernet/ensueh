@@ -21,7 +21,7 @@ if($_POST) {
     $user = $userModel->get($user_name, $pwd);
 
     if($user != null) {
-        $status = UserController::getStatus();
+        $status = $user->getStatus();
         // check if ADM is active
         if($status == Status::REQUESTED || $status == Status::SUSPENDED) {
             $result['msg'] = Status::getCaseErrorMsg($status);

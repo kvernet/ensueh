@@ -13,9 +13,9 @@ function getCard(
 ): string {
     return '<div class="col">'
         . '<div class="card h-100">'
-        //. '<img src="' . $imgPath . '" class="card-img-top" alt="...">'
+        . '<img height="100%" src="' . $imgPath . '" class="card-img-top" alt="...">'
         . '<div class="card-body">'
-        . '<h5 class="display-6">' . $title . '</h5>'
+        . '<h3 class="bold">' . $title . '</h3>'
         . '<p class="lead">' . $content . '</p>'
         . '<a class="" href="' . APP_DOMAIN . 'home/' . $page . '">Voir plus...</a>'
         . '</div>'
@@ -72,37 +72,37 @@ function getForumLists() : string {
 echo '<div class="dashboard-content px-3 pt-4 text-justify">'
     . '<div class="row row-cols-1 row-cols-md-3 g-4">'
     . getCard(
-        "../../uploads/features/admission.webp",
+        "../../uploads/features/formations.png",
         "Formation",
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque et est tenetur. Hic illo repudiandae cupiditate voluptatibus sed! Quibusdam omnis odio dolores modi veritatis quasi labore magnam animi, quaerat numquam. Doloremque molestiae rem esse, voluptatibus ut officiis facere, consectetur repellat...",
         "formations"
     )
     . getCard(
-        "../../uploads/features/admission.webp",
+        "../../uploads/features/admission.jpg",
         "Admission",
-        "Les étudiants sont recrutés par un concours, qui a lieu chaque année, en principe, à la rentrée de septembre. La durée des formations du premier cycle est de quatre (4) ans. La première année est l'année préparatoire: elle sert de transition entre l'enseignement secondaire et l'enseignement supérieur.",
+        "La gestion des candidatures et de participation au concours pour intégrer l'ENS en L1 est assurée par le rectorat de l'UEH. Pour s'inscrire, les candidats doivent soumettre un dossier comprenant les relevés de notes et/ou le diplôme de fin d'études secondaires, l'acte de naissance ou extrait des archives, ...",
         "admission"
     )
     . getCard(
-        "../../uploads/features/admission.webp",
+        "../../uploads/features/orientation.jpg",
         "Orientation",
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque et est tenetur. Hic illo repudiandae cupiditate voluptatibus sed! Quibusdam omnis odio dolores modi veritatis quasi labore magnam animi, quaerat numquam. Doloremque molestiae rem esse, voluptatibus ut officiis facere, consectetur repellat...",
         "coaching"
     )
     . getCard(
-        "../../uploads/features/admission.webp",
+        "../../uploads/features/jobs.png",
         "Stages & emplois",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque et est tenetur. Hic illo repudiandae cupiditate voluptatibus sed! Quibusdam omnis odio dolores modi veritatis quasi labore magnam animi, quaerat numquam. Doloremque molestiae rem esse, voluptatibus ut officiis facere, consectetur repellat...",
+        "Lorem ipsum dolor sit amet rem esse, voluptatibus ut officiis facere, consectetur adipisicing elit. Itaque et est tenetur. Hic illo repudiandae cupiditate voluptatibus sed! Quibusdam omnis odio dolores modi veritatis quasi labore magnam animi, quaerat numquam. Doloremque molestiae rem esse, voluptatibus ut officiis facere, consectetur repellat...",
         "jobs"
     )
     . getCard(
-        "../../uploads/features/admission.webp",
+        "../../uploads/features/partnerships.jpg",
         "Partenariats",
         "La coopération internationale est un facteur clé dans le processus de développement de toute université. L'Ecole Normale Supérieure de l'Université d'Etat d'Haïti (ENS) collabore au niveau académique avec plusieurs universités européennes et nord-américaines qui nous envoient des enseignants.es et reçoivent comme boursiers.ères ...",
         "partnerships"
     )
     . getCard(
-        "../../uploads/features/admission.webp",
+        "../../uploads/features/forums.png",
         "Forums",
         "Le forum de l'ENS est l'endroit idéal pour partager ses opinions et échanger avec d'autres personnes sur différents sujets. Sur ce forum, vous pouvez trouver des sujets sur les termes suivants : " . getForumLists(),
         "forums"

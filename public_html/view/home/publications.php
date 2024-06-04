@@ -26,7 +26,7 @@ function addPublication(Publication $publication) : void {
 }
 
 function getTitle(User|null $user) : string {
-    $tile = "Nos publications";
+    $tile = "Publications de nos Enseignants & Chercheurs";
     if($user) {
         $tile = "Publications de " . $user->getFullName();
     }

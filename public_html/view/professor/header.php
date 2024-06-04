@@ -28,9 +28,11 @@ if($status == Status::ONLINE || $status == Status::ACTIVE) {
             ["text" => "Reçus(" . $params["n_received_msg"] . ")", "href" => APP_DOMAIN . "professor/msg_received"]
         ], -1)
         ->addLiDropdown("Mon compte", [
+            ["text" => "Mon profil", "href" => APP_DOMAIN . "professor/profile"],
+            ["text" => "Mes publications", "href" => APP_DOMAIN . "professor/publications"],
             ["text" => "Changer mot de passe", "href" => APP_DOMAIN . "professor/cpwd"],
             ["text" => "Se déconnecter", "href" => APP_DOMAIN . "professor/logout"]
-        ], 0)
+        ], 2)
         ->addSearch(APP_DOMAIN . "professor/search")
         ->show();
     // update last activity date

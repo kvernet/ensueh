@@ -73,3 +73,24 @@ function uploadFile(array $file_data, string $file_name) : Message {
 function getUploadedFilePath(string $file_name) : string {
     return APP_DOMAIN . "uploads/courses/pdf/" . $file_name;
 }
+
+// move file to uploads folder
+function uploadProfilePhoto(array $file_data, string $file_name) : Message {
+    $max_file_size = 10; // in MB
+
+    if(count($file_data) < 1) return Message::FILE_UPLOAD_FAILED;
+    if($file_data['error'] != 0) return Message::FILE_UPLOAD_FAILED;
+
+    $MB = 1000**2;
+    $sizeMB = $file_data['size'] / $MB;
+    
+    if($sizeMB > $max_file_size) {
+        return Message::FILE_UPLOAD_TOO_BIG;
+    }
+
+    $to = PUBLIC_DIR . "img/researchers/profiles/" . $file_name;
+    if(move_uploaded_file($file_data['tmp_name'], $to)) {
+        return Message::SUCCESS_MSG;
+    }
+    return Message::FILE_UPLOAD_FAILED;
+}

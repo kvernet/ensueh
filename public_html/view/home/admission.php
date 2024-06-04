@@ -10,18 +10,23 @@ include_once("header.php");
 
 <hr class="my-4">
 
-<div class="dashboard-content px-3 pt-4 text-justify">
-    <div class="jumbotron">
-        <p class="lead">
-            Les étudiants sont recrutés par un concours, qui a lieu chaque année, en principe, à la rentrée de septembre. La durée des formations du premier cycle est de quatre (4) ans.
-            La première année est l'année préparatoire: elle sert de transition entre l'enseignement secondaire et l'enseignement supérieur. La deuxième, troisième et quatrième années préparent aux différents certificats d'Etudes Supérieures et au diplôme de fin d'études.
-            Ces documents confèrent aux anciens élèves de l'Ecole Normale Supérieure qui les détiennent, le droit d'être nommés dans une chaire de leur spécialité, professeurs titulaires de l'enseignement secondaire.
-            Ils permettent également aux étudiants de poursuivre leur formation en deuxième cycle dans les domaines comme la Philosophie, la Littérature, les Mathématiques, la Physique, la Chimie et en Français Langue Etrangère (FLE).
+<div class="lead text-justify">
+    <p class="lead">
+        La gestion des candidatures et de participation au concours pour intégrer l'ENS en L1 est assurée par le rectorat de l'UEH. Pour s'inscrire, les candidats doivent soumettre un dossier comprenant les relevés de notes et/ou le diplôme de fin d'études secondaires, l'acte de naissance ou extrait des archives, une matricule fiscale et la preuve de paiement des frais d'inscription versés sur le compte de l'UEH.
+    </p>
 
-            La durée de ces formations de deuxième cycle est de deux (2) ans. Les diplômes de deuxième cycle délivrés permettent aux étudiants de continuer en doctorat ou d'intégrer facilement le marché du travail.
-        </p>
-        <hr class="my-4">
-    </div>
+    <p class="lead">
+        Après la clôture des candidatures, la liste des inscrits est transmise à la direction de l'ENS pour l'organisation du concours. Les critères d'admission, qui incluent les exigences académiques, les compétences linguistiques et autres qualifications, varient selon chaque département.Les 30 meilleurs candidats de chaque département sont sélectionnés sur la base des résultats du concours, avec une liste d'attente de 5 candidats en cas de désistement.
+    </p>
+
+    <p class="lead">
+        Les candidats retenus reçoivent une notification officielle d'admission, incluant les instructions pour la validation de leur dossier académique. Celui-ci doit contenir les relevés de notes et le diplôme de fin d'études secondaires, l'acte de naissance ou extrait des archives, une matricule fiscale et une lettre de motivation précisant les raisons de leur souhait d'intégrer l'ENS et comment cela s'inscrit dans leurs projets futurs, avant de procéder à l'inscription administrative.Pour finaliser l'admission, les candidats doivent accepter formellement l'offre d'admission et régler les frais d'inscription pour confirmer leur place, ce qui leur permet de participer aux journées d'intégration et d'orientation des nouveaux étudiants.
+    </p>
+
+    <p class="lead">
+        Pour les programmes de deuxième cycle, l'intégralité de la procédure d'admission est gérée par la direction de l'ENS. Cette procédure se divise en deux phases équitables : l'étude des dossiers (50%) et un concours, qui compte également pour 50%.
+    </p>
+    <hr class="my-4">
 </div>
 
 <?php

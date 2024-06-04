@@ -19,6 +19,18 @@ class HomeController extends Controller {
         die();
     }
 
+    public function add_publications() {
+        $this->view("home/add_publications", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function save_publications() {
+        $this->view("home/save_publications", [
+            "title" => APP_NAME
+        ]);
+    }
+
     public function admission() : void {
         (new HistoryModel)->add("Page [admission] visitée", getUserIP());
         
@@ -175,6 +187,14 @@ class HomeController extends Controller {
         (new HistoryModel)->add("Page [phds] visitée", getUserIP());
         
         $this->view("home/phds", [
+            "title" => APP_NAME
+        ]);
+    }
+
+    public function profile() {
+        (new HistoryModel)->add("Page [profile] visitée", getUserIP());
+        
+        $this->view("home/profile", [
             "title" => APP_NAME
         ]);
     }
