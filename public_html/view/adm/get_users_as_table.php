@@ -8,10 +8,10 @@ function getUsersAsTable(WhoAmI $whoAmI, int $page, int $size): void {
     
     $data = array();
 
-    // Retrieve pagination parameters
+    // retrieve pagination parameters
     $offset = ($page - 1) * $size;
 
-    //TODO Get total row count
+    // get total row count
     $total = $userModel->getUsersCount($whoAmI);
 
     $users = $userModel->getPaginatedData($whoAmI, $offset, $size);
@@ -47,7 +47,7 @@ function getUsersAsTable(WhoAmI $whoAmI, int $page, int $size): void {
 
 if($_POST) {
     $whoami_id = $_POST['whoami_id'];
-    // Retrieve pagination parameters
+    // retrieve pagination parameters
     $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
     $size = isset($_POST['size']) ? intval($_POST['size']) : 10;
 

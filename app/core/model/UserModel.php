@@ -149,6 +149,44 @@ class UserModel extends Model {
         return null;
     }
 
+    public function getBySectionAndGrade(Section $section, Grade $grade, int $offset, int $size, WhoAmI $whoAmI=WhoAmI::STUDENT): array {
+        $users = [];
+        try {
+            $sql = "SELECT * FROM ". $this->table . " WHERE (section_id=:section_id AND grade_id=:grade_id AND whoami_id=:whoami_id) LIMIT :offset, :size";
+            $data = $this->query($sql, [
+                [":section_id", $section->value, PDO::PARAM_INT],
+                [":grade_id", $grade->value, PDO::PARAM_INT],
+                [":whoami_id", $whoAmI->value, PDO::PARAM_INT],
+                [":offset", $offset, PDO::PARAM_INT],
+                [":size", $size, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            foreach ($data as $d) {
+                $users[] = new User(
+                    $d["id"],
+                    $d["first_name"],
+                    $d["last_name"],
+                    Gender::get($d["gender_id"]),
+                    $d["email"],
+                    $d["phone"],
+                    Department::get($d["department_id"]),
+                    WhoAmI::get($d["whoami_id"]),
+                    Section::get($d["section_id"]),
+                    Grade::get($d["grade_id"]),
+                    $d["user_name"],
+                    $d["pwd"],
+                    new DateTime($d["date_ins"]),
+                    $d["uniqid"],
+                    Status::get($d["status_id"]),
+                    new DateTime($d["last_activity"])
+                );
+            }
+            return $users;
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return $users;
+    }
+
     public function getByUserName(string $user_name) : User|null {
         try {
             $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";
@@ -224,6 +262,21 @@ class UserModel extends Model {
         try {
             $sql = "SELECT count(*) AS total FROM users WHERE (whoami_id=:whoami_id)";
             $data = $this->query($sql, [
+                [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            return $data[0]['total'];
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return 0;
+    }
+
+    public function countBySectionAndGrade(Section $section, Grade $grade, WhoAmI $whoAmI=WhoAmI::STUDENT) : int {
+        try {
+            $sql = "SELECT count(*) AS total FROM users WHERE (section_id=:section_id AND grade_id=:grade_id AND whoami_id=:whoami_id)";
+            $data = $this->query($sql, [
+                [":section_id", $section->value, PDO::PARAM_INT],
+                [":grade_id", $grade->value, PDO::PARAM_INT],
                 [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
             ])->execute()->fetchAll();
             return $data[0]['total'];

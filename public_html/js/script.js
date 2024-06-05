@@ -57,7 +57,7 @@ function sendForm(formData, page, spanTag, method = "POST") {
     sendData(formData, page, spanTag, method);
 }
 
-function setData(formData, page, div, method="POST") {
+function setData(formData, page, tag, func=null, method="POST") {
     var request;
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -69,9 +69,11 @@ function setData(formData, page, div, method="POST") {
     }
     request.onreadystatechange = function () {
         if (request.readyState == 4 && request.status == 200) {
-            if(div) {
-                div.innerHTML = request.responseText;
+            if(tag) {
+                tag.innerHTML = request.responseText;
             }
+            console.log(request.responseText);
+            if(func) func();
         }
     };
     request.open(method, page);;

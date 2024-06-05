@@ -23,7 +23,7 @@ function getFormatedList(string $table_name, array $filteredIds = []): string {
     return (new SingleModel)->setTable($table_name)->getAllAsJSON($filteredIds);
 }
 
-echo '<div id="user-data-tr"></div>';
+echo '<div id="user-data"></div>';
 echo '<hr class="my-4">';
 ?>
 
@@ -40,7 +40,7 @@ echo '<hr class="my-4">';
                                 Status::OFFLINE->value
                             ]); ?>;
     
-    var table = new Tabulator("#user-data-tr", {
+    var table = new Tabulator("#user-data", {
         pagination: true, //enable pagination
         paginationMode: "remote", //enable remote pagination
         paginationSize: 15,
