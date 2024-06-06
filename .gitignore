@@ -1,6 +1,9 @@
 *.sql
 *.pdf
 credentials.txt
+TODO.*
+test.*
+public_html/data
 /docs
 /test
 /reunion-ens-website

@@ -81,4 +81,30 @@ class SubjectModel extends Model {
         }
         return $subjects;
     }
+
+    public function getSubjectsByGrade(Grade $grade) : array {
+        $subjects = [];
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE (grade_id=:grade_id AND deleted=:deleted)";
+            $data = $this->query($sql, [
+                [":grade_id", $grade->value, PDO::PARAM_INT],
+                [":deleted", false, PDO::PARAM_BOOL]
+            ])->execute()->fetchAll();
+            foreach($data as $d) {
+                $subjects[] = new Subject(
+                    $d['id'], $d['name'],
+                    Grade::get($d['grade_id']),
+                    $d['user_name'],
+                    $d['max_note'],
+                    $d['coef'],
+                    new DateTime($d['date']),
+                    $d['deleted']
+                );
+            }
+        }
+        catch(PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return $subjects;
+    }
 }

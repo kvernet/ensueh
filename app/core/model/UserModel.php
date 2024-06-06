@@ -353,7 +353,7 @@ class UserModel extends Model {
                     $d["email"],
                     $d["phone"],
                     Department::get($d["department_id"]),
-                    WhoAmI::get($d["whoiam_id"]),
+                    WhoAmI::get($d["whoami_id"]),
                     Section::get($d["section_id"]),
                     Grade::get($d["grade_id"]),
                     $d["user_name"],

@@ -2,21 +2,16 @@
 
 use app\core\entity\Grade;
 use app\core\entity\Section;
-use app\core\entity\Session;
 use app\core\entity\WhoAmI;
 use app\core\model\NoteModel;
-use app\core\model\SubjectModel;
 use app\core\model\UserModel;
 
 function getNotesAsTable(int $section_id, int $grade_id, int $subject_id, int $session_id, int $page, int $size, WhoAmI $whoAmI): void {
     $userModel = new UserModel;
-    $subjectModel = new SubjectModel;
     $noteModel = new NoteModel;
 
     $section = Section::get($section_id);
     $grade = Grade::get($grade_id);
-    $subject = $subjectModel->getSubjectById($subject_id);
-    $session = Session::get($session_id);
     
     $data = [];
 
@@ -26,16 +21,19 @@ function getNotesAsTable(int $section_id, int $grade_id, int $subject_id, int $s
     // get total row count
     $total = $userModel->countBySectionAndGrade($section, $grade, $whoAmI);
 
+    // get a limited number of users
     $users = $userModel->getBySectionAndGrade($section, $grade, $offset, $size, $whoAmI);
 
+    $index = -1;
     foreach($users as $user) {
         $user_name = $user->getUserName();
         // get corresponding note
-        $note = $noteModel->getNote($subject, $user_name, $session);
+        $note = $noteModel->getNote($subject_id, $user_name, $session_id);
         $data[] = [
-            "id" => $user->getId(),
+            "id" => $note ? $note->getId() : $index--,
             "user_name" => $user_name,
-            "full_name" => $user->getFullName(),
+            "first_name" => $user->getFirstName(),
+            "last_name" => $user->getLastName(),
             "note" => $note ? $note->getNote() : 0.0
         ];
     }

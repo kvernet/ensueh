@@ -48,7 +48,7 @@ if($_POST) {
     $result['msg'] = Message::getMessage($message);
 
     if($message == Message::SUCCESS_MSG) {
-        $result['page'] = APP_DOMAIN . "home/signup_welcome";
+        $result['page'] = "welcome_signup";
     }    
 }
 

@@ -36,7 +36,7 @@ class Publication {
         . '</div>'
         . '<div class="row">'
         . '<div class="col">'
-        . '<a href="'. $doi .'" target="_blank">'. $doi .'</a>'
+        . '<a href="'. $doi .'" target="_blank">Accéder à la publication</a>'
         . '</div>'
         . '</div>'
         . '<hr class="lead">';

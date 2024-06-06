@@ -9,6 +9,7 @@ $params['nav_item_active'] = "Recherche";
 
 include_once("header.php");
 
+/*
 function addPublication(Publication $publication) : void {
     $doi = $publication->getDOI();
     
@@ -24,6 +25,7 @@ function addPublication(Publication $publication) : void {
     . '</div>'
     . '<hr class="lead">';
 }
+*/
 
 function getTitle(User|null $user) : string {
     $tile = "Publications de nos Enseignants & Chercheurs";
@@ -46,14 +48,13 @@ if(isset($_GET['r'])) {
     $user = (new UserModel)->getByUserName($_GET['r']);
 }
 
-echo '<div class="jumbotron">';
-
-echo '<h2 class="display-5">'. getTitle($user) .'</h2>';
-
 $publications = getPublications($user);
 
+echo '<div class="jumbotron">'
+. '<h2 class="display-5">'. getTitle($user) .'</h2>';
+
 foreach($publications as $publication) {
-    addPublication($publication);
+    echo $publication->toString();
 }
 
 echo '</div>';

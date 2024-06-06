@@ -59,4 +59,8 @@ class ProfessorController extends UserController {
     public function update_course() {
         $this->goCheck($this->dir . "update_course");
     }
+
+    public function update_note() {
+        $this->goCheck($this->dir . "update_note");
+    }
 }

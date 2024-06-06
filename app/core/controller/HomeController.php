@@ -19,18 +19,6 @@ class HomeController extends Controller {
         die();
     }
 
-    public function add_publications() {
-        $this->view("home/add_publications", [
-            "title" => APP_NAME
-        ]);
-    }
-
-    public function save_publications() {
-        $this->view("home/save_publications", [
-            "title" => APP_NAME
-        ]);
-    }
-
     public function admission() : void {
         (new HistoryModel)->add("Page [admission] visitée", getUserIP());
         
@@ -231,14 +219,6 @@ class HomeController extends Controller {
         ]);
     }
 
-    public function request_signup() : void {
-        (new HistoryModel)->add("Page [request_signup] visitée", getUserIP());
-        
-        $this->view("home/request_signup", [
-            "title" => APP_NAME
-        ]);
-    }
-
     public function researchers() : void {
         (new HistoryModel)->add("Page [researchers] visitée", getUserIP());
         
@@ -251,22 +231,6 @@ class HomeController extends Controller {
         (new HistoryModel)->add("Page [search] visitée", getUserIP());
         
         $this->view("home/search", [
-            "title" => APP_NAME
-        ]);
-    }
-
-    public function signup() : void {
-        (new HistoryModel)->add("Page [signup] visitée", getUserIP());
-        
-        $this->view("home/signup", [
-            "title" => APP_NAME
-        ]);
-    }
-
-    public function signup_welcome() {
-        (new HistoryModel)->add("Page [signup_welcome] visitée", getUserIP());
-        
-        $this->view("home/signup_welcome", [
             "title" => APP_NAME
         ]);
     }

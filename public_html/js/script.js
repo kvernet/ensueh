@@ -72,8 +72,47 @@ function setData(formData, page, tag, func=null, method="POST") {
             if(tag) {
                 tag.innerHTML = request.responseText;
             }
-            console.log(request.responseText);
             if(func) func();
+        }
+    };
+    request.open(method, page);;
+    request.send(formData)
+}
+
+function saveData(formData, page, method="POST", span=null, tag=null, func=null, funcCalledOnSucceed=true) {
+    var request;
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        request = new XMLHttpRequest();
+    }
+    else {
+        // code for IE6, IE5
+        request = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    request.onreadystatechange = () => {
+        if (request.readyState == 4 && request.status == 200) {
+            var result = JSON.parse(request.responseText);
+            if(span) {
+                if(!result['success']) {
+                    span.innerHTML = result['msg'];
+                }
+            }
+            
+            if(tag) {
+                if(result['success']) {
+                    tag.innerHTML = result['content'];
+                }                
+            }
+
+            if(func) {
+                if(funcCalledOnSucceed) {
+                    if(result['success']) {
+                        func();
+                    }
+                }else {
+                    func();
+                }
+            }
         }
     };
     request.open(method, page);;

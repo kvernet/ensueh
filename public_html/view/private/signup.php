@@ -29,7 +29,7 @@ $singleModel = new SingleModel;
     ->add('<div class="col-12 col-lg-9 col-xl-7">')
     ->add('<div class="card shadow-2-strong card-registration" style="border-radius: 15px;">')
     ->add('<div class="card-body p-4 p-md-5">')
-    ->add('<h3 class="mb-2 pb-2 pb-md-0 mb-md-3">Formulaire de demande d\'inscription sur le portail de ' . APP_NAME . '</h3>')
+    ->add('<h3 class="mb-2 pb-2 pb-md-0 mb-md-3">Formulaire d\'inscription sur le portail de ' . APP_NAME . '</h3>')
     ->add('<form id="signupForm" action="request_signup" method="post">')
     
     ->add('<div class="row">')
@@ -137,7 +137,7 @@ $singleModel = new SingleModel;
     ->add('<label class="form-label" for="pwd">Mot de passe</label>')
     ->add('</div>')
     ->add('</div>')
-    ->add('<div class="col-md-6 mb-4 pb-2">')
+    ->add('<div class="col-md-6 mb-2 pb-2">')
     ->add('<div data-mdb-input-init class="form-outline">')
     ->add('<input class="form-control form-control-lg" type="password" id="conf_pwd" name="conf_pwd" />')
     ->add('<label class="form-label" for="conf_pwd">Confirmer mot de passe</label>')
@@ -146,7 +146,7 @@ $singleModel = new SingleModel;
     ->add('</div>')
 
     ->add('<div class="">')
-    ->add('En cliquant sur <b>Soumettre la demande</b>, vous acceptez nos <a href="terms">conditions</a>.')
+    ->add('En cliquant sur <b>Soumettre la demande</b>, vous acceptez nos <a href="../home/terms" target="_blank">conditions</a>.')
     ->add('</div>')
 
     ->add('<div class="mt-1 pt-2">')

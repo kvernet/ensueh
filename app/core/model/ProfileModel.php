@@ -12,6 +12,25 @@ class ProfileModel extends Model {
 
     private $table = "profiles";
 
+    public function add(Profile $profile) : bool {
+        try {
+            $sql = "INSERT INTO ". $this->table ."(user_name, photo_path, description, attraction, contact, deleted) VALUES(:user_name, :photo_path, :description, :attraction, :contact, :deleted)";
+            $this->query($sql, [
+                [":user_name", $profile->getUserName(), PDO::PARAM_STR],
+                [":photo_path", $profile->getPhotoPath(), PDO::PARAM_STR],
+                [":description", $profile->getDescription(), PDO::PARAM_STR],
+                [":attraction", $profile->getAttraction(), PDO::PARAM_STR],
+                [":contact", $profile->getContact(), PDO::PARAM_STR],
+                [":deleted", $profile->getDeleted(), PDO::PARAM_BOOL]
+            ])->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return false;
+    }
+
     public function getByUserName(string $user_name) : Profile|null {
         try {
             $sql = "SELECT t1.id, t1.user_name, t2.first_name, t2.last_name, t1.photo_path, t1.description, t1.attraction, t1.contact, t1.date, t1.deleted FROM " . $this->table . " AS t1 INNER JOIN users as t2 ON t1.user_name=t2.user_name WHERE (t1.user_name=:user_name AND t1.deleted=:deleted)";
