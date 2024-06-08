@@ -160,6 +160,10 @@ class UserController extends Controller {
         elseif(isset($_COOKIE["user_name"])) return $_COOKIE["user_name"];        
         return null;
     }
+    
+    public function request_cpwd() {
+        $this->goCheck($this->dir . "request_cpwd");
+    }
 
     public function user_suspend() : void {
         $this->goCheck($this->dir . "user_suspend");

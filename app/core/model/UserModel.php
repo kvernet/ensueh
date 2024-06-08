@@ -482,7 +482,23 @@ class UserModel extends Model {
     public function updateLastActivity(string $user_name) : bool {
         try {
             $sql = "UPDATE " . $this->table . " SET last_activity=now() WHERE user_name=:user_name";
-            $c = $this->query($sql, [
+            $this->query($sql, [
+                [":user_name", $user_name, PDO::PARAM_STR]
+            ])->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return false;
+    }
+
+    public function updatePwd(string $user_name, string $pwd) : bool {
+        try {
+            $encrypted_pwd = $this->getEncryptedPwd($pwd);
+            $sql = "UPDATE " . $this->table . " SET pwd=:pwd WHERE user_name=:user_name";
+            $this->query($sql, [
+                [":pwd", $encrypted_pwd, PDO::PARAM_STR],
                 [":user_name", $user_name, PDO::PARAM_STR]
             ])->execute();
             return true;

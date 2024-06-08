@@ -42,7 +42,7 @@ async function sendData(formData, page, spanTag, method) {
         const data = await response.json();
 
         if(data['msg_id'] == data['msg_id_success']) {
-            window.open(data['page'], "_self");
+            window.open(data['page'] + "?msg=" + data['msg'], "_self");
         }else {
             if(spanTag) {
                 spanTag.innerHTML = data['msg'];
