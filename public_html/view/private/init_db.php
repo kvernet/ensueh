@@ -250,6 +250,7 @@ $initializationDB->setSingle("forum_terms", [
 
 // table users
 $initializationDB->setUsers([
+    /*
     new User(
         0, "Kinson", "Vernet", Gender::MALE, "kvernet@ensueh.com",
         "+33 7 49 55 56 74", Department::Ouest,
@@ -258,6 +259,7 @@ $initializationDB->setUsers([
         new DateTime(), null,
         Status::VALIDATED, new DateTime()
     ),
+    */
     new User(
         0, "Rubenson", "Mareus", Gender::MALE, "rmareus@ensueh.com",
         "+33 7 52 24 63 11", Department::NordOuest,
@@ -266,6 +268,7 @@ $initializationDB->setUsers([
         new DateTime(), null,
         Status::VALIDATED, new DateTime()
     ),
+    /*
     new User(
         0, "Wisly", "Fidel", Gender::MALE, "wfidel@ensueh.com",
         "+33 7 51 48 68 66", Department::NordOuest,
@@ -282,6 +285,7 @@ $initializationDB->setUsers([
         new DateTime(), null,
         Status::VALIDATED, new DateTime()
     ),
+    */
     new User(
         0, "Dieuseul", "Prédélus", Gender::MALE, "adm@ensueh.com",
         "12 34 56 78 90", Department::NordOuest,
@@ -307,10 +311,10 @@ $initializationDB->setUsers([
         Status::VALIDATED, new DateTime()
     ),
     new User(
-        0, "Emmanuel", "Maddy", Gender::MALE, "emaddy@ensueh.com",
+        0, "Saul", "Maddy", Gender::MALE, "smaddy@ensueh.com",
         "+509 71 56 23 09", Department::Artibonite,
         WhoAmI::STUDENT, Section::PHYSICS,
-        Grade::L0, "emaddy", "EMaddy@ENS2024",
+        Grade::L0, "smaddy", "SMaddy@ENS2024",
         new DateTime(), null,
         Status::REQUESTED, new DateTime()
     ),

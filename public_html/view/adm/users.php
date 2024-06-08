@@ -2,32 +2,59 @@
 
 use app\core\entity\Message;
 use app\core\entity\Status;
+use app\core\entity\WhoAmI;
 use app\core\model\SingleModel;
 
 include_once("header.php");
 
-echo '<h3 style="text-align: center;">Gestion des '. $params["whoami_title"] . '</h3>';
+echo '<h3 style="text-align: center;">Gestion des ' . $params["whoami_title"] . '</h3>';
 
 echo '<div>'
-    . '<a href="#" id="print-table" class="btn btn-success my-2">Imprimer tableau</a>'
+    . '<a href="#" id="print-table" class="btn btn-success my-2">Imprimer page</a>'
     . '</div>';
 
 
 $messageContent = "";
-if(isset($_GET["msg_id"]) && Message::get($_GET["msg_id"]) != Message::SUCCESS_MSG) {
+if (isset($_GET["msg_id"]) && Message::get($_GET["msg_id"]) != Message::SUCCESS_MSG) {
     $messageContent = Message::getMessage(Message::get($_GET["msg_id"]));
 }
-echo '<span class="error-msg" id="details">'. $messageContent .'</span><br>';
+echo '<span class="error-msg" id="details">' . $messageContent . '</span><br>';
 
-function getFormatedList(string $table_name, array $filteredIds = []): string {
+function getFormatedList(string $table_name, array $filteredIds = []): string
+{
     return (new SingleModel)->setTable($table_name)->getAllAsJSON($filteredIds);
 }
 
 echo '<div id="user-data"></div>';
 echo '<hr class="my-4">';
+
+$transcriptAdded = $params['whoami'] == WhoAmI::STUDENT->value ? 1 : 0;
 ?>
 
 <script>
+    function add_transcript(transcriptAdded = true) {
+        if (transcriptAdded) {
+            return {
+                title: "Relevé",
+                field: "id",
+                formatter: function(cell, formatterParams, onRendered) {
+                    return '<a href="#" role="button" onclick="return generate_transcript(' + cell.getValue() + ');">Générer</a>';
+                }
+            }
+        }
+    }
+
+    function view_transcript(transcriptAdded = true) {
+        if (transcriptAdded) {
+            return {
+                field: "id",
+                formatter: function(cell, formatterParams, onRendered) {
+                    return '<a href="#" role="button" onclick="return download_transcript(' + cell.getValue() + ');">Télécharger</a>';
+                }
+            }
+        }
+    }
+
     const genderValues = <?php echo getFormatedList("genders"); ?>;
     const departmentValues = <?php echo getFormatedList("departments"); ?>;
     const whoamiValues = <?php echo getFormatedList("whoami", [$params['whoami']]); ?>;
@@ -39,15 +66,15 @@ echo '<hr class="my-4">';
                                 Status::ONLINE->value,
                                 Status::OFFLINE->value
                             ]); ?>;
-    
+
     var table = new Tabulator("#user-data", {
         pagination: true, //enable pagination
         paginationMode: "remote", //enable remote pagination
         paginationSize: 15,
         paginationInitialPage: getSavedPage(),
         paginationSizeSelector: [10, 15, 25, 50, 100],
-        movableColumns:true,
-        paginationCounter:"rows",
+        movableColumns: true,
+        paginationCounter: "rows",
         paginationDataSent: { // Customize the parameter names sent to the server
             "page": "page",
             "size": "size",
@@ -76,7 +103,7 @@ echo '<hr class="my-4">';
         ajaxConfig: "POST",
 
         printAsHtml: true,
-        printHeader: "<h1>Liste des <?=$params['whoami_title']?><h1>",
+        printHeader: "<h1>Liste des <?= $params['whoami_title'] ?><h1>",
         printFooter: "<h2> <?= APP_NAME ?> <h2>",
 
         columns: [{
@@ -144,19 +171,6 @@ echo '<hr class="my-4">';
                 }
             },
             {
-                title: "Statut",
-                field: "whoami",
-                sorter: "string",
-                headerFilter: "list",
-                headerFilterParams: {
-                    values: whoamiValues
-                },
-                editor: "list",
-                editorParams: {
-                    values: whoamiValues
-                }
-            },
-            {
                 title: "Section",
                 field: "section",
                 sorter: "string",
@@ -183,7 +197,7 @@ echo '<hr class="my-4">';
                 }
             },
             {
-                title: "Etat d'accès",
+                title: "Accès",
                 field: "status",
                 sorter: "string",
                 headerFilter: "list",
@@ -201,16 +215,18 @@ echo '<hr class="my-4">';
                 formatter: function(cell, formatterParams, onRendered) {
                     return '<a href="" role="button" onclick="return update_user(' + cell.getValue() + ');">Mettre à jour</a>';
                 }
-            }
+            },
+            add_transcript(<?= $transcriptAdded ?>),
+            view_transcript(<?= $transcriptAdded ?>)
         ]
     });
 
     // Function to save the current page number to local storage
     function saveCurrentPage() {
         var currentPage = table.getPage();
-        createCookie("<?=$params['current_page_cookie']?>", currentPage, <?=COOKIE_DURATION?>);
+        createCookie("<?= $params['current_page_cookie'] ?>", currentPage, <?= COOKIE_DURATION ?>);
     }
-    
+
     // Retrieve the saved page number from local storage
     function getSavedPage() {
         return <?php echo isset($_COOKIE[$params['current_page_cookie']]) ? $_COOKIE[$params['current_page_cookie']] : 1 ?>;
@@ -220,18 +236,48 @@ echo '<hr class="my-4">';
     //update a user's info
     function update_user(id) {
         saveCurrentPage();
-        
-        var row = table.getRow(id); // Gets the row at index 3
-        var rowData = row.getData(); // Get the data of the row
+
+        var row = table.getRow(id);
+        var rowData = row.getData();
         console.log(rowData);
 
         let formData = new FormData();
         for (let row in rowData) {
             formData.append(row, rowData[row]);
         }
-        formData.append("return_page", "<?=$params['return_page']?>");
+        formData.append("return_page", "<?= $params['return_page'] ?>");
         sendForm(formData, "user_update", details);
 
+        return false;
+    }
+
+    function generate_transcript(id) {
+        saveCurrentPage();
+
+        var row = table.getRow(id);
+        var rowData = row.getData();
+
+        let formData = new FormData();
+        for (let row in rowData) {
+            formData.append(row, rowData[row]);
+        }
+        formData.append("return_page", "<?= $params['return_page'] ?>");
+
+        saveData(formData, "generate_transcript", "POST", details);
+
+        return false;
+    }
+
+    function download_transcript(id) {
+        try {
+            var row = table.getRow(id);
+            var rowData = row.getData();
+
+            let transcript_path = "../uploads/transcripts/" + rowData['user_name'] + '.pdf';
+            window.open(transcript_path, "_blank");
+        }catch(e) {
+
+        }
         return false;
     }
 

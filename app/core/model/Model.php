@@ -19,7 +19,7 @@ class Model {
             // set the PDO error mode to exception
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException) {
-            echo '<h2 style="text-align:center;">Connection to the database failed.<br>';
+            echo '<h2 style="text-align:center;">En construction.<br>';
             die();
         }
     }

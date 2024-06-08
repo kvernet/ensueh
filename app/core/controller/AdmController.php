@@ -12,6 +12,10 @@ class AdmController extends UserController {
         $this->setWhoAmI(WhoAmI::ADM);
     }
 
+    public function generate_transcript() {
+        $this->goCheck($this->dir . "generate_transcript");
+    }
+
     public function get_users_as_table() {
         $this->goCheck($this->dir . "get_users_as_table");
     }
