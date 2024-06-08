@@ -119,31 +119,6 @@ class InitializationDB extends Model {
         }
     }
 
-    public function setNotes(string $table="notes") {
-        echo "=== InitializationDB::setNotes(". $table .")<br>";
-
-        // get all statudents
-        $users = (new UserModel)->getUsers(WhoAmI::STUDENT);
-        
-        $sql = "INSERT INTO " . $table . "(subject_id, user_name, session_id) VALUES(:subject_id, :user_name, :session_id)";
-
-        foreach($users as $user) {
-            $subjects = (new SubjectModel)->getSubjectsByGrade($user->getGrade());
-            $sessions = (new SingleModel)->setTable("sessions")->getAll();
-
-            foreach($sessions as $session) {
-                foreach($subjects as $subject) {
-                    $params = [
-                        ["subject_id", $subject->getId(), PDO::PARAM_INT],
-                        ["user_name", $user->getUserName(), PDO::PARAM_STR],
-                        ["session_id", $session->getId(), PDO::PARAM_INT]
-                    ];
-                    $this->query($sql, $params)->execute();
-                }
-            }
-        }
-    }
-
     private function setPublications(User $user, string $table="publications") {
         echo "=== InitializationDB::setPublications(". $table .")<br>";
         
@@ -250,7 +225,6 @@ $initializationDB->setSingle("forum_terms", [
 
 // table users
 $initializationDB->setUsers([
-    /*
     new User(
         0, "Kinson", "Vernet", Gender::MALE, "kvernet@ensueh.com",
         "+33 7 49 55 56 74", Department::Ouest,
@@ -259,7 +233,6 @@ $initializationDB->setUsers([
         new DateTime(), null,
         Status::VALIDATED, new DateTime()
     ),
-    */
     new User(
         0, "Rubenson", "Mareus", Gender::MALE, "rmareus@ensueh.com",
         "+33 7 52 24 63 11", Department::NordOuest,
@@ -277,6 +250,7 @@ $initializationDB->setUsers([
         new DateTime(), null,
         Status::VALIDATED, new DateTime()
     ),
+    */
     new User(
         0, "Dieuseul", "Prédélus", Gender::MALE, "dpredelus@ensueh.com",
         "+509 48 95 78 08", Department::NordOuest,
@@ -285,7 +259,6 @@ $initializationDB->setUsers([
         new DateTime(), null,
         Status::VALIDATED, new DateTime()
     ),
-    */
     new User(
         0, "Dieuseul", "Prédélus", Gender::MALE, "adm@ensueh.com",
         "12 34 56 78 90", Department::NordOuest,
@@ -448,7 +421,5 @@ $initializationDB->setForumMsgs([
         "content" => "L'intelligence artificielle (IA) suscite des débats passionnés concernant ses risques et ses avantages. Voici un aperçu des points de vue sur cette question : Obsolescence de l'emploi : L'IA générative, capable de produire du texte, des images et des sons sur simple commande en langage courant, soulève la question de l'obsolescence de certains emplois. Jusqu'à 30 % des heures actuellement travaillées dans l'économie américaine pourraient être automatisées d'ici 2030, ce qui pourrait affecter diverses professions, du personnel administratif aux médecins en passant par les journalistes1. Droits d'auteur : Les artistes ont protesté contre des logiciels tels que DALL-E d'OpenAI ou Midjourney, qui génèrent des images sur demande. Certains artistes reprochent aux entreprises d'avoir utilisé leurs œuvres sans permission ni rémunération. Les IA génératives sont basées sur des modèles de langage qui nécessitent d'énormes quantités de données récupérées en ligne1. Risques pour les droits humains : Michelle Bachelet, la Haut-Commissaire des droits de l'homme de l'ONU, a souligné que les technologies d'IA peuvent avoir des effets négatifs sur les droits humains si elles ne sont pas utilisées avec précaution2. Risque existentiel : Des experts en IA ont averti que la technologie qu'ils développent pourrait un jour constituer une menace existentielle pour l'humanité, comparable aux pandémies et à la guerre nucléaire3. En fin de compte, l'IA peut être à la fois bénéfique et risquée. Il est essentiel de mettre en place des régulations et des mesures de sécurité pour maximiser les avantages tout en minimisant les dangers potentiels."
     ]
 ]);
-
-//$initializationDB->setNotes();
 
 echo "=== importing data done !<br>";
