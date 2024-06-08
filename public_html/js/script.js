@@ -118,3 +118,13 @@ function saveData(formData, page, method="POST", span=null, tag=null, func=null,
     request.open(method, page);;
     request.send(formData)
 }
+
+async function fileExists(url) {
+    try {
+        const response = await fetch(url, { method: 'HEAD' });
+        return response.ok;
+    } catch (error) {
+        console.error('Error checking file existence:', error);
+        return false;
+    }
+}

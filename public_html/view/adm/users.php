@@ -10,7 +10,8 @@ include_once("header.php");
 echo '<h3 style="text-align: center;">Gestion des ' . $params["whoami_title"] . '</h3>';
 
 echo '<div>'
-    . '<a href="#" id="print-table" class="btn btn-success my-2">Imprimer page</a>'
+    . '<a href="signup" id="add-user" class="btn btn-danger m-3" target="_blank">Ajouter</a>'
+    . '<a href="#" id="print-table" class="btn btn-success my-2">Imprimer</a>'
     . '</div>';
 
 
@@ -20,8 +21,7 @@ if (isset($_GET["msg_id"]) && Message::get($_GET["msg_id"]) != Message::SUCCESS_
 }
 echo '<span class="error-msg" id="details">' . $messageContent . '</span><br>';
 
-function getFormatedList(string $table_name, array $filteredIds = []): string
-{
+function getFormatedList(string $table_name, array $filteredIds = []): string {
     return (new SingleModel)->setTable($table_name)->getAllAsJSON($filteredIds);
 }
 
@@ -270,12 +270,21 @@ $transcriptAdded = $params['whoami'] == WhoAmI::STUDENT->value ? 1 : 0;
 
     function download_transcript(id) {
         try {
+            details.innerHTML = "";
             var row = table.getRow(id);
             var rowData = row.getData();
 
             let transcript_path = "../uploads/transcripts/" + rowData['user_name'] + '.pdf';
-            window.open(transcript_path, "_blank");
-        }catch(e) {
+            fileExists(transcript_path)
+                .then(exists => {
+                    if (exists) {
+                        window.open(transcript_path, "_blank");
+                    } else {
+                        details.innerHTML = "Le relevé de note n'est pas encore disponible. Veuillez le générer.";
+                    }
+                }
+            )
+        } catch (e) {
 
         }
         return false;

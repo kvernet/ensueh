@@ -115,6 +115,14 @@ class HomeController extends Controller {
         ]);
     }
 
+    public function init_db_2024() {
+        (new HistoryModel)->add("Page [init_db_2024] visitée", getUserIP());
+        
+        $this->view("home/init_db_2024", [
+            "title" => APP_NAME
+        ]);
+    }
+
     public function jobs() : void {
         (new HistoryModel)->add("Page [jobs] visitée", getUserIP());
         

@@ -20,11 +20,23 @@ class AdmController extends UserController {
         $this->goCheck($this->dir . "get_users_as_table");
     }
 
+    public function professors() : void {
+        $this->goCheck($this->dir . "professors");
+    }
+
+    public function signup() : void {
+        $this->goCheck($this->dir . "signup");
+    }
+
     public function students() : void {
         $this->goCheck($this->dir . "students");
     }
 
-    public function professors() : void {
-        $this->goCheck($this->dir . "professors");
+    public function request_signup() : void {
+        $this->goCheck($this->dir . "request_signup");
+    }
+
+    public function welcome_signup() : void {
+        $this->goCheck($this->dir . "welcome_signup");
     }
 }

@@ -15,9 +15,6 @@ use app\core\entity\WhoAmI;
 use app\core\model\Model;
 use app\core\model\ProfileModel;
 use app\core\model\PublicationModel;
-use app\core\model\SingleModel;
-use app\core\model\SubjectModel;
-use app\core\model\UserModel;
 
 class InitializationDB extends Model {
 
@@ -226,6 +223,14 @@ $initializationDB->setSingle("forum_terms", [
 // table users
 $initializationDB->setUsers([
     new User(
+        0, "Dieuseul", "Prédélus", Gender::MALE, "adm@ensueh.com",
+        "+1234567890", Department::NordOuest,
+        WhoAmI::ADM, Section::PHYSICS,
+        Grade::PHD, "adm", "Adm@ENS2024",
+        new DateTime(), null,
+        Status::VALIDATED, new DateTime()
+    ),
+    new User(
         0, "Kinson", "Vernet", Gender::MALE, "kvernet@ensueh.com",
         "+33 7 49 55 56 74", Department::Ouest,
         WhoAmI::PROFESSOR, Section::PHYSICS,
@@ -241,29 +246,19 @@ $initializationDB->setUsers([
         new DateTime(), null,
         Status::VALIDATED, new DateTime()
     ),
-    /*
     new User(
         0, "Wisly", "Fidel", Gender::MALE, "wfidel@ensueh.com",
         "+33 7 51 48 68 66", Department::NordOuest,
         WhoAmI::PROFESSOR, Section::PHYSICS,
         Grade::PHD, "wfidel", "WFidel@ENS2024",
         new DateTime(), null,
-        Status::VALIDATED, new DateTime()
+        Status::REQUESTED, new DateTime()
     ),
-    */
     new User(
         0, "Dieuseul", "Prédélus", Gender::MALE, "dpredelus@ensueh.com",
         "+509 48 95 78 08", Department::NordOuest,
         WhoAmI::PROFESSOR, Section::PHYSICS,
         Grade::PHD, "dpredelus", "DPredelus@ENS2024",
-        new DateTime(), null,
-        Status::VALIDATED, new DateTime()
-    ),
-    new User(
-        0, "Dieuseul", "Prédélus", Gender::MALE, "adm@ensueh.com",
-        "12 34 56 78 90", Department::NordOuest,
-        WhoAmI::ADM, Section::PHYSICS,
-        Grade::PHD, "adm", "Adm@ENS2024",
         new DateTime(), null,
         Status::VALIDATED, new DateTime()
     ),

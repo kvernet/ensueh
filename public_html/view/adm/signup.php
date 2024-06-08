@@ -1,16 +1,17 @@
 <?php
 
+use app\core\entity\Footer;
 use app\core\entity\Form;
+use app\core\entity\Header;
 use app\core\entity\Message;
 use app\core\entity\WhoAmI;
 use app\core\model\SingleModel;
 
 $params['nav_item_active'] = "Inscription";
 
-include_once("header.php");
+(new Header)->setTitle($params["title"] ?? APP_NAME)->show();
 
-function getMsg(): string
-{
+function getMsg(): string {
     if (isset($_GET['msg_id'])) {
         if (Message::SUCCESS_MSG->value != $_GET['msg_id']) {
             return Message::getMessage(Message::get($_GET['msg_id']));
@@ -35,7 +36,7 @@ $singleModel = new SingleModel;
     ->add('<div class="row">')
     ->add('<div class="mb-2 text-center">')
     ->add('<div data-mdb-input-init class="form-outline">')
-    ->add('<span>Déjà inscrit ? <a href="login">Se connecter</a> sur le portail de ' . APP_NAME . ' !</span>')
+    ->add('<span>Déjà inscrit ? <a href="../home/login" target="_blank">Se connecter</a> sur le portail de ' . APP_NAME . ' !</span>')
     ->add('</div>')
     ->add('</div>')
     ->add('</div>')
@@ -146,11 +147,11 @@ $singleModel = new SingleModel;
     ->add('</div>')
 
     ->add('<div class="">')
-    ->add('En cliquant sur <b>Soumettre la demande</b>, vous acceptez nos <a href="../home/terms" target="_blank">conditions</a>.')
+    ->add('En cliquant sur <b>S\'inscrire sur le portail</b>, vous acceptez nos <a href="../home/terms" target="_blank">conditions</a>.')
     ->add('</div>')
 
     ->add('<div class="mt-1 pt-2">')
-    ->add('<input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Soumettre la demande" />')
+    ->add('<input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="S\'inscrire sur le portail" />')
     ->add('</div>')
     
     ->add('</form>')
@@ -222,5 +223,5 @@ $singleModel = new SingleModel;
 </script>
 
 <?php
-include_once("footer.php");
+(new Footer)->show();
 ?>
