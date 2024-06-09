@@ -4,6 +4,7 @@ namespace app\core\model;
 
 use app\core\entity\Grade;
 use app\core\entity\Note;
+use app\core\entity\User;
 use app\core\entity\WhoAmI;
 use DateTime;
 use PDO;
@@ -53,16 +54,18 @@ class NoteModel extends Model {
         return "Ajout/mise à jour note échoué(e) pour raison inconnue. Veuillez contacter les responsables.";
     }
 
-    public function getUserAllNotes(string $user_name, float $success_note=10, float $average_max=20) : array {
-        $notes = [
-            'success_note' => $success_note,
-            'average_max' => $average_max,
-            'notes' => []
-        ];
+    public function getUserAllNotes(User $user, float $average_max=20) : array {
+        $notes = [];
         try {
-            $sql = "SELECT t1.id, t1.note, t2.name, t2.max_note, t2.coef FROM " . $this->table . " AS t1 INNER JOIN subjects AS t2 ON t1.subject_id=t2.id WHERE (t1.user_name=:user_name AND t1.deleted=:deleted) ORDER BY t2.name";
+            // get user name
+            $user_name = $user->getUserName();
+            // get user's grade
+            $grade = $user->getGrade();
+
+            $sql = "SELECT t1.id, t1.note, t2.name, t2.max_note, t2.coef FROM " . $this->table . " AS t1 INNER JOIN subjects AS t2 ON t1.subject_id=t2.id WHERE (t1.user_name=:user_name AND t2.grade_id=:grade_id AND t1.deleted=:deleted) ORDER BY t2.name";
             $data = $this->query($sql, [
                 [":user_name", $user_name, PDO::PARAM_STR],
+                [":grade_id", $grade->value, PDO::PARAM_INT],
                 [":deleted", false, PDO::PARAM_BOOL]
             ])->execute()->fetchAll();
             foreach($data as $row) {
@@ -71,7 +74,7 @@ class NoteModel extends Model {
                     $max_note = 100;
                 }
                 $note = $average_max * floatval($row['note']) / $max_note;
-                $notes['notes'][] = [
+                $notes[] = [
                     "id" => $row['id'],
                     "note" => $note,
                     "name" => $row['name'],
@@ -85,22 +88,29 @@ class NoteModel extends Model {
         return $notes;
     }
 
-    public function getPlace(Grade $grade, string $user_name) : array {
+    public function getPlace(User $user) : array {
         $place = [
             'position' => 1,
             'total' => 0
         ];
         try {
-            // get all users by section
-            $users = (new UserModel)->getUsersByGrade($grade, WhoAmI::STUDENT);
+            // get user name
+            $user_name = $user->getUserName();
+            // get section
+            $session = $user->getSection();
+            // get grade
+            $grade = $user->getGrade();
+            
+            // get all users by grade
+            $users = (new UserModel)->getUsersBySectionGrade($session, $grade, WhoAmI::STUDENT);
 
             // get number of students in that section
             $place['total'] = count($users);
 
             // get place of the student            
-            $average = $this->computeAverage($user_name);
-            foreach($users as $user) {
-                $aver = $this->computeAverage($user->getUserName());
+            $average = $this->computeAverage($user);
+            foreach($users as $u) {
+                $aver = $this->computeAverage($u);
                 if($average < $aver) {
                     $place['position']++;
                 }
@@ -112,11 +122,17 @@ class NoteModel extends Model {
         return $place;
     }
 
-    public function computeAverage(string $user_name) : float {
+    private function computeAverage(User $user) : float {
         try {
-            $sql = "SELECT sum(t1.note*t2.coef) / sum(t2.coef) AS average FROM " . $this->table . " AS t1 INNER JOIN subjects AS t2 ON t1.subject_id=t2.id WHERE (t1.user_name=:user_name AND t1.deleted=:deleted)";
+            // get user name
+            $user_name = $user->getUserName();
+            // get grade
+            $grade = $user->getGrade();
+            
+            $sql = "SELECT sum(t1.note*t2.coef) / sum(t2.coef) AS average FROM " . $this->table . " AS t1 INNER JOIN subjects AS t2 ON t1.subject_id=t2.id WHERE (t1.user_name=:user_name AND t2.grade_id=:grade_id AND t1.deleted=:deleted)";
             $data = $this->query($sql, [
                 [":user_name", $user_name, PDO::PARAM_STR],
+                [":grade_id", $grade->value, PDO::PARAM_STR],
                 [":deleted", false, PDO::PARAM_BOOL]
             ])->execute()->fetchAll();
             if(count($data)) {

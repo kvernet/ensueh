@@ -12,21 +12,24 @@ echo '<h3 style="text-align: center;">Gestion des cours</h3>';
 
 $singleModel = new SingleModel;
 
-echo 'Filtrer par:<br>';
-echo '<div class="">'
-.'<input type="text" id="title_like" name="title_like" placeholder="Titre"><br>'
+echo '<div class="row">'
+
+.'<div class="col-sm-4">'
+.'<input class="form-control" type="text" id="title_like" name="title_like" placeholder="Titre"><br>'
 .'</div>';
 
-echo '<div class="">'
-.'<select id="section" name="section">'
+echo '<div class="col-sm-4 mb-4">'
+.'<select class="form-select" id="section" name="section">'
 .$singleModel->setTable("sections")->getAllAsOptions()
 ."</select>"
 .'</div>';
 
-echo '<div class="mb-3">'
-.'<select id="grade" name="grade">'
+echo '<div class="col-sm-4 mb-4">'
+.'<select class="form-select" id="grade" name="grade">'
 .$singleModel->setTable("grades")->getAllAsOptions()
 ."</select>"
+.'</div>'
+
 .'</div>';
 
 echo Course::getAddModal("courses");
@@ -77,7 +80,7 @@ echo '<div id="courses_data_tr"></div>';
         formData.append("grade_id", grade.value);
         formData.append("title_like", title_like.value);
         formData.append("return_page", "courses");
-        formData.append("color_index", 0);
+        formData.append("color_index", getRndInteger(0, 10));
 
         const response = await fetch("get_courses_as_table", {
             method: "POST",

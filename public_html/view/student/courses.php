@@ -15,7 +15,7 @@ echo '<div class="row">'
 .'<input class="form-control" type="text" id="title_like" name="title_like" placeholder="Titre"><br>'
 .'</div>'
 . '<div class="col-md-6">'
-.'<select class="form-control" id="section" name="section">'
+.'<select class="form-select" id="section" name="section">'
 .$singleModel->setTable("sections")->getAllAsOptions()
 ."</select>"
 .'</div>'
@@ -46,7 +46,7 @@ echo '<div id="courses_data_tr"></div>';
         formData.append("section_id", section.value);
         formData.append("title_like", title_like.value);
         formData.append("return_page", "courses");
-        formData.append("color_index", 2);
+        formData.append("color_index", getRndInteger(0, 10));
 
         const response = await fetch("get_courses_as_table", {
             method: "POST",

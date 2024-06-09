@@ -6,8 +6,7 @@ class Footer {
 
     public function __construct(
         private $js_links=[
-            BOOSTRAP_JS,
-            '<script src="../../js/script.js"></script>'
+            BOOSTRAP_JS
         ]) {
     }
 

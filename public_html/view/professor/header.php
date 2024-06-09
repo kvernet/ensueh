@@ -27,7 +27,7 @@ if($status == Status::ONLINE || $status == Status::ACTIVE) {
             ["text" => "Envoyés", "href" => APP_DOMAIN . "professor/msg_sent"],
             ["text" => "Reçus(" . $params["n_received_msg"] . ")", "href" => APP_DOMAIN . "professor/msg_received"]
         ], -1)
-        ->addLiDropdown("Mon compte", [
+        ->addLiDropdown("Mon compte<sup>". $user_name ."</sup>", [
             ["text" => "Mon profil", "href" => APP_DOMAIN . "professor/profile"],
             ["text" => "Mes publications", "href" => APP_DOMAIN . "professor/publications"],
             ["text" => "Changer mot de passe", "href" => APP_DOMAIN . "professor/cpwd"],

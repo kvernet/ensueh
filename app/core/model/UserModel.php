@@ -220,6 +220,18 @@ class UserModel extends Model {
         return null;
     }
 
+    public function getGrade(string $user_name) : Grade {
+        try {
+            $user = $this->getByUserName($user_name);
+            if($user) {
+                return $user->getGrade();
+            }
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return Grade::UNKNOWN;
+    }
+
     public function getPaginatedData(WhoAmI $whoAmI, int $offset, int $size): array {
         $users = array();
         try {
@@ -284,6 +296,18 @@ class UserModel extends Model {
             (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
         return 0;
+    }
+
+    public function getSection(string $user_name) : Section {
+        try {
+            $user = $this->getByUserName($user_name);
+            if($user) {
+                return $user->getSection();
+            }
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return Section::UNKNOWN;
     }
 
     static public function getStatus(array $ar) : Status {
@@ -373,11 +397,12 @@ class UserModel extends Model {
         return array();
     }
 
-    public function getUsersByGrade(Grade $grade, WhoAmI $whoAmI=WhoAmI::STUDENT) : array {
+    public function getUsersBySectionGrade(Section $section, Grade $grade, WhoAmI $whoAmI=WhoAmI::STUDENT) : array {
         $users = [];
         try {
-            $sql = "SELECT * FROM " . $this->table . " WHERE (grade_id=:grade_id AND whoami_id=:whoami_id)";
+            $sql = "SELECT * FROM " . $this->table . " WHERE (section_id=:section_id AND grade_id=:grade_id AND whoami_id=:whoami_id)";
             $data = $this->query($sql, [
+                [":section_id", $section->value, PDO::PARAM_INT],
                 [":grade_id", $grade->value, PDO::PARAM_INT],
                 [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
             ])->execute()->fetchAll();

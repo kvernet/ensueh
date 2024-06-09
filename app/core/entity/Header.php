@@ -8,8 +8,9 @@ class Header {
         private $css_links=[
             BOOTSTRAP_CSS,
             TABLE_CSS,
+            '<link rel="stylesheet" href="../../css/style.css">',
             TABLE_JS,
-            '<link rel="stylesheet" href="../../css/style.css">'
+            '<script src="../../js/script.js"></script>'
         ]){
     }
 

@@ -314,6 +314,14 @@ $initializationDB->setUsers([
         new DateTime(), null,
         Status::REQUESTED, new DateTime()
     ),
+    new User(
+        0, "Katiana", "Jean", Gender::MALE, "kjean@ensueh.com",
+        "+509 66 71 00 45", Department::Nord,
+        WhoAmI::STUDENT, Section::PHYSICS,
+        Grade::M1, "kjean", "KJean@ENS2024",
+        new DateTime(), null,
+        Status::REQUESTED, new DateTime()
+    ),
 ]);
 
 // table subjects
@@ -340,7 +348,7 @@ $initializationDB->setSubjects([
         new DateTime(), false
     ),
     new Subject(
-        0, "Dynamique Newtoniene", Grade::L0,
+        0, "Dynamique Newtonienne", Grade::L0,
         "rmareus", 100.0, 1.0,
         new DateTime(), false
     ),

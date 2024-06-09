@@ -27,8 +27,8 @@ $response = [
 if ($_POST) {
     try {
         // notes info
-        $success_note = 5;
-        $average_max = 10;
+        $success_note = 50;
+        $average_max = 100;
         
         // student information
         $id = $_POST['id'];
@@ -98,10 +98,8 @@ if ($_POST) {
         $pdf->SetFont('dejavusans', '', 12);
 
         $noteModel = new NoteModel;
-        $transcripts = $noteModel->getUserAllNotes($user_name, $success_note, $average_max);
-        error_log(json_encode($transcripts));
+        $notes = $noteModel->getUserAllNotes($user, $average_max);
 
-        $notes = $transcripts['notes'];        
         foreach($notes as $row) {
             $pdf->Cell(80, $text_size, $row['name'], 1);
             $pdf->Cell(55, $text_size, $row['note'], 1);
@@ -113,7 +111,7 @@ if ($_POST) {
 
         $average = round(computeAverage($notes), 1);
         // get student place
-        $place = $noteModel->getPlace($user->getGrade(), $user_name);
+        $place = $noteModel->getPlace($user);
         $place_position = $place['position'];
         $place_total = $place['total'];
 

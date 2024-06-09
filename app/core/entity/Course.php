@@ -30,11 +30,11 @@ class Course {
     public function getDate() : DateTime { return $this->date_add; }
     public function getDeleted() : bool { return $this->deleted; }
 
-    static public function getAddModal(string $return_page="", string $action="add_course", string $text="Ajouter") : string {
+    static public function getAddModal(string $return_page="", string $action="add_course", string $text="Ajouter un document") : string {
         $target = "modal_add_course";
         $singleModel = new SingleModel;
 
-        return '<a href="#" data-bs-toggle="modal" data-bs-target="#'.$target.'" data-bs-whatever="@mdo">'. $text .'</a>'
+        return '<a class="btn btn-success" href="#" data-bs-toggle="modal" data-bs-target="#'.$target.'" data-bs-whatever="@mdo">'. $text .'</a>'
         .'<div class="modal fade" id="'.$target.'" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">'
         .'<div class="modal-dialog">'
         .'<div class="modal-content">'

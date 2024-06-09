@@ -280,7 +280,7 @@ $transcriptAdded = $params['whoami'] == WhoAmI::STUDENT->value ? 1 : 0;
                     if (exists) {
                         window.open(transcript_path, "_blank");
                     } else {
-                        details.innerHTML = "Le relevé de note n'est pas encore disponible. Veuillez le générer.";
+                        details.innerHTML = "Le relevé de notes n'est pas encore disponible. Veuillez le générer.";
                     }
                 }
             )

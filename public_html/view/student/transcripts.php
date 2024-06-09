@@ -26,7 +26,7 @@ echo '<div id="transcript_data_tr"></div>';
 
     async function postData() {
         const formData = new FormData();
-        formData.append("color_index", 2);
+        formData.append("color_index", getRndInteger(0, 10));
 
         const response = await fetch("get_transcripts_as_table", {
             method: "POST",
@@ -48,7 +48,7 @@ echo '<div id="transcript_data_tr"></div>';
                     if (exists) {
                         window.open(transcript_path, "_blank");
                     } else {
-                        details.innerHTML = "Le relevé de note n'est pas encore disponible. Veuillez le générer.";
+                        details.innerHTML = "Le relevé de notes n'est pas encore disponible. Veuillez contacter l'administration.";
                     }
                 }
             )
