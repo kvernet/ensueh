@@ -65,13 +65,15 @@ class InitializationDB extends Model {
     public function setSubjects(array $subjects=[], string $table="subjects") : void {
         echo "=== InitializationDB::setSubjects(". $table .")<br>";
         
-        $sql = "INSERT INTO ". $table ."(name, grade_id, user_name) VALUES(:name, :grade_id, :user_name)";
+        $sql = "INSERT INTO ". $table ."(name, grade_id, user_name, max_note, coef) VALUES(:name, :grade_id, :user_name, :max_note, :coef)";
 
         foreach($subjects as $subject) {
             $params = [
                 [":name", $subject->getName(), PDO::PARAM_STR],
                 [":grade_id", $subject->getGrade()->value, PDO::PARAM_INT],
-                [":user_name", $subject->getUserName(), PDO::PARAM_STR]
+                [":user_name", $subject->getUserName(), PDO::PARAM_STR],
+                [":max_note", $subject->getMaxNote(), PDO::PARAM_STR],
+                [":coef", $subject->getCoef(), PDO::PARAM_STR]
             ];
             $this->query($sql, $params)->execute();
         }
@@ -231,10 +233,10 @@ $initializationDB->setUsers([
         Status::VALIDATED, new DateTime()
     ),
     new User(
-        0, "Kinson", "Vernet", Gender::MALE, "kvernet@ensueh.com",
-        "+33 7 49 55 56 74", Department::Ouest,
+        0, "Dieuseul", "Prédélus", Gender::MALE, "dpredelus@ensueh.com",
+        "+509 48 95 78 08", Department::NordOuest,
         WhoAmI::PROFESSOR, Section::PHYSICS,
-        Grade::PHD, "kvernet", "KVernet@ENS2024",
+        Grade::PHD, "dpredelus", "DPredelus@ENS2024",
         new DateTime(), null,
         Status::VALIDATED, new DateTime()
     ),
@@ -247,6 +249,15 @@ $initializationDB->setUsers([
         Status::VALIDATED, new DateTime()
     ),
     new User(
+        0, "Kinson", "Vernet", Gender::MALE, "kvernet@ensueh.com",
+        "+33 7 49 55 56 74", Department::Ouest,
+        WhoAmI::PROFESSOR, Section::PHYSICS,
+        Grade::PHD, "kvernet", "KVernet@ENS2024",
+        new DateTime(), null,
+        Status::VALIDATED, new DateTime()
+    ),
+    /*
+    new User(
         0, "Wisly", "Fidel", Gender::MALE, "wfidel@ensueh.com",
         "+33 7 51 48 68 66", Department::NordOuest,
         WhoAmI::PROFESSOR, Section::PHYSICS,
@@ -254,14 +265,7 @@ $initializationDB->setUsers([
         new DateTime(), null,
         Status::REQUESTED, new DateTime()
     ),
-    new User(
-        0, "Dieuseul", "Prédélus", Gender::MALE, "dpredelus@ensueh.com",
-        "+509 48 95 78 08", Department::NordOuest,
-        WhoAmI::PROFESSOR, Section::PHYSICS,
-        Grade::PHD, "dpredelus", "DPredelus@ENS2024",
-        new DateTime(), null,
-        Status::VALIDATED, new DateTime()
-    ),
+    */
     new User(
         0, "Judel", "Dort", Gender::MALE, "jdort@ensueh.com",
         "+509 56 85 34 25", Department::Ouest,
@@ -300,7 +304,15 @@ $initializationDB->setUsers([
         WhoAmI::STUDENT, Section::PHYSICS,
         Grade::L1, "jfautin", "JFaustin@ENS2024",
         new DateTime(), null,
-        Status::SUSPENDED, new DateTime()
+        Status::REQUESTED, new DateTime()
+    ),
+    new User(
+        0, "Smith", "Antoine", Gender::MALE, "santoine@ensueh.com",
+        "+509 34 77 30 07", Department::Sud,
+        WhoAmI::STUDENT, Section::PHYSICS,
+        Grade::M1, "santoine", "SAntoine@ENS2024",
+        new DateTime(), null,
+        Status::REQUESTED, new DateTime()
     ),
 ]);
 
@@ -318,7 +330,7 @@ $initializationDB->setSubjects([
         new DateTime(), false
     ),
     new Subject(
-        0, "Anlais", Grade::L0,
+        0, "Anglais", Grade::L0,
         "rmareus", 100.0, 1.0,
         new DateTime(), false
     ),
@@ -337,7 +349,48 @@ $initializationDB->setSubjects([
         0, "Electromagnétisme", Grade::L1,
         "rmareus", 100.0, 1.0,
         new DateTime(), false
-    )
+    ),
+    // M1
+    new Subject(
+        0, "Mécanique Quantique", Grade::M1,
+        "rmareus", 100.0, 10.,
+        new DateTime(), false
+    ),
+    new Subject(
+        0, "Physique Atomique", Grade::M1,
+        "dpredelus", 100.0, 9.,
+        new DateTime(), false
+    ),
+    new Subject(
+        0, "Physique Statistique", Grade::M1,
+        "dpredelus", 100.0, 10.,
+        new DateTime(), false
+    ),
+    new Subject(
+        0, "Optique & Laser", Grade::M1,
+        "rmareus", 100.0, 9.,
+        new DateTime(), false
+    ),
+    new Subject(
+        0, "Physique Nucléaire", Grade::M1,
+        "dpredelus", 100.0, 8.,
+        new DateTime(), false
+    ),
+    new Subject(
+        0, "Programmation", Grade::M1,
+        "kvernet", 100.0, 4.,
+        new DateTime(), false
+    ),
+    new Subject(
+        0, "Chimie de l'Environnement", Grade::M1,
+        "kvernet", 100.0, 6.,
+        new DateTime(), false
+    ),
+    new Subject(
+        0, "Micro-projet", Grade::M1,
+        "rmareus", 100.0, 4.,
+        new DateTime(), false
+    ),
 ]);
 
 
@@ -362,6 +415,16 @@ $initializationDB->setProfiles([
         false
     ),
     new Profile(
+        0, "kvernet", "Kinson", "Vernet",
+        "kvernet.png",
+        "Dr Kinson VERNET, est spécialiste en Physique des Particules. Ses travaux de recherche se portent sur la radiographie des volcans. Il cherche à dévélopper des outils et méthodes robustes permettant de radiographier un volcan en utilisant la mesure des muons atmosphériques qui se propagent à travers le volcan. Cette technique d'imagerie a été utilsée dans le passé par d'autres chercheurs dans divers secteurs tels que le génie civil, les pyramides, les centrales nucléaires, etc.",
+        "",
+        "kvernet@ensueh.com",
+        new DateTime(),
+        false
+    ),
+    /*
+    new Profile(
         0, "wfidel", "Wisly", "Fidel",
         "wfidel.png",
         "Wisly FIDEL, enseignant-chercheur à l'ENS et doctorant en énergies renouvelables propres et alternatives. Il est ingénieur reconnu par la CTI et légalement enregistré dans le Répertoire des Ingénieurs et des Scientifiques Français. Il a obtenu son master de physique, mention \"Atome, Molécule, Energie et Environnement\" à l'ENS, en partenariat avec les universités de Poitiers et Claude Bernard Lyon 1 . Il est ingénieur diplômé de la grande école JUNIA-Hautes Etudes d'Ingénieur(HEI) de l'Université Catholique de Lille dans le domaine des énergies et systèmes électriques automatisés.",
@@ -370,6 +433,7 @@ $initializationDB->setProfiles([
         new DateTime(),
         true
     )
+    */
 ]);
 
 // table forum_subjects

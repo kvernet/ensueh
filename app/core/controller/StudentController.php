@@ -24,7 +24,11 @@ class StudentController extends UserController {
         $this->goCheck($this->dir . "get_courses_as_table");
     }
 
-    public function rnotes() {
-        $this->goCheck($this->dir . "rnotes");
+    public function get_transcripts_as_table() {
+        $this->goCheck($this->dir . "get_transcripts_as_table");
+    }
+
+    public function transcripts() {
+        $this->goCheck($this->dir . "transcripts");
     }
 }

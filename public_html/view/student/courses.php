@@ -10,15 +10,15 @@ echo '<h3 style="text-align: center;">Mes cours</h3>';
 
 $singleModel = new SingleModel;
 
-echo 'Filtrer par:<br>';
-echo '<div class="">'
-.'<input type="text" id="title_like" name="title_like" placeholder="Titre"><br>'
-.'</div>';
-
-echo '<div class="">'
-.'<select id="section" name="section">'
+echo '<div class="row">'
+. '<div class="col-md-6">'
+.'<input class="form-control" type="text" id="title_like" name="title_like" placeholder="Titre"><br>'
+.'</div>'
+. '<div class="col-md-6">'
+.'<select class="form-control" id="section" name="section">'
 .$singleModel->setTable("sections")->getAllAsOptions()
 ."</select>"
+.'</div>'
 .'</div>';
 
 echo '<div id="courses_data_tr"></div>';

@@ -2,25 +2,20 @@
 
 use app\core\entity\Gender;
 use app\core\entity\Message;
+use app\core\model\NoteModel;
 use app\core\model\UserModel;
-
-//require_once(PUBLIC_DIR . "tcpdf/tcpdf.php");
 
 function computeAverage(array $transcripts=[]) : float {
     $sumNotes = 0;
     $sumWeights = 0;
-    foreach($transcripts as $row) {
-        $sumNotes += $row[1]*$row[2];
-        $sumWeights += $row[2];
+    foreach($transcripts as $transcript) {
+        $sumNotes += $transcript['note']*$transcript['coef'];
+        $sumWeights += $transcript['coef'];
     }
 
     if($sumWeights == 0) return 0.0;
 
     return $sumNotes / $sumWeights;
-}
-
-function getPlace() : int {
-    return 1;
 }
 
 $response = [
@@ -31,6 +26,10 @@ $response = [
 
 if ($_POST) {
     try {
+        // notes info
+        $success_note = 5;
+        $average_max = 10;
+        
         // student information
         $id = $_POST['id'];
         $user = (new UserModel)->getById($id);
@@ -42,8 +41,9 @@ if ($_POST) {
         $gender = $user->getGender();
         $gender_name = $gender == Gender::MALE ? "Monsieur" : "Madame";
         $gender_pronoun = $gender == Gender::MALE ? "Il" : "Elle";
+        $grade = $user->getGrade()->toText();
         $year = "2024 - 2025";
-        $programme = $user->getGrade()->toText();
+        //$programme = $user->getGrade()->toText();
         $text_size = 9;
 
         
@@ -80,49 +80,48 @@ if ($_POST) {
         $pdf->SetFont('dejavusans', '', 12);
 
         $pdf->Cell(0, $text_size, "La direction de l'Ecole Normale Supérieure (ENS) atteste et certifie par la présente que", 0, 1);
-        $pdf->Cell(0, $text_size, $gender_name . " " . $full_name . " a complété le cycle de cours prévu au programme du " . $programme . ".", 0, 1);
+        $pdf->Cell(0, $text_size, $gender_name . " " . $full_name . " a complété le cycle de cours prévu au programme du " . $grade . ".", 0, 1);
         $pdf->Cell(0, $text_size, $gender_pronoun . " a obtenu les notes suivantes :", 0, 1);
 
         $pdf->Ln(5);
 
-        $pdf->Cell(190, $text_size, "Année : " . $year, 0, 1, "C");
+        $pdf->Cell(190, $text_size, "Année académique: " . $year, 0, 1, "C");
 
         // transcript table header
         $pdf->SetFont('dejavusans', 'B', 12);
         $pdf->Cell(80, $text_size, 'Matières', 1);
-        $pdf->Cell(55, $text_size, 'Notes sur 20', 1);
+        $pdf->Cell(55, $text_size, 'Notes sur ' . $average_max, 1);
         $pdf->Cell(55, $text_size, 'Coefficients', 1);
         $pdf->Ln();
 
         // transcript table content
         $pdf->SetFont('dejavusans', '', 12);
-        $transcript = [
-            ['Mécanique Quantique', 16, 10],
-            ['Physique Atomique', 13, 9],
-            ['Physique Statistique', 14, 10],
-            ['Optique & Laser', 14, 9],
-            ['Physique Nucléaire', 14.5, 8],
-            ['Programmation', 18.7, 4],
-            ['Chimie de l\'Environnement', 19.5, 6],
-            ['Micro-Projet', 14, 4],
-        ];
 
-        foreach ($transcript as $row) {
-            $pdf->Cell(80, $text_size, $row[0], 1);
-            $pdf->Cell(55, $text_size, $row[1], 1);
-            $pdf->Cell(55, $text_size, $row[2], 1);
+        $noteModel = new NoteModel;
+        $transcripts = $noteModel->getUserAllNotes($user_name, $success_note, $average_max);
+        error_log(json_encode($transcripts));
+
+        $notes = $transcripts['notes'];        
+        foreach($notes as $row) {
+            $pdf->Cell(80, $text_size, $row['name'], 1);
+            $pdf->Cell(55, $text_size, $row['note'], 1);
+            $pdf->Cell(55, $text_size, $row['coef'], 1);
             $pdf->Ln();
         }
 
         $pdf->Ln();
 
-        $average = round(computeAverage($transcript), 1);
+        $average = round(computeAverage($notes), 1);
+        // get student place
+        $place = $noteModel->getPlace($user->getGrade(), $user_name);
+        $place_position = $place['position'];
+        $place_total = $place['total'];
 
-        $pdf->Cell(100, $text_size, "Moyenne : " . $average . "/20");
+        $pdf->Cell(100, $text_size, "Moyenne : " . $average . "/" . $average_max);
         $pdf->Ln();
-        $pdf->Cell(100, $text_size, "Classement : 1/30");
+        $pdf->Cell(100, $text_size, "Classement : ". $place_position ."/". $place_total ."");
         $pdf->Ln();
-        $pdf->Cell(100, $text_size, "La moyenne de passage est de 10/20.");
+        $pdf->Cell(100, $text_size, "La moyenne de passage est de ". $success_note ."/". $average_max .".");
         $pdf->Ln();
         $pdf->Cell(100, $text_size, "Certifié conforme à l'original des Registres de l'Ecole Normale Supérieure.");
 
@@ -131,7 +130,7 @@ if ($_POST) {
         $pdf->Image($signature, 125, 240, 60, 0, 'JPG', '', 'C', false, 300, '', false, false, 0, false, false, false);
 
         // output the PDF
-        $transcript_path = 'uploads/transcripts/' . $user_name . '.pdf';
+        $transcript_path = 'uploads/transcripts/' . $user_name . "-" . $grade . '.pdf';
         $pdf->Output(PUBLIC_DIR . $transcript_path, 'F');
 
         $response['msg'] = "Relevé de notes de " . $full_name . " généré avec succès.";

@@ -373,6 +373,41 @@ class UserModel extends Model {
         return array();
     }
 
+    public function getUsersByGrade(Grade $grade, WhoAmI $whoAmI=WhoAmI::STUDENT) : array {
+        $users = [];
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE (grade_id=:grade_id AND whoami_id=:whoami_id)";
+            $data = $this->query($sql, [
+                [":grade_id", $grade->value, PDO::PARAM_INT],
+                [":whoami_id", $whoAmI->value, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            foreach ($data as $d) {
+                $users[] = new User(
+                    $d["id"],
+                    $d["first_name"],
+                    $d["last_name"],
+                    Gender::get($d["gender_id"]),
+                    $d["email"],
+                    $d["phone"],
+                    Department::get($d["department_id"]),
+                    WhoAmI::get($d["whoami_id"]),
+                    Section::get($d["section_id"]),
+                    Grade::get($d["grade_id"]),
+                    $d["user_name"],
+                    $d["pwd"],
+                    new DateTime($d["date_ins"]),
+                    $d["uniqid"],
+                    Status::get($d["status_id"]),
+                    new DateTime($d["last_activity"])
+                );
+            }
+            return $users;
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return $users;
+    }
+
     public function getWhoAmI(string $user_name) : WhoAmI {
         try {
             $sql = "SELECT * FROM " . $this->table . " WHERE user_name=:user_name";

@@ -274,7 +274,7 @@ $transcriptAdded = $params['whoami'] == WhoAmI::STUDENT->value ? 1 : 0;
             var row = table.getRow(id);
             var rowData = row.getData();
 
-            let transcript_path = "../uploads/transcripts/" + rowData['user_name'] + '.pdf';
+            let transcript_path = "../uploads/transcripts/" + rowData['user_name'] + "-" + rowData['grade'] + '.pdf';
             fileExists(transcript_path)
                 .then(exists => {
                     if (exists) {
