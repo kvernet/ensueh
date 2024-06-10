@@ -3,6 +3,7 @@
 namespace app\core\model;
 
 use app\core\entity\Grade;
+use app\core\entity\Section;
 use app\core\entity\Subject;
 use DateTime;
 use PDO;
@@ -40,6 +41,7 @@ class SubjectModel extends Model {
             if(count($data)) {
                 return new Subject(
                     $data[0]['id'], $data[0]['name'],
+                    Section::get($data[0]['section_id']),
                     Grade::get($data[0]['grade_id']),
                     $data[0]['user_name'],
                     $data[0]['max_note'],
@@ -67,6 +69,7 @@ class SubjectModel extends Model {
             foreach($data as $d) {
                 $subjects[] = new Subject(
                     $d['id'], $d['name'],
+                    Section::get($d['section_id']),
                     Grade::get($d['grade_id']),
                     $d['user_name'],
                     $d['max_note'],
@@ -93,6 +96,35 @@ class SubjectModel extends Model {
             foreach($data as $d) {
                 $subjects[] = new Subject(
                     $d['id'], $d['name'],
+                    Section::get($d['section_id']),
+                    Grade::get($d['grade_id']),
+                    $d['user_name'],
+                    $d['max_note'],
+                    $d['coef'],
+                    new DateTime($d['date']),
+                    $d['deleted']
+                );
+            }
+        }
+        catch(PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return $subjects;
+    }
+
+    public function getSubjectsBySectionGrade(int $secion_id, int $grade_id) : array {
+        $subjects = [];
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE (section_id=:section_id AND grade_id=:grade_id AND deleted=:deleted)";
+            $data = $this->query($sql, [
+                [":section_id", $secion_id, PDO::PARAM_INT],
+                [":grade_id", $grade_id, PDO::PARAM_INT],
+                [":deleted", false, PDO::PARAM_BOOL]
+            ])->execute()->fetchAll();
+            foreach($data as $d) {
+                $subjects[] = new Subject(
+                    $d['id'], $d['name'],
+                    Section::get($d['section_id']),
                     Grade::get($d['grade_id']),
                     $d['user_name'],
                     $d['max_note'],

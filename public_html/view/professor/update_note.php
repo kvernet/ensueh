@@ -2,6 +2,7 @@
 
 use app\core\entity\Message;
 use app\core\entity\Note;
+use app\core\entity\NoteStatus;
 use app\core\model\NoteModel;
 
 $response = [
@@ -17,16 +18,29 @@ if($_POST) {
     $value = floatval( $_POST['note'] );
     $session_id = $_POST['session_id'];
 
-    $note = new Note(
-        $id, $subject_id, $user_name,
-        $value, $session_id, false, false,
-        new DateTime()
-    );
+    $noteModel = new NoteModel;
 
-    $msg = (new NoteModel)->addOrUpdate($note);
+    $note = $noteModel->getNoteById($id);
+    if($note) {
+        // update note
+        $note->setNote($value);
+        $response['msg'] = "Note mise à jour avec succès.";
+    } else {
+        // create note
+        $note = new Note(
+            $id, $subject_id, $user_name,
+            $value, $session_id,
+            NoteStatus::UNKNOWN->value,
+            new DateTime()
+        );
+        $response['msg'] = "Note ajoutée avec succès.";
+    }
 
-    $response['success'] = $msg == "SUCCESS";
-    $response['msg'] = $msg;
+    $msg = $noteModel->addOrUpdate($note);
+
+    if($msg != "SUCCESS") {
+        $response['msg'] = $msg;
+    }
 }
 
 echo json_encode($response);

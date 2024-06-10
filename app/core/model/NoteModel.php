@@ -3,7 +3,9 @@
 namespace app\core\model;
 
 use app\core\entity\Grade;
+use app\core\entity\Message;
 use app\core\entity\Note;
+use app\core\entity\NoteStatus;
 use app\core\entity\User;
 use app\core\entity\WhoAmI;
 use DateTime;
@@ -16,10 +18,26 @@ class NoteModel extends Model {
 
     public function addOrUpdate(Note $note) : string {
         try {
-            // check note if not yet validated
-            if($this->isNoteValidated($note->getId())) {
-                return "Désolé mais cette note a déjà été validée. Vous ne pouvez plus la modifier";
+            if($note == null) {
+                return "Désolé mais la note n'existe pas.";
             }
+
+            error_log(json_encode([
+                "note_status_id" => $note->getStatusId(),
+                "validated_id" => NoteStatus::VALIDATED,
+                "confirmed_id" => NoteStatus::CONFIRMED
+            ]));
+
+            // check note if not yet validated
+            if($note->getStatusId() == NoteStatus::VALIDATED->value) {
+                return "Désolé mais cette note a déjà été validée. Vous ne pouvez plus la modifier.";
+            }
+
+            // check note if not yet confirmed
+            if($note->getStatusId() == NoteStatus::CONFIRMED->value) {
+                return "Désolé mais cette note a déjà été confirmée. Vous ne pouvez plus la modifier.";
+            }
+
             // check if note range is correct
             $note_msg = $this->isNoteCorrect($note->getSubjectId(), $note->getNote());
             if($note_msg != "CORRECT") {
@@ -28,11 +46,10 @@ class NoteModel extends Model {
             
             if($note->getId() > 0) {
                 // update current note if not yet validated
-                $sql = "UPDATE " . $this->table . " SET note=:note WHERE (id=:id AND deleted=:deleted)";
+                $sql = "UPDATE " . $this->table . " SET note=:note WHERE id=:id";
                 $params = [
                     [":note", $note->getNote(), PDO::PARAM_STR],
-                    [":id", $note->getId(), PDO::PARAM_INT],
-                    [":deleted", false, PDO::PARAM_BOOL]
+                    [":id", $note->getId(), PDO::PARAM_INT]
                 ];
             }else {
                 // add new note
@@ -62,11 +79,10 @@ class NoteModel extends Model {
             // get user's grade
             $grade = $user->getGrade();
 
-            $sql = "SELECT t1.id, t1.note, t2.name, t2.max_note, t2.coef FROM " . $this->table . " AS t1 INNER JOIN subjects AS t2 ON t1.subject_id=t2.id WHERE (t1.user_name=:user_name AND t2.grade_id=:grade_id AND t1.deleted=:deleted) ORDER BY t2.name";
+            $sql = "SELECT t1.id, t1.note, t2.name, t2.max_note, t2.coef FROM " . $this->table . " AS t1 INNER JOIN subjects AS t2 ON t1.subject_id=t2.id WHERE (t1.user_name=:user_name AND t2.grade_id=:grade_id) ORDER BY t2.name";
             $data = $this->query($sql, [
                 [":user_name", $user_name, PDO::PARAM_STR],
-                [":grade_id", $grade->value, PDO::PARAM_INT],
-                [":deleted", false, PDO::PARAM_BOOL]
+                [":grade_id", $grade->value, PDO::PARAM_INT]
             ])->execute()->fetchAll();
             foreach($data as $row) {
                 $max_note = floatval($row['max_note']);
@@ -129,7 +145,7 @@ class NoteModel extends Model {
             // get grade
             $grade = $user->getGrade();
             
-            $sql = "SELECT sum(t1.note*t2.coef) / sum(t2.coef) AS average FROM " . $this->table . " AS t1 INNER JOIN subjects AS t2 ON t1.subject_id=t2.id WHERE (t1.user_name=:user_name AND t2.grade_id=:grade_id AND t1.deleted=:deleted)";
+            $sql = "SELECT sum(t1.note*t2.coef) / sum(t2.coef) AS average FROM " . $this->table . " AS t1 INNER JOIN subjects AS t2 ON t1.subject_id=t2.id WHERE (t1.user_name=:user_name AND t2.grade_id=:grade_id)";
             $data = $this->query($sql, [
                 [":user_name", $user_name, PDO::PARAM_STR],
                 [":grade_id", $grade->value, PDO::PARAM_STR],
@@ -147,19 +163,17 @@ class NoteModel extends Model {
 
     public function getNote(int $subject_id, string $user_name, int $session_id) : Note|null {
         try {
-            $sql = "SELECT * FROM " . $this->table . " WHERE (subject_id=:subject_id AND user_name=:user_name AND session_id=:session_id AND deleted=:deleted)";
+            $sql = "SELECT * FROM " . $this->table . " WHERE (subject_id=:subject_id AND user_name=:user_name AND session_id=:session_id)";
             $data = $this->query($sql, [
                 [":subject_id", $subject_id, PDO::PARAM_INT],
                 [":user_name", $user_name, PDO::PARAM_STR],
-                [":session_id", $session_id, PDO::PARAM_INT],
-                [":deleted", false, PDO::PARAM_BOOL]
+                [":session_id", $session_id, PDO::PARAM_INT]
             ])->execute()->fetchAll();
             if(count($data)) {
                 return new Note(
                     $data[0]['id'], $subject_id, $user_name,
                     $data[0]['note'], $session_id,
-                    $data[0]['validated'],
-                    $data[0]['deleted'],
+                    $data[0]['status_id'],
                     new DateTime($data[0]['date'])
                 );
             }
@@ -172,18 +186,16 @@ class NoteModel extends Model {
 
     public function getNoteById(int $id) : Note|null {
         try {
-            $sql = "SELECT * FROM " . $this->table . " WHERE (id=:id AND deleted=:deleted)";
+            $sql = "SELECT * FROM " . $this->table . " WHERE id=:id";
             $data = $this->query($sql, [
-                [":id", $id, PDO::PARAM_INT],
-                [":deleted", false, PDO::PARAM_BOOL]
+                [":id", $id, PDO::PARAM_INT]
             ])->execute()->fetchAll();
             if(count($data)) {
                 return new Note(
                     $data[0]['id'], $data[0]['subject_id'],
                     $data[0]['user_name'],
                     $data[0]['note'], $data[0]['session_id'],
-                    $data[0]['validated'],
-                    $data[0]['deleted'],
+                    $data[0]['status_id'],
                     new DateTime($data[0]['date'])
                 );
             }
@@ -213,18 +225,23 @@ class NoteModel extends Model {
         return "La note fournie n'est pas correcte. Elle doit être comprise entre 0 et " . $max_note;
     }
 
-    public function isNoteValidated(int $id) : bool {
-        if($id == null) return false;
-        
-        $note = $this->getNoteById($id);
-        if($note != null) {
-            return $note->getValidated();
-        }
-        return false;
-    }
-
     public function setTable(string $table) : self {
         $this->table = $table;
         return $this;
+    }
+
+    public function updateStatus(int $id, NoteStatus $noteStatus) : Message {
+        try {
+            $sql = "UPDATE " . $this->table . " SET status_id=:status_id WHERE id=:id";
+            $this->query($sql, [
+                [":status_id", $noteStatus->value, PDO::PARAM_INT],
+                [":id", $id, PDO::PARAM_INT]
+            ])->execute();
+            return Message::SUCCESS_MSG;
+        }
+        catch(PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return Message::UNKNOWN;
     }
 }

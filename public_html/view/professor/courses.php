@@ -13,18 +13,15 @@ echo '<h3 style="text-align: center;">Gestion des cours</h3>';
 $singleModel = new SingleModel;
 
 echo '<div class="row">'
-
 .'<div class="col-sm-4">'
 .'<input class="form-control" type="text" id="title_like" name="title_like" placeholder="Titre"><br>'
-.'</div>';
-
-echo '<div class="col-sm-4 mb-4">'
+.'</div>'
+.'<div class="col-sm-4 mb-4">'
 .'<select class="form-select" id="section" name="section">'
 .$singleModel->setTable("sections")->getAllAsOptions()
 ."</select>"
-.'</div>';
-
-echo '<div class="col-sm-4 mb-4">'
+.'</div>'
+.'<div class="col-sm-4 mb-4">'
 .'<select class="form-select" id="grade" name="grade">'
 .$singleModel->setTable("grades")->getAllAsOptions()
 ."</select>"
@@ -42,7 +39,6 @@ else {
     echo '<span id="error-msg" class="error-msg"></span>';
 }
 echo "<br>";
-
 
 echo '<div id="courses_data_tr"></div>';
 ?>

@@ -36,6 +36,4 @@ if($_POST) {
     }
 }
 
-error_log(json_encode($response));
-
 echo json_encode($response);

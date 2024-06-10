@@ -12,8 +12,7 @@ class Note {
         private string $user_name,
         private float $note,
         private int $session_id,
-        private bool $validated,
-        private bool $deleted,
+        private int $status_id,
         private DateTime $date
     ) {
 
@@ -25,7 +24,6 @@ class Note {
     public function getNote() : float { return $this->note; }
     public function setNote(float $note) : void { $this->note = $note; }
     public function getSessionId() : int { return $this->session_id; }
-    public function getValidated() : bool { return $this->validated; }
-    public function getDeleted() : bool { return $this->deleted; }
+    public function getStatusId() : int { return $this->status_id; }
     public function getDate() : DateTime { return $this->date; }
 }

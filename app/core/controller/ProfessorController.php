@@ -32,8 +32,8 @@ class ProfessorController extends UserController {
         $this->goCheck($this->dir . "get_notes_as_table");
     }
 
-    public function get_sujects() {
-        $this->goCheck($this->dir . "get_sujects");
+    public function get_subjects() {
+        $this->goCheck($this->dir . "get_subjects");
     }
 
     public function notes() {

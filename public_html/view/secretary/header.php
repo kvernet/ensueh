@@ -1,12 +1,12 @@
 <?php
 
-use app\core\controller\AdmController;
+use app\core\controller\SecretaryController;
 use app\core\entity\Header;
 use app\core\entity\Navbar;
 use app\core\entity\Status;
 use app\core\model\UserModel;
 
-$user_name = AdmController::getUserName();
+$user_name = SecretaryController::getUserName();
 
 $header = new Header;
 $header->setTitle($params["title"] ?? APP_NAME)->show();
@@ -17,7 +17,7 @@ if(!isset($params['nav_item_active'])) {
 //TODO, read from database
 $params["n_received_msg"] = 0;
 
-$status = AdmController::getStatus();
+$status = SecretaryController::getStatus();
 if($status == Status::ONLINE || $status == Status::ACTIVE) {
     (new Navbar)
         ->addLiDropdown("Etudiants", [

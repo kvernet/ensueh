@@ -4,16 +4,16 @@ namespace app\core\controller;
 
 use app\core\entity\WhoAmI;
 
-class AdmController extends UserController {
-    
+class SecretaryController extends UserController {
+
     public function __construct() {
-        $this->setDir("adm/");
-        $this->setTitle(APP_NAME . " - ADM");
-        $this->setWhoAmI(WhoAmI::ADM);
+        $this->setDir("secretary/");
+        $this->setTitle(APP_NAME . " - Secrétaire");
+        $this->setWhoAmI(WhoAmI::SECRETARY);
     }
 
-    public function get_notes_as_table() {
-        $this->goCheck($this->dir . "get_notes_as_table");
+    public function confirm_note() {
+        $this->goCheck($this->dir . "confirm_note");
     }
 
     public function get_subjects() {
@@ -24,11 +24,11 @@ class AdmController extends UserController {
         $this->goCheck($this->dir . "get_users_as_table");
     }
 
-    public function generate_transcript() {
-        $this->goCheck($this->dir . "generate_transcript");
+    public function get_notes_as_table() {
+        $this->goCheck($this->dir . "get_notes_as_table");
     }
 
-    public function notes() {
+    public function notes() : void {
         $this->goCheck($this->dir . "notes");
     }
 
@@ -50,10 +50,6 @@ class AdmController extends UserController {
 
     public function undo_note() {
         $this->goCheck($this->dir . "undo_note");
-    }
-
-    public function validate_note() {
-        $this->goCheck($this->dir . "validate_note");
     }
 
     public function welcome_signup() : void {

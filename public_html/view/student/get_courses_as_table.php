@@ -7,7 +7,7 @@ use app\core\entity\Section;
 use app\core\model\CourseModel;
 use app\core\model\UserModel;
 
-function getCoursesAsTable(string $user_name, Section $section, Grade $grade,
+function getCoursesAsTable(Section $section, Grade $grade,
 $title_like, array $class_colors=[], $color_index=0) : void {
     
     echo '<table class="table table-striped">'
@@ -62,6 +62,6 @@ if($_POST) {
         "table-active"
     ];
 
-    getCoursesAsTable($user_name, Section::get($section_id), Grade::get($grade_id),
+    getCoursesAsTable(Section::get($section_id), Grade::get($grade_id),
         $title_like, $class_colors, $color_index);
 }

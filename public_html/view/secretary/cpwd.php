@@ -1,0 +1,90 @@
+<?php
+
+use app\core\entity\Form;
+
+$params['nav_item_active'] = "Changer mot de passe";
+
+include_once("header.php");
+
+(new Form())->add('<section class="vh-100 gradient-custom">')
+->add('<div class="container py-5 h-100">')
+->add('<div class="row justify-content-center align-items-center h-100">')
+->add('<div class="col-12 col-lg-9 col-xl-7">')
+->add('<div class="card shadow-2-strong card-registration" style="border-radius: 15px;">')
+->add('<div class="card-body p-4 p-md-5">')
+->add('<h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Modification de mot de passe</h3>')
+->add('<form id="pwdForm" action="" method="post">')
+->add('<div class="row">')
+->add('<div class="mb-2 align-items-center">')
+->add('<span class="error-msg align-items-center" id="details">')
+->add(isset($_GET['msg']) ? $_GET['msg'] : "")
+->add('</span>')
+->add('</div>')
+->add('</div>')
+
+->add('<div class="row">')
+->add('<div class="mb-4">')
+->add('<div data-mdb-input-init class="form-outline">')
+->add('<input class="form-control form-control-lg" type="password" id="apwd" name="apwd" />')
+->add('<label class="form-label" for="apwd">Mot de passe actuel</label>')
+->add('</div>')
+->add('</div>')
+->add('</div>')
+
+->add('<div class="row">')
+->add('<div class="mb-2">')
+->add('<div data-mdb-input-init class="form-outline">')
+->add('<input class="form-control form-control-lg" type="password" id="pwd" name="pwd" />')
+->add('<label class="form-label" for="pwd">Nouveau mot de passe</label>')
+->add('</div>')
+->add('</div>')
+->add('</div>')
+
+->add('<div class="row">')
+->add('<div class="mb-2">')
+->add('<div data-mdb-input-init class="form-outline">')
+->add('<input class="form-control form-control-lg" type="password" id="conf_pwd" name="conf_pwd" />')
+->add('<label class="form-label" for="conf_pwd">Confirmer nouveau mot de passe</label>')
+->add('</div>')
+->add('</div>')
+->add('</div>')
+
+->add('<div class="mb-2 mt-3">')
+->add('<input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Modifier mot de passe" />')
+->add('</div>')
+
+->add('</form>')
+->add('</div>')
+->add('</div>')
+->add('</div>')
+->add('</div>')
+->add('</div>')
+->add('</section>')
+->add('<script>')
+->add('let apwd = document.getElementById("apwd");')
+->add('let pwd = document.getElementById("pwd");')
+->add('let conf_pwd = document.getElementById("conf_pwd");')
+->add('let details = document.getElementById("details");')
+->add('let form = document.getElementById("pwdForm");')
+->add('form.addEventListener("submit", (e) => {')
+->add('e.preventDefault();')
+->add('details.innerHTML = "";')
+->add('if (checkLength(apwd, 1, "Le mot de passe actuel est obligatoire.", details)) {')
+->add('if (passwordValid(pwd.value)) {')
+->add('if(pwd.value == conf_pwd.value){')
+->add('const formData = new FormData(form);')
+->add('sendForm(formData, "request_cpwd", details);')
+->add('}else {')
+->add('details.innerHTML = "Le nouveau mot de passe et sa confirmation ne se correspondent pas."')
+->add('}')
+
+->add('}else {')
+->add('details.innerHTML = "Le nouveau mot de passe n\'est pas correct. Il doit contenir :<ul><li>au moins huit (8) caractères</li><li>au moins une lettre majuscule</li><li>au moins une lettre minuscule</li><li>au moins un chiffre</li><li>au moins un caractères spécial : (e.g., @, $, !, %, *, ?, &)</li></ul>";')
+->add('}')
+->add('}')
+->add('}')
+->add(');')
+->add('</script>')
+->show();
+
+include_once("footer.php");

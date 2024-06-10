@@ -12,7 +12,6 @@ function getNotesAsTable(int $section_id, int $grade_id, int $subject_id, int $s
 
     $section = Section::get($section_id);
     $grade = Grade::get($grade_id);
-    
     $data = [];
 
     // retrieve pagination parameters
@@ -44,7 +43,7 @@ function getNotesAsTable(int $section_id, int $grade_id, int $subject_id, int $s
     ];
 
     header('Content-Type: application/json');
-    echo (json_encode($response));
+    echo(json_encode($response));
 }
 
 if($_POST) {

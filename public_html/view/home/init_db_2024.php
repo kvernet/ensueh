@@ -65,11 +65,12 @@ class InitializationDB extends Model {
     public function setSubjects(array $subjects=[], string $table="subjects") : void {
         echo "=== InitializationDB::setSubjects(". $table .")<br>";
         
-        $sql = "INSERT INTO ". $table ."(name, grade_id, user_name, max_note, coef) VALUES(:name, :grade_id, :user_name, :max_note, :coef)";
+        $sql = "INSERT INTO ". $table ."(name, section_id, grade_id, user_name, max_note, coef) VALUES(:name, :section_id, :grade_id, :user_name, :max_note, :coef)";
 
         foreach($subjects as $subject) {
             $params = [
                 [":name", $subject->getName(), PDO::PARAM_STR],
+                [":section_id", $subject->getSection()->value, PDO::PARAM_INT],
                 [":grade_id", $subject->getGrade()->value, PDO::PARAM_INT],
                 [":user_name", $subject->getUserName(), PDO::PARAM_STR],
                 [":max_note", $subject->getMaxNote(), PDO::PARAM_STR],
@@ -170,7 +171,7 @@ $initializationDB->setSingle("departments", [
 
 // table whoami
 $initializationDB->setSingle("whoami", [
-    "Etudiant", "Professeur", "Adm"
+    "Etudiant", "Professeur", "Secretary", "Adm"
 ]);
 
 // table sections
@@ -222,6 +223,11 @@ $initializationDB->setSingle("forum_terms", [
     "Vie quotidienne et entraide"
 ]);
 
+// table note_status
+$initializationDB->setSingle("notes_status", [
+    "Ajoutée", "Modifiée", "Confirmée", "Validée"
+]);
+
 // table users
 $initializationDB->setUsers([
     new User(
@@ -256,16 +262,14 @@ $initializationDB->setUsers([
         new DateTime(), null,
         Status::VALIDATED, new DateTime()
     ),
-    /*
     new User(
-        0, "Wisly", "Fidel", Gender::MALE, "wfidel@ensueh.com",
-        "+33 7 51 48 68 66", Department::NordOuest,
-        WhoAmI::PROFESSOR, Section::PHYSICS,
-        Grade::PHD, "wfidel", "WFidel@ENS2024",
+        0, "Linda", "Etienne", Gender::MALE, "secretaire@ensueh.com",
+        "+509 41 76 54 98", Department::Artibonite,
+        WhoAmI::SECRETARY, Section::PHYSICS,
+        Grade::M2, "secretaire", "LEtienne@ENS2024",
         new DateTime(), null,
-        Status::REQUESTED, new DateTime()
+        Status::VALIDATED, new DateTime()
     ),
-    */
     new User(
         0, "Judel", "Dort", Gender::MALE, "jdort@ensueh.com",
         "+509 56 85 34 25", Department::Ouest,
@@ -328,79 +332,92 @@ $initializationDB->setUsers([
 $initializationDB->setSubjects([
     // LO
     new Subject(
-        0, "Cinématique", Grade::L0,
+        0, "Cinématique",
+        Section::PHYSICS, Grade::L0,
         "rmareus", 100.0, 1.0,
         new DateTime(), false
     ),
     new Subject(
-        0, "Mécanique du point", Grade::L0,
+        0, "Mécanique du point",
+        Section::PHYSICS, Grade::L0,
         "kvernet", 100.0, 1.0,
         new DateTime(), false
     ),
     new Subject(
-        0, "Anglais", Grade::L0,
+        0, "Anglais",
+        Section::PHYSICS, Grade::L0,
         "rmareus", 100.0, 1.0,
         new DateTime(), false
     ),
     new Subject(
-        0, "Chimie", Grade::L0,
+        0, "Chimie",
+        Section::PHYSICS, Grade::L0,
         "kvernet", 100.0, 1.0,
         new DateTime(), false
     ),
     new Subject(
-        0, "Dynamique Newtonienne", Grade::L0,
+        0, "Dynamique Newtonienne",
+        Section::PHYSICS, Grade::L0,
         "rmareus", 100.0, 1.0,
         new DateTime(), false
     ),
     // L1
     new Subject(
-        0, "Electromagnétisme", Grade::L1,
+        0, "Electromagnétisme",
+        Section::PHYSICS, Grade::L1,
         "rmareus", 100.0, 1.0,
         new DateTime(), false
     ),
     // M1
     new Subject(
-        0, "Mécanique Quantique", Grade::M1,
+        0, "Mécanique Quantique",
+        Section::PHYSICS, Grade::M1,
         "rmareus", 100.0, 10.,
         new DateTime(), false
     ),
     new Subject(
-        0, "Physique Atomique", Grade::M1,
+        0, "Physique Atomique",
+        Section::PHYSICS, Grade::M1,
         "dpredelus", 100.0, 9.,
         new DateTime(), false
     ),
     new Subject(
-        0, "Physique Statistique", Grade::M1,
+        0, "Physique Statistique",
+        Section::PHYSICS, Grade::M1,
         "dpredelus", 100.0, 10.,
         new DateTime(), false
     ),
     new Subject(
-        0, "Optique & Laser", Grade::M1,
+        0, "Optique & Laser",
+        Section::PHYSICS, Grade::M1,
         "rmareus", 100.0, 9.,
         new DateTime(), false
     ),
     new Subject(
-        0, "Physique Nucléaire", Grade::M1,
+        0, "Physique Nucléaire",
+        Section::PHYSICS, Grade::M1,
         "dpredelus", 100.0, 8.,
         new DateTime(), false
     ),
     new Subject(
-        0, "Programmation", Grade::M1,
+        0, "Programmation",
+        Section::PHYSICS, Grade::M1,
         "kvernet", 100.0, 4.,
         new DateTime(), false
     ),
     new Subject(
-        0, "Chimie de l'Environnement", Grade::M1,
+        0, "Chimie de l'Environnement",
+        Section::PHYSICS, Grade::M1,
         "kvernet", 100.0, 6.,
         new DateTime(), false
     ),
     new Subject(
-        0, "Micro-projet", Grade::M1,
+        0, "Micro-projet",
+        Section::PHYSICS, Grade::M1,
         "rmareus", 100.0, 4.,
         new DateTime(), false
     ),
 ]);
-
 
 // table profiles
 $initializationDB->setProfiles([

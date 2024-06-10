@@ -7,7 +7,7 @@ define("APP_NAME", "ENS UEH");
 define("APP_FULL_NAME", "Ecole Normale Supérieure");
 define("APP_SLOGAN", "Un slogan, une philosophie ???");
 define("UEH", "Université d'Etat d'Haïti");
-define("ACTIVE_DURATION", 1800);         // in seconds
+define("ACTIVE_DURATION", 1800);        // in seconds
 define("ONLINE_DURATION", 60);          // in seconds and must be less than ACTIVE_DURATION
 define("MAX_UPLOAD_FILE_SIZE", 25);     // in MegaByte
 define("COOKIE_DURATION", 1);           // in days

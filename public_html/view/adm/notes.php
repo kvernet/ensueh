@@ -1,10 +1,8 @@
 <?php
 
-use app\core\controller\ProfessorController;
-use app\core\entity\Grade;
+use app\core\entity\Single;
 use app\core\model\SingleModel;
 use app\core\model\SubjectModel;
-use app\core\model\UserModel;
 
 $params['nav_item_active'] = "Notes";
 
@@ -12,18 +10,18 @@ include_once("header.php");
 
 echo '<h3 style="text-align: center;">Gestion des notes des étudiants</h3>';
 
-function getGradesAsOptions(array $grades): string {
+function getSinglesAsOptions(array $singles): string {
     $result = "";
-    foreach ($grades as $grade) {
-        $result .= '<option value="' . $grade->value . '">' . $grade->toText() . '</option>';
+    foreach ($singles as $single) {
+        $result .= '<option value="' . $single->getId() . '">' . $single->getContent() . '</option>';
     }
     return $result;
 }
 
-function getSubjectsAsOptions(string $user_name, Grade|null $grade): string {
+function getSubjectsAsOptions(Single $section, Single $grade): string {
     if ($grade == null) return "";
 
-    $subjects = (new SubjectModel)->getSubjects($user_name, $grade);
+    $subjects = (new SubjectModel)->getSubjectsBySectionGrade($section->getId(), $grade->getId());
     $result = "";
     foreach ($subjects as $subject) {
         $result .= '<option value="' . $subject->getId() . '">' . $subject->getName() . '</option>';
@@ -31,50 +29,63 @@ function getSubjectsAsOptions(string $user_name, Grade|null $grade): string {
     return $result;
 }
 
-$user_name = ProfessorController::getUserName();
-$user = (new UserModel)->getByUserName($user_name);
-$grades = (new SubjectModel)->getGrades($user_name);
+$sections = (new SingleModel)->setTable("sections")->getAll();
+$grades = (new SingleModel)->setTable("grades")->getAll();
+
 
 echo '<div class="row">'
-    . '<div class="col-lg-4 mb-3">'
+    . '<div class="col-lg-3 col-md-6 mb-3">'
+    . '<select class="form-select" name="section" id="section" onchange="sectionChange()">'
+    . getSinglesAsOptions($sections)
+    . '</select>'
+    . '</div>'
+
+    . '<div class="col-lg-3 col-md-6 mb-3">'
     . '<select class="form-select" name="grade" id="grade" onchange="gradeChange()">'
-    . getGradesAsOptions($grades)
+    . getSinglesAsOptions($grades)
     . '</select>'
     . '</div>'
-    . '<div class="col-lg-4 mb-3">'
+
+    . '<div class="col-lg-3 col-md-6 mb-3">'
     . '<select class="form-select" name="subject" id="subject" onchange="subjectChange()">'
-    . getSubjectsAsOptions($user_name, $grades[0])
+    . getSubjectsAsOptions($sections[0], $grades[0])
     . '</select>'
     . '</div>'
-    . '<div class="col-lg-4 mb-3">'
+
+    . '<div class="col-lg-3 col-md-6 mb-3">'
     . '<select class="form-select" name="session" id="session" onchange="sessionChange()">'
     . (new SingleModel)->setTable("sessions")->getAllAsOptions()
     . '</select>'
     . '</div>'
+
     . '</div>'
     . '<span class="error-msg" id="details"></span>'
     . '<div id="student-notes"></div>';
 ?>
 
 <script>
-    var section_id = <?= $user->getSection()->value ?>;
+    var section = document.getElementById("section");
     var grade = document.getElementById("grade");
     var subject = document.getElementById('subject');
     var session = document.getElementById("session");
     var details = document.getElementById("details");
     var table = null;
 
-    function setSubjects() {
-        details.innerHTML = "";
-        
-        let formData = new FormData();
-        formData.append("grade_id", grade.value);
-
-        setData(formData, "get_subjects", subject, updateTable);
+    function sectionChange() {
+        setSubjects();
     }
 
     function gradeChange() {
         setSubjects();
+    }
+
+    function setSubjects() {
+        details.innerHTML = "";
+        let formData = new FormData();
+        formData.append("section_id", section.value);
+        formData.append("grade_id", grade.value);
+
+        setData(formData, "get_subjects", subject, updateTable);
     }
 
     function subjectChange() {
@@ -91,7 +102,6 @@ echo '<div class="row">'
 
     function updateTable() {
         details.innerHTML = "";
-        
         table = new Tabulator("#student-notes", {
             pagination: true, //enable pagination
             paginationMode: "remote", //enable remote pagination
@@ -123,7 +133,7 @@ echo '<div class="row">'
             ajaxURL: "get_notes_as_table",
             placeholder: "Aucune entrée",
             ajaxParams: {
-                section_id: section_id,
+                section_id: section.value,
                 grade_id: grade.value,
                 subject_id: subject.value,
                 session_id: session.value
@@ -156,24 +166,27 @@ echo '<div class="row">'
                     title: "Note",
                     field: "note",
                     sorter: "number",
-                    headerFilter: "input",
-                    editor: "input",
-                    validator: "required"
+                    headerFilter: "input"
                 },
                 {
                     title: "Actions",
                     field: "id",
                     formatter: function(cell, formatterParams, onRendered) {
-                        return '<a href="" role="button" onclick="return update_note(' + cell.getValue() + ');">Modifier</a>';
+                        return '<a href="" role="button" onclick="return validate_note(' + cell.getValue() + ');">Valider</a>';
+                    }
+                },
+                {
+                    field: "id",
+                    formatter: function(cell, formatterParams, onRendered) {
+                        return '<a href="" role="button" onclick="return undo_note(' + cell.getValue() + ');">Défaire</a>';
                     }
                 }
             ]
         });
     }
 
-    function update_note(id) {
+    function validate_note(id) {
         details.innerHTML = "";
-        
         let formData = new FormData();
         formData.append("grade_id", grade.value);
         formData.append("subject_id", subject.value);
@@ -186,8 +199,19 @@ echo '<div class="row">'
             formData.append(row, rowData[row]);
         }
 
-        saveData(formData, "update_note", "POST", details, null, updateTable, true);
+        saveData(formData, "validate_note", "POST", details, null, updateTable, true);
+        return false;
+    }
 
+    function undo_note(id) {
+        details.innerHTML = "";
+        let formData = new FormData();
+
+        var row = table.getRow(id)
+        var rowData = row.getData();
+        formData.append("id", rowData["id"]);
+
+        saveData(formData, "undo_note", "POST", details, null, updateTable, true);
         return false;
     }
 </script>

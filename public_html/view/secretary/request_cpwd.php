@@ -1,6 +1,6 @@
 <?php
 
-use app\core\controller\AdmController;
+use app\core\controller\SecretaryController;
 use app\core\entity\Message;
 use app\core\model\UserModel;
 
@@ -12,7 +12,7 @@ $response =[
 ];
 
 if($_POST) {
-    $user_name = AdmController::getUserName();
+    $user_name = SecretaryController::getUserName();
     $apwd = $_POST['apwd'];
     $pwd = $_POST['pwd'];
     $conf_pwd = $_POST['conf_pwd'];
@@ -26,7 +26,7 @@ if($_POST) {
                 $response['msg'] = "Votre mot de passe a été changé avec succès.";
             } else {
                 $response['msg'] = "Le changement de mot de passe a échoué. Veuillez essayer à nouveau et si cela persite, merci de contacter les responsables.";
-            }            
+            }
         } else {
             $response['msg'] = "Le mot de passe actuel indiqué est incorrect. Veuillez contacter les responsables.";
             $response['msg_id'] = Message::USER_NOT_EXISTS_MSG->value;

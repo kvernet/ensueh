@@ -71,6 +71,7 @@ function setData(formData, page, tag, func=null, method="POST") {
         if (request.readyState == 4 && request.status == 200) {
             if(tag) {
                 tag.innerHTML = request.responseText;
+                console.log(request.responseText);
             }
             if(func) func();
         }

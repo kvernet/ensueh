@@ -7,7 +7,8 @@ use app\core\model\SingleModel;
 enum WhoAmI : int {
     case STUDENT   = 1;
     case PROFESSOR = 2;
-    case ADM       = 3;
+    case SECRETARY = 3;
+    case ADM       = 4;
     case UNKNOWN   = 0;
 
     static public function get(int $id) : WhoAmI {
@@ -18,6 +19,7 @@ enum WhoAmI : int {
         return match($this) {
             WhoAmI::STUDENT => "student/courses",
             WhoAmI::PROFESSOR => "professor/courses",
+            WhoAmI::SECRETARY => "secretary/students",
             WhoAmI::ADM => "adm/students",
             Default => ""
         };
