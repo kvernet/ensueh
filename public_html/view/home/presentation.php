@@ -21,7 +21,7 @@ include_once("header.php");
         Par la loi du 23 janvier 1969, elle était devenue Faculté des Lettres et de Pédagogie qui avait pour but de dispenser un enseignement théorique et pratique. Le 9 octobre 1973, la Faculté des Lettres est redevenue Ecole Normale Supérieure jusqu'aujourd'hui.
     </p>
     <p>
-        L'ENS a pour vision de:
+        L'ENS a pour mission de:
     <ul>
         <li> former des professeurs pour l'enseignement secondaire afin de résoudre le problème de carence de professeurs qualifiés rencontré dans les différentes écoles au niveau national ;
         <li> former des personnels qualifiés pour aborder les problèmes socio-politiques et économiques d'Haïti ;

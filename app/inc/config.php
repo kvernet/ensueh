@@ -14,8 +14,8 @@ define("COOKIE_DURATION", 1);           // in days
 
 define("DB_HOST", "127.0.0.1");
 define("DB_NAME", "ens_db_2024");
-define("DB_USER", "ens");
-define("DB_PWD", "Test_xyz1");
+define("DB_USER", "root");
+define("DB_PWD", "Joseph2024");
 /*=================================================*/
 
 

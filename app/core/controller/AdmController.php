@@ -12,12 +12,20 @@ class AdmController extends UserController {
         $this->setWhoAmI(WhoAmI::ADM);
     }
 
+    public function add_subject() : void {
+        $this->goCheck($this->dir . "add_subject");
+    }
+
     public function get_notes_as_table() {
         $this->goCheck($this->dir . "get_notes_as_table");
     }
 
     public function get_subjects() {
         $this->goCheck($this->dir . "get_subjects");
+    }
+
+    public function get_subjects_as_table() {
+        $this->goCheck($this->dir . "get_subjects_as_table");
     }
 
     public function get_users_as_table() {
@@ -48,8 +56,16 @@ class AdmController extends UserController {
         $this->goCheck($this->dir . "students");
     }
 
+    public function subjects() : void {
+        $this->goCheck($this->dir . "subjects");
+    }
+
     public function undo_note() {
         $this->goCheck($this->dir . "undo_note");
+    }
+
+    public function update_subject() : void {
+        $this->goCheck($this->dir . "update_subject");
     }
 
     public function validate_note() {

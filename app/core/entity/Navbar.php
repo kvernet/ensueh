@@ -40,7 +40,7 @@ class Navbar {
     // $dividerAt : the index to include a divider, default id -1 means no divider should be included
     public function addLiDropdown(string $text, array $links, $dividerAt=-1) : Navbar {
         $this->content .= '<li class="nav-item dropdown">'.
-        '<a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">'.
+        '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">'.
         $text.
         '</a>'.
         '<ul class="dropdown-menu">';

@@ -12,12 +12,20 @@ class SecretaryController extends UserController {
         $this->setWhoAmI(WhoAmI::SECRETARY);
     }
 
+    public function add_subject() {
+        $this->goCheck($this->dir . "add_subject");
+    }
+
     public function confirm_note() {
         $this->goCheck($this->dir . "confirm_note");
     }
 
     public function get_subjects() {
         $this->goCheck($this->dir . "get_subjects");
+    }
+
+    public function get_subjects_as_table() {
+        $this->goCheck($this->dir . "get_subjects_as_table");
     }
 
     public function get_users_as_table() {
@@ -48,8 +56,16 @@ class SecretaryController extends UserController {
         $this->goCheck($this->dir . "students");
     }
 
+    public function subjects() : void {
+        $this->goCheck($this->dir . "subjects");
+    }
+
     public function undo_note() {
         $this->goCheck($this->dir . "undo_note");
+    }
+
+    public function update_subject() {
+        $this->goCheck($this->dir . "update_subject");
     }
 
     public function welcome_signup() : void {

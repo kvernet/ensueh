@@ -3,6 +3,7 @@
 namespace app\core\model;
 
 use app\core\entity\Grade;
+use app\core\entity\Message;
 use app\core\entity\Section;
 use app\core\entity\Subject;
 use DateTime;
@@ -12,6 +13,70 @@ use PDOException;
 class SubjectModel extends Model {
 
     private $table = "subjects";
+
+    public function add(Subject $subject) : Message {
+        try {
+            $sql = "INSERT INTO " . $this->table . "(name, section_id, grade_id, user_name, max_note, coef) VALUES(:name, :section_id, :grade_id, :user_name, :max_note, :coef)";
+            $this->query($sql, [
+                [":name", $subject->getName(), PDO::PARAM_STR],
+                [":section_id", $subject->getSection()->value, PDO::PARAM_INT],
+                [":grade_id", $subject->getGrade()->value, PDO::PARAM_INT],
+                [":user_name", $subject->getUserName(), PDO::PARAM_STR],
+                [":max_note", $subject->getMaxNote(), PDO::PARAM_STR],
+                [":coef", $subject->getCoef(), PDO::PARAM_STR]
+            ])->execute();
+            return Message::SUCCESS_MSG;
+        }
+        catch(PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return Message::UNKNOWN;
+    }
+
+    public function countByUserName(string $user_name) : int {
+        try {
+            $sql = "SELECT COUNT(*) AS total FROM " . $this->table . " WHERE (user_name=:user_name AND deleted=:deleted)";
+            $data = $this->query($sql, [
+                [":user_name", $user_name, PDO::PARAM_STR],
+                [":deleted", false, PDO::PARAM_BOOL]
+            ])->execute()->fetchAll();
+            if(count($data) > 0) {
+                return $data[0]['total'];
+            }
+        }
+        catch(PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return 0;
+    }
+
+    public function getByUserName(string $user_name, int $offset, int $size): array {
+        $subjects = [];
+        try {
+            $sql = "SELECT * FROM ". $this->table . " WHERE user_name=:user_name LIMIT :offset, :size";
+            $data = $this->query($sql, [
+                [":user_name", $user_name, PDO::PARAM_STR],
+                [":offset", $offset, PDO::PARAM_INT],
+                [":size", $size, PDO::PARAM_INT]
+            ])->execute()->fetchAll();
+            foreach ($data as $d) {
+                $subjects[] = new Subject(
+                    $d['id'],
+                    $d['name'],
+                    Section::get($d['section_id']),
+                    Grade::get($d['grade_id']),
+                    $d['user_name'],
+                    $d['max_note'],
+                    $d['coef'],
+                    new DateTime($d['date']),
+                    $d['deleted']
+                );
+            }
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return $subjects;
+    }
 
     public function getGrades(string $user_name) : array {
         $grades = [];
@@ -138,5 +203,24 @@ class SubjectModel extends Model {
             (new HistoryModel)->add($e->getMessage(), getUserIP());
         }
         return $subjects;
+    }
+
+    public function update(Subject $subject) : Message {
+        try {
+            $sql = "UPDATE " . $this->table . " SET name=:name, section_id=:section_id, grade_id=:grade_id, max_note=:max_note, coef=:coef WHERE id=:id";
+            $this->query($sql, [
+                [":name", $subject->getName(), PDO::PARAM_STR],
+                [":section_id", $subject->getSection()->value, PDO::PARAM_INT],
+                [":grade_id", $subject->getGrade()->value, PDO::PARAM_INT],
+                [":max_note", $subject->getMaxNote(), PDO::PARAM_STR],
+                [":coef", $subject->getCoef(), PDO::PARAM_STR],
+                [":id", $subject->getId(), PDO::PARAM_INT],
+            ])->execute();
+            return Message::SUCCESS_MSG;
+        }
+        catch(PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return Message::UNKNOWN;
     }
 }

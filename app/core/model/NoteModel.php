@@ -148,8 +148,7 @@ class NoteModel extends Model {
             $sql = "SELECT sum(t1.note*t2.coef) / sum(t2.coef) AS average FROM " . $this->table . " AS t1 INNER JOIN subjects AS t2 ON t1.subject_id=t2.id WHERE (t1.user_name=:user_name AND t2.grade_id=:grade_id)";
             $data = $this->query($sql, [
                 [":user_name", $user_name, PDO::PARAM_STR],
-                [":grade_id", $grade->value, PDO::PARAM_STR],
-                [":deleted", false, PDO::PARAM_BOOL]
+                [":grade_id", $grade->value, PDO::PARAM_INT]
             ])->execute()->fetchAll();
             if(count($data)) {
                 return floatval($data[0]['average']);

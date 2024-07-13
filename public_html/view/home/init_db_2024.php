@@ -171,7 +171,7 @@ $initializationDB->setSingle("departments", [
 
 // table whoami
 $initializationDB->setSingle("whoami", [
-    "Etudiant", "Professeur", "Secretary", "Adm"
+    "Etudiant", "Professeur", "Secrétaire", "Adm"
 ]);
 
 // table sections
@@ -446,9 +446,8 @@ $initializationDB->setProfiles([
         "",
         "kvernet@ensueh.com",
         new DateTime(),
-        false
+        true
     ),
-    /*
     new Profile(
         0, "wfidel", "Wisly", "Fidel",
         "wfidel.png",
@@ -458,7 +457,6 @@ $initializationDB->setProfiles([
         new DateTime(),
         true
     )
-    */
 ]);
 
 // table forum_subjects

@@ -21,10 +21,13 @@ $status = AdmController::getStatus();
 if($status == Status::ONLINE || $status == Status::ACTIVE) {
     (new Navbar)
         ->addLiDropdown("Etudiants", [
-            ["text" => "Informations", "href" => "students"],
+            ["text" => "Infos", "href" => "students"],
             ["text" => "Notes", "href" => "notes"]
         ])
-        ->addLi("Professeurs", "professors", $params['nav_item_active'] == "Professeurs")
+        ->addLiDropdown("Professeurs", [
+            ["text" => "Infos", "href" => "professors"],
+            ["text" => "Cours", "href" => "subjects"]
+        ])
         ->addLiDropdown("Mes messages", [
             ["text" => "Envoyés", "href" => "msg_sent"],
             ["text" => "Reçus(" . $params["n_received_msg"] . ")", "href" => "msg_received"]

@@ -39,7 +39,7 @@ class Course {
         .'<div class="modal-dialog">'
         .'<div class="modal-content">'
         .'<div class="modal-header">'
-        .'<h1 class="modal-title fs-5" id="addModalLabel">Ajout d\'un cours</h1>'
+        .'<h1 class="modal-title fs-5" id="addModalLabel">Ajout d\'un document</h1>'
         .'<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>'
         .'</div>'
         .'<div class="modal-body">'
@@ -50,7 +50,7 @@ class Course {
         .'</div>'
 
         .'<div class="mb-3">'
-        .'<label for="title" class="col-form-label">Titre:</label>'
+        .'<label for="title" class="col-form-label">Titre du document:</label>'
         .'<input type="text" class="form-control" id="title" name="title">'
         .'</div>'
 

@@ -13,7 +13,7 @@ function getCard(
 ): string {
     return '<div class="col">'
         . '<div class="card h-100">'
-        . '<img height="100%" src="' . $imgPath . '" class="card-img-top" alt="...">'
+        . '<img height="200hv" src="' . $imgPath . '" class="card-img-top" alt="...">'
         . '<div class="card-body">'
         . '<h3 class="bold">' . $title . '</h3>'
         . '<p class="lead">' . $content . '</p>'
@@ -70,7 +70,7 @@ function getForumLists() : string {
 
 <?php
 echo '<div class="dashboard-content px-3 pt-4 text-justify">'
-    . '<div class="row row-cols-1 row-cols-md-3 g-4">'
+    . '<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">'
     . getCard(
         "../../uploads/features/formations.png",
         "Formation",

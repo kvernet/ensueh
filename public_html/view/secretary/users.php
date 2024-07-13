@@ -10,7 +10,7 @@ include_once("header.php");
 echo '<h3 style="text-align: center;">Gestion des ' . $params["whoami_title"] . '</h3>';
 
 echo '<div>'
-    . '<a href="signup" id="add-user" class="btn btn-danger m-3" target="_blank">Ajouter</a>'
+    . '<a href="signup?id='. $params['whoami'] .'" id="add-user" class="btn btn-danger m-3" target="_blank">Ajouter</a>'
     . '<a href="#" id="print-table" class="btn btn-success my-2">Imprimer</a>'
     . '</div>';
 
@@ -173,7 +173,7 @@ $transcriptAdded = $params['whoami'] == WhoAmI::STUDENT->value ? 1 : 0;
                 }
             },
             {
-                title: "N'iveau d'étude",
+                title: "Niveau d'étude",
                 field: "grade",
                 sorter: "string",
                 headerFilter: "list",

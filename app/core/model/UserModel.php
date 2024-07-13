@@ -397,6 +397,25 @@ class UserModel extends Model {
         return array();
     }
 
+    public function getUsersAsOptions(WhoAmI $whoAmI, string $user_name_selected="") : string {
+        $options = "";
+        try {
+            $users = $this->getUsers($whoAmI);
+            foreach ($users as $user) {
+                $user_name = $user->getUserName();
+                $full_info = $user->getFullName();
+                if($user_name == $user_name_selected) {
+                    $options .= '<option value="'. $user_name .'" selected>'. $full_info .'</option>';
+                } else {
+                    $options .= '<option value="'. $user_name .'">'. $full_info .'</option>';
+                }
+            }
+        } catch (PDOException $e) {
+            (new HistoryModel)->add($e->getMessage(), getUserIP());
+        }
+        return $options;
+    }
+
     public function getUsersBySectionGrade(Section $section, Grade $grade, WhoAmI $whoAmI=WhoAmI::STUDENT) : array {
         $users = [];
         try {
