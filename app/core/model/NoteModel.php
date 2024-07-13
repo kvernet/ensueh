@@ -22,12 +22,6 @@ class NoteModel extends Model {
                 return "Désolé mais la note n'existe pas.";
             }
 
-            error_log(json_encode([
-                "note_status_id" => $note->getStatusId(),
-                "validated_id" => NoteStatus::VALIDATED,
-                "confirmed_id" => NoteStatus::CONFIRMED
-            ]));
-
             // check note if not yet validated
             if($note->getStatusId() == NoteStatus::VALIDATED->value) {
                 return "Désolé mais cette note a déjà été validée. Vous ne pouvez plus la modifier.";

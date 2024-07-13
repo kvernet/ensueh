@@ -65,8 +65,6 @@ echo '<div class="row">'
     var table = null;
 
     function setSubjects() {
-        details.innerHTML = "";
-        
         let formData = new FormData();
         formData.append("grade_id", grade.value);
 
@@ -74,14 +72,17 @@ echo '<div class="row">'
     }
 
     function gradeChange() {
+        details.innerHTML = "";
         setSubjects();
     }
 
     function subjectChange() {
+        details.innerHTML = "";
         updateTable();
     }
 
     function sessionChange() {
+        details.innerHTML = "";
         updateTable();
     }
 
@@ -90,8 +91,6 @@ echo '<div class="row">'
     }
 
     function updateTable() {
-        details.innerHTML = "";
-        
         table = new Tabulator("#student-notes", {
             pagination: true, //enable pagination
             paginationMode: "remote", //enable remote pagination
@@ -186,7 +185,7 @@ echo '<div class="row">'
             formData.append(row, rowData[row]);
         }
 
-        saveData(formData, "update_note", "POST", details, null, updateTable, true);
+        saveData(formData, "update_note", "POST", details, null, updateTable, false);
 
         return false;
     }
