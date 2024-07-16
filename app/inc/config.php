@@ -27,6 +27,9 @@ define("UPLOAD_BASE_DIR", "23D5EFD9A3134EC5D61C2A841744A9A45CE5C0B640BF855F8C603
 define("BOOTSTRAP_CSS", '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">');
 define("BOOSTRAP_JS", '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>');
 
+/* Font awesome */
+define('FONT_AWESOME', '<script src="https://kit.fontawesome.com/08898f7ed0.js" crossorigin="anonymous"></script>');
+
 /* Tableau */
 define("TABLE_CSS", '<link href="https://unpkg.com/tabulator-tables@6.2.1/dist/css/tabulator.min.css" rel="stylesheet">');
 define("TABLE_JS", '<script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.2.1/dist/js/tabulator.min.js"></script>');
